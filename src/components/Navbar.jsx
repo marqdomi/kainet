@@ -38,7 +38,7 @@ const Navbar = () => {
               aria-label="Inicio KAINET"
               className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
             >
-              <img src="/logo.svg" alt="KAINET" className="h-8 w-auto" loading="eager" decoding="sync" />
+              <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
               <span className="sr-only">KAINET</span>
             </a>
 
