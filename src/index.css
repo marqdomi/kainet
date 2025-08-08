@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;   /* solo oculta desbordes horizontales */
+  /* overflow-y: auto;  // opcional, por defecto ya permite scroll */
+}
+
+/* opcional: scroll suave */
+html { scroll-behavior: smooth; }
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body { @apply bg-black text-white; }
+}
+
+/* === KAINET micro-interacciones & cursor (components layer) === */
+@layer components {
+  /* Botón primario (por si aún no existe) */
+  .btn-kainet {
+    @apply relative inline-flex items-center justify-center rounded-lg font-semibold text-black px-5 py-3 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70;
+    background: linear-gradient(90deg, #00E5FF, #66F0FF, #00E5FF);
+    background-size: 200% 100%;
+    animation: kainet-shimmer 3s linear infinite;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 24px rgba(0,229,255,0.15);
+  }
+  .btn-kainet:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 10px 32px rgba(0,229,255,0.28); }
+  .btn-kainet:active { transform: translateY(1px); }
+
+  /* Botón secundario outline */
+  .btn-kainet--outline {
+    @apply inline-flex items-center justify-center rounded-lg font-semibold px-4 py-2 text-[#EAEAEA] border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/60;
+    border-color: rgba(255,255,255,0.12);
+    background: transparent;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+  }
+  .btn-kainet--outline:hover {
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.16) inset;
+  }
+  .btn-kainet--outline:active { transform: translateY(1px); }
+
+  /* Subrayado animado para links */
+  .link-underline { @apply relative text-[#EAEAEA]; }
+  .link-underline::after {
+    content: ""; position: absolute; left: 50%; bottom: -2px; height: 1px; width: 0; transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, #00E5FF, transparent);
+    transition: width 220ms ease;
+  }
+  .link-underline:hover::after { width: 100%; }
+}
+
+/* Shimmer keyframes (por si aún no existen) */
+@keyframes kainet-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Cursor (si quieres activarlo, ya añadimos estilos aquí) */
+.has-custom-cursor { cursor: none; }
+.k-cursor {
+  position: fixed; left: 0; top: 0; pointer-events: none; z-index: 60;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(0,229,255,0.9);
+  box-shadow: 0 0 18px rgba(0,229,255,0.7), 0 0 36px rgba(0,229,255,0.35);
+  transform: translate(-50%, -50%);
+  transition: transform 40ms linear;
+}
+
+/* Skip link visible al enfocar (A11y) */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -40px;
+  z-index: 100;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #00E5FF;
+  color: #000;
+  box-shadow: 0 6px 24px rgba(0,229,255,0.25);
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 1rem; outline: none; }
+
+/* Respeta preferencias del usuario para reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .btn-kainet { animation: none; }
+  .k-cursor { transition: none; }
+}
