@@ -1,0 +1,38 @@
+{
+  "name": "kainet-news-aggregator-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server para agregar y curar noticias de IA semanalmente para el blog de KAINET",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "kainet-news": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test-aggregate": "node test-aggregate.js",
+    "generate-post": "node generate-post.js",
+    "generate-automation": "node generate-automation-post.js"
+  },
+  "keywords": [
+    "mcp",
+    "ai",
+    "news",
+    "aggregator",
+    "automation"
+  ],
+  "author": "Marco Domínguez",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0",
+    "@google/generative-ai": "^0.21.0",
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "dotenv": "^17.2.3",
+    "jsdom": "^24.0.0",
+    "node-fetch": "^3.3.2",
+    "rss-parser": "^3.13.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

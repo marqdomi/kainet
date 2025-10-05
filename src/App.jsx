@@ -4,9 +4,11 @@ import BackgroundCanvas from './components/BackgroundCanvas';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Work from './components/Work';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import KainetResto from './components/KainetResto';
+import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
 
 const Playground = lazy(() => import('./components/Playground'));
 
@@ -49,11 +51,19 @@ const LazySection = ({ children }) => {
 
 const sectionByPath = (path) => {
   const clean = (path || '/').replace(/\/+$/, '') || '/';
+  
+  // Detectar rutas de blog individual (/blog/slug)
+  if (clean.startsWith('/blog/')) {
+    return 'blog-post';
+  }
+  
   switch (clean) {
     case '/about':
       return 'about';
-    case '/work':
-      return 'work';
+    case '/kainet-resto':
+      return 'kainet-resto';
+    case '/blog':
+      return 'blog';
     case '/playground':
       return 'playground';
     case '/contact':
@@ -70,6 +80,10 @@ const App = () => {
     typeof window !== 'undefined' &&
     window.location.pathname.replace(/\/+$/, '') === '/playground';
   const [forcePlayground] = useState(initialForcePlayground);
+  
+  // Detectar si estamos en una página de blog individual
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const isBlogPost = currentPath.startsWith('/blog/') && currentPath !== '/blog' && currentPath !== '/blog/';
 
   useEffect(() => {
     // Scroll automático a la sección correspondiente a la ruta bonita
@@ -83,6 +97,22 @@ const App = () => {
     }, 60);
     return () => clearTimeout(t);
   }, []);
+
+  // Si es una página de blog individual, mostrar solo eso
+  if (isBlogPost) {
+    return (
+      <>
+        <a href="#main" className="skip-link">Saltar al contenido</a>
+        <BackgroundCanvas />
+        <Navbar />
+        <KainetCursor />
+        <main id="main">
+          <BlogPost />
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -99,7 +129,8 @@ const App = () => {
       <main id="main" className="pt-24">
         <Hero />
         <About />
-        <Work />
+        <KainetResto />
+        <Blog />
 
         {forcePlayground ? (
           <Suspense fallback={null}>

@@ -1,0 +1,248 @@
+/* Estilos personalizados para posts de blog */
+
+/* ====================================
+   FEATURED CARD - Historia Principal
+   ==================================== */
+.prose .featured-card {
+  @apply bg-gradient-to-br from-cyan-400/10 via-gray-900/50 to-blue-500/10 
+         border-2 border-cyan-400/30 rounded-2xl p-8 my-8
+         hover:border-cyan-400/60 transition-all duration-300;
+}
+
+.prose .featured-card h3,
+.prose .card-title {
+  @apply text-2xl font-bold text-white mt-0 mb-6 leading-tight;
+}
+
+.prose .featured-card p {
+  @apply text-gray-200 leading-relaxed text-justify;
+  margin-bottom: 1.5rem; /* Doble espaciado entre párrafos */
+}
+
+/* ====================================
+   NEWS GRID - Noticias Destacadas
+   ==================================== */
+.prose .news-grid {
+  @apply grid md:grid-cols-2 gap-6 my-8;
+}
+
+.prose .news-card {
+  @apply bg-[#0a0a0a] border border-gray-800 rounded-xl p-6 
+         hover:border-cyan-400/50 hover:bg-gray-900/30
+         transition-all duration-300;
+}
+
+.prose .news-card h3,
+.prose .news-card .card-title {
+  @apply text-xl font-bold text-white mt-0 mb-5 leading-snug;
+}
+
+.prose .news-card p {
+  @apply text-gray-300 leading-relaxed text-justify;
+  margin-bottom: 1.5rem; /* Doble espaciado entre párrafos */
+  hyphens: auto;
+}
+
+/* ====================================
+   PAPERS GRID - Investigación
+   ==================================== */
+.prose .papers-grid {
+  @apply grid md:grid-cols-3 gap-4 my-8;
+}
+
+.prose .paper-card {
+  @apply bg-[#0a0a0a] border border-gray-800 rounded-lg p-5
+         hover:border-purple-400/50 transition-all duration-300;
+}
+
+.prose .paper-card:hover {
+  @apply bg-purple-900/10;
+}
+
+.prose .paper-card p {
+  @apply text-sm text-gray-400 leading-relaxed;
+}
+
+/* ====================================
+   COMMUNITY GRID - Discusiones
+   ==================================== */
+.prose .community-grid {
+  @apply grid md:grid-cols-3 gap-4 my-8;
+}
+
+.prose .community-card {
+  @apply bg-[#0a0a0a] border border-gray-800 rounded-lg p-4
+         hover:border-blue-400/50 transition-all duration-300 text-sm;
+}
+
+/* ====================================
+   KAINET PERSPECTIVE
+   ==================================== */
+.prose .kainet-perspective p {
+  @apply text-gray-200 leading-relaxed text-justify;
+  margin-bottom: 1.5rem; /* Doble espaciado entre párrafos */
+}
+
+.prose .community-card:hover {
+  @apply bg-blue-900/10;
+}
+
+/* ====================================
+   CARD META - Info común en cards
+   ==================================== */
+.prose .card-meta {
+  @apply text-sm text-gray-400 mt-4 pt-4 border-t border-gray-800;
+}
+
+.prose .featured-card .card-meta {
+  @apply border-cyan-400/20;
+}
+
+/* ====================================
+   KAINET PERSPECTIVE - Análisis Editorial
+   ==================================== */
+.prose .kainet-perspective {
+  @apply bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-purple-500/10 
+         border-2 border-cyan-400/40 rounded-2xl p-8 my-8
+         shadow-lg shadow-cyan-400/5;
+}
+
+.prose .kainet-perspective p {
+  @apply text-gray-200 leading-relaxed;
+}
+
+.prose .kainet-perspective p:first-child {
+  @apply text-lg font-semibold text-cyan-100;
+}
+
+/* ====================================
+   POST FOOTER
+   ==================================== */
+.prose .post-footer {
+  @apply text-center text-sm text-gray-500 py-6 border-t border-gray-800 mt-12
+         bg-gray-900/30 rounded-lg;
+}
+
+/* ====================================
+   LEGACY SUPPORT
+   ==================================== */
+.prose .highlight-box {
+  @apply bg-gradient-to-r from-cyan-400/5 to-blue-500/5 border-l-4 border-cyan-400 p-6 rounded-r-xl my-8;
+}
+
+.prose .news-card .meta {
+  @apply text-sm text-gray-400 mt-4 pt-4 border-t border-gray-800;
+}
+
+/* ====================================
+   TYPOGRAPHY
+   ==================================== */
+
+/* Títulos de sección (h2) - Historia Principal, Otras Noticias, etc. */
+.prose h2 {
+  @apply text-3xl font-bold text-transparent bg-clip-text 
+         bg-gradient-to-r from-cyan-400 to-blue-400
+         mt-16 mb-8 pb-4 border-b-2 border-gray-800
+         tracking-tight;
+}
+
+.prose h2:first-of-type {
+  @apply mt-8;
+}
+
+/* Subtítulos descriptivos en cursiva después de h2 */
+.prose h2 + p {
+  @apply text-gray-400 text-base font-normal -mt-6 mb-8;
+}
+
+.prose h2 + p em {
+  @apply not-italic font-normal;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-cyan-400 pl-6 italic text-gray-300 bg-cyan-400/5 py-4 rounded-r-lg my-6;
+}
+
+/* Stats badges */
+.prose .stat-badge {
+  @apply inline-flex items-center gap-2 px-3 py-1 bg-gray-800 rounded-full text-sm text-cyan-400;
+}
+
+/* Section dividers */
+.prose hr {
+  @apply border-gray-800 my-12;
+}
+
+/* Links mejorados */
+.prose a {
+  @apply text-cyan-400 no-underline hover:text-cyan-300 transition-colors;
+  @apply relative;
+}
+
+.prose a:hover {
+  @apply underline decoration-cyan-400/50 underline-offset-4;
+}
+
+/* Headers con mejor spacing */
+.prose h2 {
+  @apply text-3xl font-bold text-white mb-6 mt-16 flex items-center gap-3;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold text-white mb-4 mt-8;
+}
+
+/* Lists mejoradas */
+.prose ul {
+  @apply space-y-3;
+}
+
+.prose li {
+  @apply text-gray-300 leading-relaxed;
+}
+
+.prose li::marker {
+  @apply text-cyan-400;
+}
+
+/* Code blocks */
+.prose code {
+  @apply text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-gray-900 border border-gray-800 rounded-xl p-6 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Tables */
+.prose table {
+  @apply w-full border-collapse my-8;
+}
+
+.prose th {
+  @apply bg-gray-900 border border-gray-800 px-4 py-3 text-left text-cyan-400 font-bold;
+}
+
+.prose td {
+  @apply border border-gray-800 px-4 py-3 text-gray-300;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .prose .news-grid {
+    @apply grid-cols-1;
+  }
+  
+  .prose h2 {
+    @apply text-2xl mt-12;
+  }
+  
+  .prose .highlight-box,
+  .prose .kainet-perspective {
+    @apply p-4;
+  }
+}

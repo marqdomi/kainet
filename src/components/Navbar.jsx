@@ -1,39 +1,118 @@
 // src/components/Navbar.jsx
-import React, { useCallback } from 'react';
-import { motion } from 'framer-motion';
+import React, { useCallback, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  // Detectar si estamos en una página de blog
+  const isBlogPage = window.location.pathname.startsWith('/blog/');
+  const isBlogListing = window.location.pathname === '/blog';
+
+  // Auto-hide navbar on scroll down, show on mouse move or scroll up
+  useEffect(() => {
+    let timeoutId;
+    let lastY = 0;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Si scroll down, ocultar
+      if (currentScrollY > lastY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+      // Si scroll up, mostrar
+      else if (currentScrollY < lastY) {
+        setIsVisible(true);
+      }
+      
+      lastY = currentScrollY;
+    };
+
+    const handleMouseMove = (e) => {
+      // Mostrar navbar si el mouse está en los primeros 100px de la pantalla
+      if (e.clientY <= 100) {
+        setIsVisible(true);
+        
+        // Auto-hide después de 3 segundos si no hay movimiento
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          if (window.scrollY > 100) {
+            setIsVisible(false);
+          }
+        }, 3000);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
+  }, []); // Solo ejecutar una vez al montar
+
   const scrollToTop = useCallback((e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+    if (isBlogPage || isBlogListing) {
+      // Si estamos en blog, navegar a la home
+      window.location.href = '/';
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isBlogPage, isBlogListing]);
 
   const scrollToId = useCallback((e, id) => {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+    if (isBlogPage || isBlogListing) {
+      // Si estamos en blog, navegar a la home con hash
+      window.location.href = `/#${id}`;
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isBlogPage, isBlogListing]);
+
+  const handleBlogClick = useCallback((e) => {
+    e.preventDefault();
+    if (isBlogPage) {
+      // Si estamos en un post, ir al listing
+      window.location.href = '/blog';
+    } else if (isBlogListing) {
+      // Si estamos en el listing, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Si estamos en home, scroll a la sección
+      const el = document.getElementById('blog');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isBlogPage, isBlogListing]);
 
   return (
-    <motion.nav
-      initial={{ y: -16, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="fixed top-0 inset-x-0 z-50"
-    >
-      <div className="mx-auto max-w-6xl px-4">
-        <div
-          className="
-            mt-4 rounded-2xl
-            bg-black/40 backdrop-blur-md
-            border border-white/10
-            shadow-[0_2px_20px_rgba(0,0,0,0.35)]
-          "
+    <AnimatePresence>
+      {isVisible && (
+        <motion.nav
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="fixed top-0 inset-x-0 z-50"
         >
-          <div className="h-14 px-4 flex items-center justify-between">
+          <div className="mx-auto max-w-6xl px-4">
+            <div
+              className="
+                mt-4 rounded-2xl
+                bg-black/40 backdrop-blur-md
+                border border-white/10
+                shadow-[0_2px_20px_rgba(0,0,0,0.35)]
+              "
+            >
+              <div className="h-14 px-4 flex items-center justify-between">
             {/* Logo */}
             <a
-              href="#top"
+              href="/"
               onClick={scrollToTop}
               aria-label="Inicio KAINET"
               className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
@@ -55,32 +134,38 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#work"
-                  onClick={(e) => scrollToId(e, 'work')}
+                  href="#kainet-resto"
+                  onClick={(e) => scrollToId(e, 'kainet-resto')}
                   className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
                 >
-                  Proyectos
+                  Kainet Resto
                 </a>
               </li>
               <li>
                 <a
-                    href="https://www.linkedin.com/in/marcdomibe/"
-                    target="_blank" rel="me noopener noreferrer"
-                    className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded flex items-center gap-2"
-                    aria-label="LinkedIn de Marco Domínguez"
+                  href="#blog"
+                  onClick={handleBlogClick}
+                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
                 >
-                    {/* Ícono simple inline (sin dependencias) */}
-                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className="opacity-90">
-                    <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.98 0h3.83v2.2h.05c.53-1 1.82-2.2 3.75-2.2 4.01 0 4.75 2.64 4.75 6.07V24h-4v-6.9c0-1.64-.03-3.74-2.28-3.74-2.29 0-2.64 1.78-2.64 3.62V24h-4V8z"/>
-                    </svg>
-                    LinkedIn
+                  Blog
                 </a>
-                </li>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  onClick={(e) => scrollToId(e, 'contact')}
+                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                >
+                  Contacto
+                </a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-    </motion.nav>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 };
 
