@@ -1,9 +1,9 @@
 name: Weekly AI News Blog Post
 
 on:
-  # Ejecutar cada lunes a las 9:00 AM UTC
+  # Ejecutar cada lunes a las 10:00 AM México (16:00 UTC)
   schedule:
-    - cron: '0 9 * * 1'
+    - cron: '0 16 * * 1'
   
   # Permitir ejecución manual
   workflow_dispatch:
@@ -18,6 +18,10 @@ on:
         type: boolean
         default: true
 
+# Permisos necesarios para que el workflow pueda hacer push
+permissions:
+  contents: write
+
 jobs:
   generate-weekly-post:
     runs-on: ubuntu-latest
@@ -31,61 +35,59 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
           cache: 'npm'
+          cache-dependency-path: mcp-server/news-aggregator/package-lock.json
       
       - name: Install dependencies (main project)
-        run: npm install
+        run: npm ci
       
       - name: Install MCP server dependencies
-        working-directory: ./mcp-server/news-aggregator
-        run: npm install
+        working-directory: mcp-server/news-aggregator
+        run: npm ci
       
       - name: Calculate week number
         id: week
         run: |
-          if [ -n "${{ github.event.inputs.weekNumber }}" ]; then
-            echo "WEEK_NUMBER=${{ github.event.inputs.weekNumber }}" >> $GITHUB_OUTPUT
-          else
-            echo "WEEK_NUMBER=$(date +%V)" >> $GITHUB_OUTPUT
+          WEEK_NUM=${{ github.event.inputs.weekNumber }}
+          if [ -z "$WEEK_NUM" ]; then
+            WEEK_NUM=$(date +%V)
           fi
+          echo "week_number=$WEEK_NUM" >> $GITHUB_OUTPUT
       
       - name: Generate blog post (Preview)
-        if: ${{ github.event.inputs.dryRun == 'true' || github.event_name == 'workflow_dispatch' }}
-        working-directory: ./mcp-server/news-aggregator
+        if: github.event.inputs.dryRun == 'true'
+        working-directory: mcp-server/news-aggregator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "Preview del post para semana ${{ steps.week.outputs.WEEK_NUMBER }}"
-          node index.js preview_blog_post --weekNumber ${{ steps.week.outputs.WEEK_NUMBER }}
+          echo "🔍 Generating preview for Week ${{ steps.week.outputs.week_number }}..."
+          node generate-post.js
+          echo "✅ Preview generated (not published)"
       
       - name: Generate and publish blog post
-        if: ${{ github.event.inputs.dryRun != 'true' && github.event_name == 'schedule' }}
-        working-directory: ./mcp-server/news-aggregator
-        run: |
-          node index.js generate_weekly_blog_post \
-            --weekNumber ${{ steps.week.outputs.WEEK_NUMBER }} \
-            --autoPublish true
+        if: github.event.inputs.dryRun != 'true'
+        working-directory: mcp-server/news-aggregator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node generate-post.js
       
-      - name: Commit and push changes
-        if: ${{ github.event.inputs.dryRun != 'true' && github.event_name == 'schedule' }}
+      - name: Create summary
+        run: |
+          echo "### 📝 Weekly AI News Post Generated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Week:** ${{ steps.week.outputs.week_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dry Run:** ${{ github.event.inputs.dryRun || 'false' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Post Setup Node.js
+        if: github.event.inputs.dryRun != 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || \
-            git commit -m "🤖 Auto-post: IA Semanal (Semana ${{ steps.week.outputs.WEEK_NUMBER }})"
-          git push
       
-      - name: Create summary
-        if: always()
+      - name: Commit and push changes
+        if: github.event.inputs.dryRun != 'true'
         run: |
-          echo "## 📰 Weekly AI News Post" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Week Number:** ${{ steps.week.outputs.WEEK_NUMBER }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Dry Run:** ${{ github.event.inputs.dryRun || 'false' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ github.event.inputs.dryRun }}" == "true" ]; then
-            echo "✅ Preview generado exitosamente" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "✅ Post publicado y commiteado" >> $GITHUB_STEP_SUMMARY
-          fi
+          git add src/data/blogPosts.js
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Weekly AI News (Semana ${{ steps.week.outputs.week_number }})" && git push)

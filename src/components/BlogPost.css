@@ -16,7 +16,8 @@
 
 .prose .featured-card p {
   @apply text-gray-200 leading-relaxed text-justify;
-  margin-bottom: 1.5rem; /* Doble espaciado entre párrafos */
+  margin-bottom: 1.5rem;
+  white-space: pre-line; /* Doble espaciado entre párrafos */
 }
 
 /* ====================================
@@ -41,6 +42,7 @@
   @apply text-gray-300 leading-relaxed text-justify;
   margin-bottom: 1.5rem; /* Doble espaciado entre párrafos */
   hyphens: auto;
+  white-space: pre-line;
 }
 
 /* ====================================
@@ -109,6 +111,7 @@
 
 .prose .kainet-perspective p {
   @apply text-gray-200 leading-relaxed;
+  white-space: pre-line;
 }
 
 .prose .kainet-perspective p:first-child {

@@ -2,10 +2,10 @@ name: Generate Weekly Blog Posts
 
 on:
   schedule:
-    # Post de IA: Viernes a las 10:00 AM (UTC)
-    - cron: '0 10 * * 5'
-    # Post de Automatización: Lunes a las 10:00 AM (UTC)
-    - cron: '0 10 * * 1'
+    # Post de IA: Viernes a las 10:00 AM México (16:00 UTC)
+    - cron: '0 16 * * 5'
+    # Post de Automatización: Lunes a las 10:00 AM México (16:00 UTC)
+    - cron: '0 16 * * 1'
   
   # Permitir ejecución manual desde GitHub UI
   workflow_dispatch:
@@ -19,10 +19,14 @@ on:
           - automatizacion
           - ambos
 
+# Permisos necesarios para que el workflow pueda hacer push
+permissions:
+  contents: write
+
 jobs:
   generate-ia-post:
     # Solo correr el viernes o si se selecciona manualmente
-    if: github.event.schedule == '0 10 * * 5' || github.event.inputs.post_type == 'ia' || github.event.inputs.post_type == 'ambos'
+    if: github.event.schedule == '0 16 * * 5' || github.event.inputs.post_type == 'ia' || github.event.inputs.post_type == 'ambos'
     runs-on: ubuntu-latest
     
     steps:
@@ -57,7 +61,7 @@ jobs:
 
   generate-automation-post:
     # Solo correr el lunes o si se selecciona manualmente
-    if: github.event.schedule == '0 10 * * 1' || github.event.inputs.post_type == 'automatizacion' || github.event.inputs.post_type == 'ambos'
+    if: github.event.schedule == '0 16 * * 1' || github.event.inputs.post_type == 'automatizacion' || github.event.inputs.post_type == 'ambos'
     runs-on: ubuntu-latest
     
     steps:
