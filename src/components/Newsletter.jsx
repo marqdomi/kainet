@@ -2,16 +2,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/movlpoje'; // Mismo endpoint de contacto
+// 🚀 ACTUALIZADO: Usar nuestra propia API
+const NEWSLETTER_ENDPOINT = '/api/newsletter';
 
 const Newsletter = ({ variant = 'default' }) => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validación básica
     if (!email || !email.includes('@')) {
       setStatus('error');
       setMessage('Por favor, ingresa un email válido');
@@ -26,31 +29,32 @@ const Newsletter = ({ variant = 'default' }) => {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 
-          'Accept': 'application/json' 
         },
         body: JSON.stringify({
-          email: email,
-          _subject: '🔔 Nueva suscripción al Newsletter KAINET',
-          message: `Nueva suscripción al newsletter de IA y automatización`,
-          type: 'newsletter',
+          email: email.trim(),
+          name: name.trim() || undefined,
         }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setStatus('success');
-        setMessage('¡Gracias! Recibirás nuestras actualizaciones semanales.');
+        setMessage(data.message || '¡Gracias! Revisa tu email para confirmar.');
         setEmail('');
+        setName('');
         
-        // Reset después de 5 segundos
+        // Reset después de 6 segundos
         setTimeout(() => {
           setStatus('idle');
           setMessage('');
-        }, 5000);
+        }, 6000);
       } else {
         setStatus('error');
-        setMessage('Algo salió mal. Por favor, intenta nuevamente.');
+        setMessage(data.message || 'Algo salió mal. Por favor, intenta nuevamente.');
       }
     } catch (err) {
+      console.error('Error submitting newsletter:', err);
       setStatus('error');
       setMessage('Error de conexión. Intenta más tarde.');
     }
@@ -70,17 +74,27 @@ const Newsletter = ({ variant = 'default' }) => {
             ¿Te gustó este artículo?
           </h3>
           <p className="text-gray-300">
-            Suscríbete a nuestro newsletter para recibir más contenido sobre IA, automatización y desarrollo de prototipos técnicos.
+            Suscríbete a nuestro newsletter para recibir más contenido sobre IA, automatización y desarrollo.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-3">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Tu nombre (opcional)"
+            disabled={status === 'sending' || status === 'success'}
+            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+          />
+          
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
+              placeholder="tu@email.com *"
+              required
               disabled={status === 'sending' || status === 'success'}
               className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
             />
@@ -89,7 +103,7 @@ const Newsletter = ({ variant = 'default' }) => {
               disabled={status === 'sending' || status === 'success'}
               className="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-gray-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {status === 'sending' ? 'Enviando...' : status === 'success' ? '✓ Suscrito' : 'Suscribirse'}
+              {status === 'sending' ? '⏳ Enviando...' : status === 'success' ? '✓ Suscrito' : 'Suscribirse'}
             </button>
           </div>
 
@@ -97,7 +111,7 @@ const Newsletter = ({ variant = 'default' }) => {
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`mt-3 text-sm text-center ${
+              className={`text-sm text-center ${
                 status === 'success' ? 'text-green-400' : 'text-red-400'
               }`}
             >
@@ -129,6 +143,7 @@ const Newsletter = ({ variant = 'default' }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="tu@email.com"
+              required
               disabled={status === 'sending' || status === 'success'}
               className="flex-1 px-4 py-2 bg-gray-900/50 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
             />
@@ -137,7 +152,7 @@ const Newsletter = ({ variant = 'default' }) => {
               disabled={status === 'sending' || status === 'success'}
               className="px-4 py-2 bg-cyan-400 text-gray-900 font-semibold rounded-lg hover:bg-cyan-300 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
-              {status === 'sending' ? '...' : status === 'success' ? '✓' : 'Suscribirse'}
+              {status === 'sending' ? '⏳' : status === 'success' ? '✓' : 'Suscribirse'}
             </button>
           </div>
 

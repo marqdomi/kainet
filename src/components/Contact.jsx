@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
 
-const FORM_ENDPOINT = 'https://formspree.io/f/movlpoje'; // ⬅️ Reemplaza con tu Form ID
+// 🚀 ACTUALIZADO: Usar nuestra propia API
+const CONTACT_ENDPOINT = '/api/contact';
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '', company: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -20,36 +21,45 @@ const Contact = () => {
     setStatus('sending');
     setErrorMsg('');
 
+    // Honeypot anti-spam
     if (form.company.trim()) {
       setStatus('success');
-      setForm({ name: '', email: '', message: '', company: '' });
+      setForm({ name: '', email: '', subject: '', message: '', company: '' });
       setShowModal(true);
       return;
     }
 
+    // Validaciones adicionales
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus('error');
+      setErrorMsg('Por favor completa todos los campos obligatorios');
+      return;
+    }
+
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          _subject: 'Nuevo mensaje desde kainet.mx',
-          _replyto: form.email,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          subject: form.subject.trim() || undefined,
+          message: form.message.trim(),
         }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setStatus('success');
-        setForm({ name: '', email: '', message: '', company: '' });
+        setForm({ name: '', email: '', subject: '', message: '', company: '' });
         setShowModal(true);
       } else {
-        const data = await res.json().catch(() => ({}));
         setStatus('error');
-        setErrorMsg(data?.error || 'No se pudo enviar el mensaje. Intenta más tarde.');
+        setErrorMsg(data.message || 'No se pudo enviar el mensaje. Intenta más tarde.');
       }
     } catch (err) {
+      console.error('Error submitting contact form:', err);
       setStatus('error');
       setErrorMsg('Ocurrió un error de red. Intenta más tarde.');
     }
@@ -140,6 +150,22 @@ const Contact = () => {
                 />
               </div>
 
+              {/* Asunto (opcional) */}
+              <div className="mb-5">
+                <label htmlFor="subject" className="mb-2 block text-sm font-medium text-gray-200">
+                  Asunto <span className="text-gray-500 font-normal">(opcional)</span>
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="Ej. Consulta sobre automatización"
+                  className="w-full rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 px-4 py-3 transition"
+                />
+              </div>
+
               {/* Mensaje */}
               <div className="mb-6">
                 <label htmlFor="message" className="mb-2 block text-sm font-medium text-gray-200">
@@ -181,9 +207,19 @@ const Contact = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
           <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
-            <h3 className="text-xl font-semibold text-white mb-2">¡Mensaje enviado!</h3>
-            <p className="text-gray-300 mb-6">
-              Gracias por escribirnos. Te responderemos a <span className="text-[#00E5FF]">kainetmx@gmail.com</span> en breve.
+            <div className="mb-4 flex justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#00E5FF]/20 flex items-center justify-center">
+                <svg className="w-8 h-8 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">¡Mensaje enviado! ✓</h3>
+            <p className="text-gray-300 mb-2">
+              Gracias por escribirnos. Te responderemos pronto.
+            </p>
+            <p className="text-sm text-[#00E5FF] mb-6">
+              contacto@kainet.mx
             </p>
             <button
               onClick={() => setShowModal(false)}

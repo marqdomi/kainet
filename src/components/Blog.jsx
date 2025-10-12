@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { blogPosts } from '../data/blogPosts';
 import { calculateReadTime } from '../utils/readTime';
+import LazyImage from './LazyImage';
 
 // ---- Datos importados desde /src/data/blogPosts.js ----
 
@@ -35,11 +36,11 @@ const FeaturedPost = ({ post }) => (
     <div className="grid md:grid-cols-2 gap-0">
       {/* Image */}
       <div className="relative overflow-hidden h-64 md:h-auto">
-        <img
+        <LazyImage
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          placeholderClassName="h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent md:hidden" />
       </div>
@@ -91,11 +92,11 @@ const PostCard = ({ post }) => (
   >
     {/* Image */}
     <div className="relative overflow-hidden aspect-[16/10]">
-      <img
+      <LazyImage
         src={post.image}
         alt={post.title}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        loading="lazy"
+        placeholderClassName="aspect-[16/10]"
       />
       <div className="absolute top-4 left-4">
         <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-white text-xs font-medium">
@@ -216,18 +217,34 @@ const NewsletterCTA = () => {
 // ---- Main Blog Component ----
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  // 🚀 OPTIMIZADO: Paginación para mejorar rendimiento
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6; // Mostrar 6 posts por página
 
   const featuredPost = useMemo(
     () => blogPosts.find((p) => p.featured),
     []
   );
 
-  const filteredPosts = useMemo(
-    () => blogPosts.filter((p) => 
+  // 🚀 OPTIMIZADO: Filtrar y paginar posts
+  const { paginatedPosts, totalPages } = useMemo(() => {
+    const filtered = blogPosts.filter((p) => 
       !p.featured && (selectedCategory === 'Todos' || p.category === selectedCategory)
-    ),
-    [selectedCategory]
-  );
+    );
+    
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const paginated = filtered.slice(startIndex, endIndex);
+    const total = Math.ceil(filtered.length / postsPerPage);
+    
+    return { paginatedPosts: paginated, totalPages: total };
+  }, [selectedCategory, currentPage]);
+
+  // Resetear página cuando cambie la categoría
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
 
   return (
     <section>
@@ -258,22 +275,62 @@ const Blog = () => {
         <CategoryFilter
           categories={categories}
           active={selectedCategory}
-          onChange={setSelectedCategory}
+          onChange={handleCategoryChange}
         />
 
         {/* ===== POSTS GRID ===== */}
-        {filteredPosts.length > 0 ? (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filteredPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </motion.div>
+        {paginatedPosts.length > 0 ? (
+          <>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              key={`${selectedCategory}-${currentPage}`} // Key para forzar re-animación
+            >
+              {paginatedPosts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </motion.div>
+
+            {/* ===== PAGINACIÓN ===== */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-12">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-lg bg-white/5 text-white border border-white/10 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                >
+                  ← Anterior
+                </button>
+                
+                <div className="flex gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-10 h-10 rounded-lg transition-all ${
+                        currentPage === page
+                          ? 'bg-[#00E5FF] text-black font-semibold'
+                          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 rounded-lg bg-white/5 text-white border border-white/10 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                >
+                  Siguiente →
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-400">

@@ -1,16 +1,24 @@
 // src/App.jsx
 import React, { useEffect, useRef, lazy, Suspense, useState } from 'react';
-import BackgroundCanvas from './components/BackgroundCanvas';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
-import KainetResto from './components/KainetResto';
-import Blog from './components/Blog';
-import BlogPost from './components/BlogPost';
 
+// 🚀 OPTIMIZADO: Lazy loading de componentes pesados
+const BackgroundCanvas = lazy(() => import('./components/BackgroundCanvas'));
+const About = lazy(() => import('./components/About'));
+const Contact = lazy(() => import('./components/Contact'));
+const KainetResto = lazy(() => import('./components/KainetResto'));
+const Blog = lazy(() => import('./components/Blog'));
+const BlogPost = lazy(() => import('./components/BlogPost'));
 const Playground = lazy(() => import('./components/Playground'));
+
+// 🚀 OPTIMIZADO: Loading placeholder mejorado
+const LoadingFallback = () => (
+  <div className="min-h-[200px] flex items-center justify-center">
+    <div className="animate-pulse text-[#00E5FF]">Cargando...</div>
+  </div>
+);
 
 const KainetCursor = () => {
   const ref = useRef(null);
@@ -103,11 +111,15 @@ const App = () => {
     return (
       <>
         <a href="#main" className="skip-link">Saltar al contenido</a>
-        <BackgroundCanvas />
+        <Suspense fallback={null}>
+          <BackgroundCanvas />
+        </Suspense>
         <Navbar />
         <KainetCursor />
         <main id="main">
-          <BlogPost />
+          <Suspense fallback={<LoadingFallback />}>
+            <BlogPost />
+          </Suspense>
         </main>
         <Footer />
       </>
@@ -119,7 +131,9 @@ const App = () => {
       <a href="#main" className="skip-link">Saltar al contenido</a>
 
       {/* Fondo viviente detrás de todo */}
-      <BackgroundCanvas />
+      <Suspense fallback={null}>
+        <BackgroundCanvas />
+      </Suspense>
 
       {/* Ancla de inicio para el logo de la navbar */}
       <span id="top" className="sr-only">Inicio</span>
@@ -128,23 +142,43 @@ const App = () => {
 
       <main id="main" className="pt-24">
         <Hero />
-        <About />
-        <KainetResto />
-        <Blog />
+        
+        <LazySection>
+          <Suspense fallback={<LoadingFallback />}>
+            <About />
+          </Suspense>
+        </LazySection>
+
+        <LazySection>
+          <Suspense fallback={<LoadingFallback />}>
+            <KainetResto />
+          </Suspense>
+        </LazySection>
+
+        <LazySection>
+          <Suspense fallback={<LoadingFallback />}>
+            <Blog />
+          </Suspense>
+        </LazySection>
 
         {forcePlayground ? (
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingFallback />}>
             <Playground />
           </Suspense>
         ) : (
           <LazySection>
-            <Suspense fallback={null}>
+            <Suspense fallback={<LoadingFallback />}>
               <Playground />
             </Suspense>
           </LazySection>
         )}
 
-        <Contact />
+        <LazySection>
+          <Suspense fallback={<LoadingFallback />}>
+            <Contact />
+          </Suspense>
+        </LazySection>
+
         <Footer />
       </main>
     </>

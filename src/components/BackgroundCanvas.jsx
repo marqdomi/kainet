@@ -6,13 +6,24 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 // ---- Config rápido para tunear el fondo ----
+// 🚀 OPTIMIZADO: Detectar mobile para reducir carga
+const isMobile = typeof window !== 'undefined' && 
+  (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+   window.innerWidth < 768);
+
 const CONFIG = {
-  particles: { count: 7000, cyanOpacity: 0.28, whiteOpacity: 0.12, sizeCyan: 0.022, sizeWhite: 0.013 },
-  bloom: { intensity: 0.85 },
-  streaks: { count: 24, attract: 0.08 },
+  particles: { 
+    count: isMobile ? 2000 : 7000,  // 70% menos partículas en mobile
+    cyanOpacity: 0.28, 
+    whiteOpacity: 0.12, 
+    sizeCyan: isMobile ? 0.028 : 0.022,  // Partículas ligeramente más grandes en mobile
+    sizeWhite: 0.013 
+  },
+  bloom: { intensity: isMobile ? 0.5 : 0.85 },  // Reduce bloom en mobile
+  streaks: { count: isMobile ? 8 : 24, attract: 0.08 },  // 66% menos streaks
   breathing: { freq: 1.6, amp: 0.12, base: 1.0 },
   cursorGlow: { size: 1.6, pulseAmp: 0.25, color: '#00E5FF', opacity: 0.55 },
-  twinkles: { count: 220, sigma: 2.8, speedMin: 0.6, speedMax: 1.4, base: 0.25 },
+  twinkles: { count: isMobile ? 80 : 220, sigma: 2.8, speedMin: 0.6, speedMax: 1.4, base: 0.25 },
 };
 
 function usePrefersReducedMotion() {
@@ -322,35 +333,57 @@ function Twinkles({ motionScale = 1 }) {
 }
 
 /* ========================= Canvas de fondo fijo + Bloom ========================= */
-const BackgroundCanvas = () => {
+const BackgroundCanvas = React.memo(() => {
   const reduce = usePrefersReducedMotion();
   const motionScale = reduce ? 0.4 : 1;
-  const counts = {
+  
+  // 🚀 OPTIMIZADO: useMemo para evitar recrear counts en cada render
+  const counts = useMemo(() => ({
     particles: Math.floor(CONFIG.particles.count * (reduce ? 0.5 : 1)),
     streaks: Math.floor(CONFIG.streaks.count * (reduce ? 0.6 : 1)),
     twinkles: Math.floor(CONFIG.twinkles.count * (reduce ? 0.7 : 1)),
-  };
+  }), [reduce]);
+
+  // 🚀 OPTIMIZADO: Configuración de cámara memoizada
+  const cameraConfig = useMemo(() => ({ 
+    position: [0, 0, 8], 
+    fov: 60 
+  }), []);
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10">
-      <Canvas camera={{ position: [0, 0, 8], fov: 60 }} eventPrefix="client">
+      <Canvas 
+        camera={cameraConfig} 
+        eventPrefix="client"
+        dpr={isMobile ? [1, 1.5] : [1, 2]} // Limita DPR en mobile
+        performance={{ min: 0.5 }} // Degrada calidad si FPS baja
+        gl={{ 
+          antialias: !isMobile, // Deshabilita antialiasing en mobile
+          powerPreference: "high-performance",
+          alpha: false
+        }}
+      >
         {/* Capas */}
         <Particles count={counts.particles} motionScale={motionScale} />
         <Streaks count={counts.streaks} motionScale={motionScale} />
         <Twinkles motionScale={motionScale} />
 
-        {/* Glow global: partículas y streaks “iluminan” */}
-        <EffectComposer>
-          <Bloom
-            intensity={CONFIG.bloom.intensity}
-            luminanceThreshold={0.0}
-            luminanceSmoothing={0.2}
-            mipmapBlur
-          />
-        </EffectComposer>
+        {/* Glow global: partículas y streaks "iluminan" */}
+        {!isMobile && ( // Deshabilita bloom en mobile para mejor performance
+          <EffectComposer>
+            <Bloom
+              intensity={CONFIG.bloom.intensity}
+              luminanceThreshold={0.0}
+              luminanceSmoothing={0.2}
+              mipmapBlur
+            />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );
-};
+});
+
+BackgroundCanvas.displayName = 'BackgroundCanvas';
 
 export default BackgroundCanvas;
