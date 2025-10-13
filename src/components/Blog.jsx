@@ -47,7 +47,7 @@ const FeaturedPost = ({ post }) => (
       {/* Content */}
       <div className="p-8 md:p-10 flex flex-col justify-center">
         <span className="inline-block w-fit px-3 py-1 rounded-full bg-[#00E5FF]/20 text-[#00E5FF] text-xs font-medium mb-4">
-          ⭐ Destacado
+          Destacado
         </span>
         
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">
@@ -187,7 +187,7 @@ const NewsletterCTA = () => {
 
         {status === 'success' ? (
           <div className="text-[#00E5FF] font-medium">
-            ✅ ¡Suscripción exitosa! Revisa tu email.
+            ¡Suscripción exitosa! Revisa tu email.
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto flex gap-3">
@@ -297,7 +297,7 @@ const Blog = () => {
     return (
       <section>
         <div className="mx-auto max-w-6xl px-6 text-center py-20">
-          <div className="text-red-400 mb-4">⚠️ {error}</div>
+          <div className="text-red-400 mb-4">{error}</div>
           <button 
             onClick={() => window.location.reload()} 
             className="btn-kainet"

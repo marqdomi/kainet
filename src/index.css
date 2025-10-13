@@ -89,16 +89,7 @@ html { scroll-behavior: smooth; }
   100% { background-position: 200% 50%; }
 }
 
-/* Cursor (si quieres activarlo, ya añadimos estilos aquí) */
-.has-custom-cursor { cursor: none; }
-.k-cursor {
-  position: fixed; left: 0; top: 0; pointer-events: none; z-index: 60;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: rgba(0,229,255,0.9);
-  box-shadow: 0 0 18px rgba(0,229,255,0.7), 0 0 36px rgba(0,229,255,0.35);
-  transform: translate(-50%, -50%);
-  transition: transform 40ms linear;
-}
+/* Custom cursor removed - using browser default for better UX */
 
 /* Skip link visible al enfocar (A11y) */
 .skip-link {

@@ -9,9 +9,9 @@ import useParallaxScroll from '../hooks/useParallaxScroll';
 const Services = () => {
   const services = [
     {
-      icon: '🤖',
+      kanji: '知',
       title: 'Inteligencia Artificial',
-      description: 'Desarrollamos soluciones de IA personalizadas: chatbots con RAG, análisis de datos, automatización de contenido con LLMs, y pipelines ML.',
+      description: 'Soluciones de IA que transforman datos en decisiones inteligentes. Chatbots con RAG, análisis predictivo, automatización con LLMs y pipelines ML optimizados.',
       technologies: ['OpenAI', 'Claude', 'LangChain', 'TensorFlow'],
       features: [
         'Chatbots inteligentes con RAG',
@@ -21,9 +21,9 @@ const Services = () => {
       ]
     },
     {
-      icon: '⚡',
+      kanji: '速',
       title: 'Automatización',
-      description: 'Optimizamos procesos empresariales con workflows inteligentes, scraping de datos, integración de APIs y sistemas de notificaciones automatizadas.',
+      description: 'Automatización inteligente que libera tu tiempo para lo que importa. Workflows personalizados, scraping avanzado, integraciones API y notificaciones en tiempo real.',
       technologies: ['Node.js', 'Python', 'Redis', 'GitHub Actions'],
       features: [
         'Workflows personalizados',
@@ -33,9 +33,9 @@ const Services = () => {
       ]
     },
     {
-      icon: '💻',
+      kanji: '創',
       title: 'Desarrollo Web',
-      description: 'Creamos aplicaciones web modernas, rápidas y escalables con las últimas tecnologías: React, Next.js, Three.js y diseños 3D interactivos.',
+      description: 'Experiencias web que combinan diseño impactante con tecnología de vanguardia. React, Next.js, Three.js y efectos 3D que cautivan a tus usuarios.',
       technologies: ['React', 'Next.js', 'Three.js', 'Tailwind CSS'],
       features: [
         'Apps web modernas y rápidas',
@@ -122,8 +122,8 @@ const Services = () => {
                 hover 
                 className="h-full flex flex-col"
               >
-                {/* Icon */}
-                <div className="text-6xl mb-4">{service.icon}</div>
+                {/* Kanji Icon */}
+                <div className="text-6xl mb-4 font-bold text-[var(--cyan-neon)]">{service.kanji}</div>
                 
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">
