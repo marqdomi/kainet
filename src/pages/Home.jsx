@@ -1,12 +1,12 @@
 // src/pages/Home.jsx
 import React, { lazy, Suspense, useState, useRef, useEffect } from 'react';
 import Hero from '../components/Hero';
+import Services from '../components/Services';
 
 // Lazy loading de componentes pesados
+const FeaturedProjects = lazy(() => import('../components/FeaturedProjects'));
+const LatestPosts = lazy(() => import('../components/LatestPosts'));
 const About = lazy(() => import('../components/About'));
-const KainetResto = lazy(() => import('../components/KainetResto'));
-const Blog = lazy(() => import('../components/Blog'));
-const Playground = lazy(() => import('../components/Playground'));
 const Contact = lazy(() => import('../components/Contact'));
 
 // Loading placeholder
@@ -41,32 +41,34 @@ const Home = () => {
     <>
       <span id="top" className="sr-only">Inicio</span>
       
+      {/* Hero Section */}
       <Hero />
       
+      {/* Services Overview - No lazy (importante, arriba del fold) */}
+      <Services />
+      
+      {/* Featured Projects */}
+      <LazySection>
+        <Suspense fallback={<LoadingFallback />}>
+          <FeaturedProjects />
+        </Suspense>
+      </LazySection>
+
+      {/* Latest Blog Posts */}
+      <LazySection>
+        <Suspense fallback={<LoadingFallback />}>
+          <LatestPosts />
+        </Suspense>
+      </LazySection>
+
+      {/* About Section */}
       <LazySection>
         <Suspense fallback={<LoadingFallback />}>
           <About />
         </Suspense>
       </LazySection>
 
-      <LazySection>
-        <Suspense fallback={<LoadingFallback />}>
-          <KainetResto />
-        </Suspense>
-      </LazySection>
-
-      <LazySection>
-        <Suspense fallback={<LoadingFallback />}>
-          <Blog />
-        </Suspense>
-      </LazySection>
-
-      <LazySection>
-        <Suspense fallback={<LoadingFallback />}>
-          <Playground />
-        </Suspense>
-      </LazySection>
-
+      {/* Contact Form */}
       <LazySection>
         <Suspense fallback={<LoadingFallback />}>
           <Contact />
