@@ -575,7 +575,7 @@ Este plan de implementación convierte el diseño de mejoras japonesas-cyberpunk
 
 - [ ] 22. Gradual rollout to production
 
-  - [-] 22.1 Deploy to dev branch
+  - [x] 22.1 Deploy to dev branch
 
     - Merge all changes to dev
     - Deploy to preview URL
