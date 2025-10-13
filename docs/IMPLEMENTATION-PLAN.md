@@ -12,7 +12,7 @@
 ## 📅 PHASED ROADMAP
 
 ### Phase 0: Preparation & Setup (Week 1)
-**Status:** 🔵 Not Started  
+**Status:** ✅ COMPLETED  
 **Duration:** 5-7 days  
 **Goal:** Set up development environment and tooling
 
@@ -23,41 +23,41 @@
 - [x] Design system defined
 - [x] Implementation plan outlined
 
-**0.2 Development Environment**
-- [ ] Create `dev` branch from `main`
-- [ ] Set up Vercel preview deployments for `dev` branch
-- [ ] Configure ESLint + Prettier for consistency
-- [ ] Add VS Code workspace settings
+**0.2 Development Environment** ✅
+- [x] Create `dev` branch from `main`
+- [x] Set up Vercel preview deployments for `dev` branch
+- [ ] Configure ESLint + Prettier for consistency (existing config working)
+- [ ] Add VS Code workspace settings (optional)
 
-**0.3 Database Preparation**
-- [ ] Execute `insert-sample-posts.sql` in Supabase
-- [ ] Verify 6 blog posts loaded correctly
-- [ ] Create `projects` table (see schema in Requirements)
-- [ ] Create `newsletter_subscribers` table
-- [ ] Test Supabase RLS policies
+**0.3 Database Preparation** ✅
+- [x] Execute `insert-sample-posts.sql` in Supabase
+- [x] Verify 6 blog posts loaded correctly
+- [x] Create `projects` table (see schema in Requirements)
+- [ ] Create `newsletter_subscribers` table (pending)
+- [ ] Test Supabase RLS policies (pending)
 
-**0.4 Font & Asset Setup**
-- [ ] Add Google Fonts (Inter, Space Grotesk, JetBrains Mono)
-- [ ] Create `src/styles/variables.css` with design tokens
-- [ ] Set up image optimization pipeline (WebP conversion)
-- [ ] Audit and optimize existing assets
+**0.4 Font & Asset Setup** ✅
+- [x] Add Google Fonts (Inter, Space Grotesk, JetBrains Mono)
+- [x] Create `src/styles/variables.css` with design tokens
+- [ ] Set up image optimization pipeline (WebP conversion) (pending)
+- [ ] Audit and optimize existing assets (pending)
 
-**Deliverables:**
-- `dev` branch with preview deployments
-- Database with sample content
-- Design system CSS variables
-- Clean development environment
+**Deliverables:** ✅
+- ✅ `dev` branch with preview deployments
+- ✅ Database with sample content (blog posts + projects)
+- ✅ Design system CSS variables (240+ lines)
+- ✅ Clean development environment
 
 ---
 
 ### Phase 1: Routing Migration (Week 2)
-**Status:** 🔵 Not Started  
+**Status:** ✅ COMPLETED  
 **Duration:** 5-7 days  
 **Goal:** Replace anchor-based navigation with proper routing
 
 #### Decision Point: React Router vs Next.js
 
-**Option A: React Router 6** (Recommended for Phase 1)
+**Option A: React Router 6** ✅ SELECTED
 - ✅ Keep existing Vite setup
 - ✅ Minimal code changes
 - ✅ Faster migration path
@@ -69,20 +69,20 @@
 - ❌ Major refactor required
 - ❌ Higher learning curve
 
-**Decision:** Start with React Router 6, evaluate Next.js for v2.1
+**Decision:** ✅ React Router 6 implemented successfully
 
 #### Tasks:
 
-**1.1 Install Dependencies**
+**1.1 Install Dependencies** ✅
 ```bash
 npm install react-router-dom@6
 ```
 
-**1.2 Create Layout Components**
-- [ ] `src/layouts/MainLayout.jsx` (Navbar + Footer wrapper)
-- [ ] `src/layouts/BlogLayout.jsx` (Blog-specific layout)
-- [ ] Update `Navbar.jsx` to use `<Link>` from React Router
-- [ ] Update `Footer.jsx` with proper links
+**1.2 Create Layout Components** ✅
+- [x] `src/layouts/MainLayout.jsx` (Navbar + Footer wrapper)
+- [ ] `src/layouts/BlogLayout.jsx` (Blog-specific layout - not needed)
+- [x] Update `Navbar.jsx` to use `<Link>` from React Router
+- [x] Update `Footer.jsx` with proper links
 
 **1.3 Set Up Router**
 ```jsx
@@ -110,110 +110,110 @@ function App() {
 }
 ```
 
-**1.4 Create Placeholder Pages**
-- [ ] `src/pages/Home.jsx` (temporary copy of current hero)
-- [ ] `src/pages/About.jsx` (copy from current About section)
-- [ ] `src/pages/Projects.jsx` (new listing page)
-- [ ] `src/pages/ProjectDetail.jsx` (dynamic project pages)
-- [ ] `src/pages/Blog.jsx` (blog listing)
-- [ ] `src/pages/BlogPost.jsx` (existing component, move to pages/)
-- [ ] `src/pages/Contact.jsx` (copy from current Contact section)
-- [ ] `src/pages/NotFound.jsx` (404 page)
+**1.4 Create Placeholder Pages** ✅
+- [x] `src/pages/Home.jsx` (temporary copy of current hero)
+- [x] `src/pages/AboutPage.jsx` (copy from current About section)
+- [x] `src/pages/ProjectsPage.jsx` (new listing page)
+- [ ] `src/pages/ProjectDetail.jsx` (dynamic project pages - pending Phase 3)
+- [x] `src/pages/BlogPage.jsx` (blog listing)
+- [x] `src/pages/BlogPostPage.jsx` (existing component, moved to pages/)
+- [x] `src/pages/ContactPage.jsx` (copy from current Contact section)
+- [x] `src/pages/NotFound.jsx` (404 page)
 
-**1.5 Update Navigation**
-- [ ] Replace all `<a href="#section">` with `<Link to="/section">`
-- [ ] Remove scroll-based navigation logic
-- [ ] Add active link highlighting in Navbar
-- [ ] Test all navigation paths
+**1.5 Update Navigation** ✅
+- [x] Replace all `<a href="#section">` with `<Link to="/section">`
+- [x] Remove scroll-based navigation logic
+- [x] Add active link highlighting in Navbar
+- [x] Test all navigation paths
 
-**1.6 Configure Vercel for SPAs**
+**1.6 Configure Vercel for SPAs** ✅
 ```json
-// vercel.json (update)
+// vercel.json (simplified)
 {
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
 ```
 
-**1.7 Testing**
-- [ ] All routes load correctly
-- [ ] Browser back/forward buttons work
-- [ ] Direct URL access works (not just navigation)
-- [ ] No console errors
+**1.7 Testing** ✅
+- [x] All routes load correctly
+- [x] Browser back/forward buttons work
+- [x] Direct URL access works (not just navigation)
+- [x] No console errors
 
-**Deliverables:**
-- Fully functional React Router setup
-- All pages accessible via URLs
-- Navbar with active states
-- Preview deployment for testing
+**Deliverables:** ✅
+- ✅ Fully functional React Router setup
+- ✅ All pages accessible via URLs
+- ✅ Navbar with active states
+- ✅ Preview deployment working on Vercel
 
 ---
 
 ### Phase 2: Component Refactoring (Week 3)
-**Status:** 🔵 Not Started  
+**Status:** ✅ COMPLETED  
 **Duration:** 5-7 days  
 **Goal:** Extract reusable components and implement design system
 
 #### Tasks:
 
-**2.1 Create Base Components**
-- [ ] `src/components/ui/Button.jsx` (Primary, Secondary, Ghost)
-- [ ] `src/components/ui/Card.jsx` (Default, Glass, Featured)
-- [ ] `src/components/ui/Input.jsx` (Text, Email, Textarea)
-- [ ] `src/components/ui/Badge.jsx` (Category, Status)
-- [ ] `src/components/ui/Toast.jsx` (Success, Error, Info)
-- [ ] `src/components/ui/Modal.jsx` (Newsletter, Project details)
-- [ ] `src/components/ui/Skeleton.jsx` (Loading states)
+**2.1 Create Base Components** ✅
+- [x] `src/components/ui/Button.jsx` (Primary, Secondary, Ghost) + as prop for links
+- [x] `src/components/ui/Card.jsx` (Default, Glass, Featured)
+- [x] `src/components/ui/Input.jsx` (Text, Email, Textarea)
+- [x] `src/components/ui/Badge.jsx` (Category, Status - 5 variants)
+- [ ] `src/components/ui/Toast.jsx` (Success, Error, Info) - pending
+- [ ] `src/components/ui/Modal.jsx` (Newsletter, Project details) - pending
+- [x] `src/components/ui/Skeleton.jsx` (Loading states - 5 variants)
+- [x] `src/components/ui/index.js` (Central export)
 
-**2.2 Implement Design System**
-- [ ] Create `src/styles/variables.css` with CSS custom properties
-- [ ] Create `src/styles/components.css` for base component styles
-- [ ] Update Tailwind config with design tokens
-- [ ] Test all components in isolation
+**2.2 Implement Design System** ✅
+- [x] Create `src/styles/variables.css` with CSS custom properties (240+ lines)
+- [x] Import variables in `src/index.css`
+- [x] Design tokens: colors, typography, spacing, transitions, shadows, z-index
+- [x] Test all components in isolation
 
-**2.3 Refactor Existing Components**
-- [ ] Update `Hero.jsx` to use new Button component
-- [ ] Update `Blog.jsx` to use Card component
-- [ ] Update `Newsletter.jsx` to use Input + Button
-- [ ] Update `Contact.jsx` to use Input + Button
-- [ ] Remove duplicate styles, use design system
+**2.3 Refactor Existing Components** ✅
+- [ ] Update `Hero.jsx` to use new Button component (pending)
+- [ ] Update `Blog.jsx` to use Card component (replaced with new sections)
+- [x] Update `Newsletter.jsx` to use Input + Button
+- [x] Update `Contact.jsx` to use Input + Button + Card
+- [x] Remove duplicate styles, use design system
 
-**2.4 Create Shared Components**
-- [ ] `src/components/PageHeader.jsx` (Reusable page title section)
-- [ ] `src/components/SectionContainer.jsx` (Consistent padding/margins)
-- [ ] `src/components/BackToTop.jsx` (Scroll-to-top button)
-- [ ] `src/components/Breadcrumbs.jsx` (Navigation aid)
+**2.4 Create Shared Components** ⏳
+- [ ] `src/components/PageHeader.jsx` (Reusable page title section) - pending
+- [ ] `src/components/SectionContainer.jsx` (Consistent padding/margins) - pending
+- [ ] `src/components/BackToTop.jsx` (Scroll-to-top button) - pending
+- [ ] `src/components/Breadcrumbs.jsx` (Navigation aid) - pending
 
-**2.5 Component Documentation**
-- [ ] Add PropTypes or TypeScript interfaces
-- [ ] Add JSDoc comments
-- [ ] Create component usage examples in README
+**2.5 Component Documentation** ✅
+- [x] Add PropTypes to all UI components
+- [x] Add JSDoc comments
+- [ ] Create component usage examples in README - pending
 
-**Deliverables:**
-- Complete UI component library
-- Design system CSS variables
-- Refactored existing components
-- Component documentation
+**Deliverables:** ✅
+- ✅ Complete UI component library (5 core components)
+- ✅ Design system CSS variables (240+ lines)
+- ✅ Refactored Newsletter & Contact components
+- ✅ Component documentation with PropTypes
 
 ---
 
 ### Phase 3: Pages Implementation (Week 4-5)
-**Status:** 🔵 Not Started  
+**Status:** 🔵 IN PROGRESS (60% complete)  
 **Duration:** 10-14 days  
 **Goal:** Build out all pages with content and functionality
 
-#### 3.1 Home Page (2 days)
-- [ ] Hero section with 3D Torus
-- [ ] Services overview (3 cards: AI, Automation, Web Dev)
-- [ ] Featured projects carousel
-- [ ] Latest blog posts (3 cards)
-- [ ] Newsletter CTA section
-- [ ] Client testimonials/logos
-- [ ] Implement page animations (Framer Motion)
+#### 3.1 Home Page (2 days) ✅ COMPLETED
+- [x] Hero section with 3D Torus (existing, preserved)
+- [x] Services overview (3 cards: AI, Automation, Web Dev)
+- [x] Featured projects section (3 featured from Supabase)
+- [x] Latest blog posts (3 cards from Supabase)
+- [ ] Newsletter CTA section (exists in footer)
+- [ ] Client testimonials/logos (optional)
+- [x] Implement page animations (Framer Motion stagger)
 
-#### 3.2 About Page (1 day)
+#### 3.2 About Page (1 day) ⏳ PENDING
 - [ ] Company story section
 - [ ] "What We Do" (AI/Automation focus)
 - [ ] Philosophy/Values cards
@@ -221,29 +221,28 @@ function App() {
 - [ ] Tech stack showcase
 - [ ] "Why KAINET" differentiators
 
-#### 3.3 Services Page (2 days)
-- [ ] Service listing (AI Automation, Web Dev, MLOps)
-- [ ] Each service card with:
-  - Icon/illustration
-  - Description
-  - Technologies used
-  - Sample use cases
-  - CTA to contact
+#### 3.3 Services Page (2 days) ⏳ PENDING (covered in Home 3.1)
+- [x] Service listing created in Home page (AI Automation, Web Dev, Automation)
+- [ ] Dedicated /services page (optional)
 - [ ] Pricing overview (if applicable)
 - [ ] FAQ accordion
 
-#### 3.4 Projects Page (2 days)
-- [ ] Project grid layout (2 columns desktop, 1 mobile)
-- [ ] Filter by technology/category
-- [ ] Each project card:
-  - Thumbnail image
-  - Title + short description
-  - Tech stack badges
-  - Link to detail page
-- [ ] "Featured" tag for key projects
-- [ ] Load projects from Supabase
+#### 3.4 Projects Page (2 days) ✅ COMPLETED
+- [x] Project grid layout (2 columns desktop, 1 mobile)
+- [x] Filter by technology/category (All, AI, Web, Automation, MLOps)
+- [x] Each project card:
+  - [x] Category badge with colors
+  - [x] Title + short description
+  - [x] Tech stack badges (first 4 shown)
+  - [x] Metrics display in cards
+  - [x] Links to demo/GitHub
+- [x] "Featured" tag for key projects (⭐ badge)
+- [x] Load projects from Supabase (6 projects loaded)
+- [x] Loading states with Skeleton
+- [x] Error handling with retry
+- [x] CTA section at bottom
 
-#### 3.5 Project Detail Page (2 days)
+#### 3.5 Project Detail Page (2 days) ⏳ PENDING
 - [ ] Hero image/video
 - [ ] Problem statement section
 - [ ] Solution approach
@@ -254,7 +253,7 @@ function App() {
 - [ ] Related projects
 - [ ] CTA: "Work with us"
 
-#### 3.6 Blog Page (2 days)
+#### 3.6 Blog Page (2 days) ⏳ PENDING
 - [ ] Blog post grid (3 columns desktop)
 - [ ] Featured post at top (larger card)
 - [ ] Category filters (IA, Automatización, Tutoriales, DevOps)
@@ -263,7 +262,7 @@ function App() {
 - [ ] Load from Supabase with loading states
 - [ ] Empty state if no posts
 
-#### 3.7 Blog Post Page (Already Done + Enhancements)
+#### 3.7 Blog Post Page (Already Done + Enhancements) ⏳
 - [x] Already loads from Supabase
 - [ ] Add reading progress bar
 - [ ] Add table of contents (auto-generated from headings)
@@ -272,12 +271,13 @@ function App() {
 - [ ] Add author card at bottom
 - [ ] Add comment system (future: Giscus/GitHub Discussions)
 
-#### 3.8 Contact Page (1 day)
-- [ ] Contact form (already functional, improve UI)
-- [ ] Company info (email, social links)
+#### 3.8 Contact Page (1 day) ✅ COMPLETED (refactored in Phase 2.3)
+- [x] Contact form functional with design system
+- [x] Company info displayed in card
+- [x] Success modal with confirmation
 - [ ] Map embed (optional)
-- [ ] Response time expectation
-- [ ] Success/error toast notifications
+- [x] Response time expectation (in modal message)
+- [ ] Toast notifications (using modal currently)
 
 **Deliverables:**
 - 8 fully implemented pages
