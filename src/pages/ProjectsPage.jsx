@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Card, Badge, Button, Skeleton } from '../components/ui';
+import { Badge, Button, Skeleton, SectionTitle } from '../components/ui';
+import HolographicCard from '../components/effects/HolographicCard';
+import GlitchText from '../components/effects/GlitchText';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
@@ -51,12 +53,9 @@ const ProjectsPage = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-[var(--text-primary)] mb-4">
-            Proyectos<span className="text-[var(--cyan-neon)]">.</span>
-          </h1>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
-            Soluciones innovadoras en IA, automatización y desarrollo web. 
-            Cada proyecto representa nuestro compromiso con la excelencia técnica.
+          <SectionTitle kanji="作" title="Proyectos" align="center" />
+          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
+            Soluciones innovadoras en IA, automatización y desarrollo web que transforman ideas en realidad
           </p>
         </motion.div>
 
@@ -86,21 +85,21 @@ const ProjectsPage = () => {
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <Card key={i}>
+              <HolographicCard key={i}>
                 <Skeleton variant="card" />
-              </Card>
+              </HolographicCard>
             ))}
           </div>
         )}
 
         {/* Error State */}
         {error && (
-          <Card className="text-center py-12">
+          <HolographicCard className="text-center py-12">
             <p className="text-[var(--text-danger)] mb-4">Error al cargar proyectos: {error}</p>
             <Button onClick={fetchProjects} variant="primary">
               Reintentar
             </Button>
-          </Card>
+          </HolographicCard>
         )}
 
         {/* Projects Grid */}
@@ -112,11 +111,11 @@ const ProjectsPage = () => {
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             {filteredProjects.length === 0 ? (
-              <Card className="col-span-full text-center py-12">
+              <HolographicCard className="col-span-full text-center py-12">
                 <p className="text-[var(--text-secondary)] text-lg">
                   No hay proyectos en la categoría "{selectedCategory}"
                 </p>
-              </Card>
+              </HolographicCard>
             ) : (
               filteredProjects.map((project, index) => (
                 <motion.div
@@ -125,16 +124,12 @@ const ProjectsPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card 
-                    variant={project.featured ? "featured" : "default"}
-                    hover
-                    className="h-full flex flex-col"
-                  >
+                  <HolographicCard className="h-full flex flex-col">
                     {/* Featured Badge */}
                     {project.featured && (
                       <div className="mb-4">
                         <Badge variant="default" size="sm">
-                          ⭐ Destacado
+                          Destacado
                         </Badge>
                       </div>
                     )}
@@ -236,7 +231,7 @@ const ProjectsPage = () => {
                         </Button>
                       )}
                     </div>
-                  </Card>
+                  </HolographicCard>
                 </motion.div>
               ))
             )}
@@ -251,10 +246,12 @@ const ProjectsPage = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="mt-16"
           >
-            <Card variant="featured" className="text-center py-12">
-              <h3 className="text-3xl font-bold text-[var(--text-primary)] mb-4">
-                ¿Tienes un proyecto en mente?
-              </h3>
+            <HolographicCard className="text-center py-12">
+              <GlitchText
+                text="¿Tienes un proyecto en mente?"
+                className="text-3xl font-bold text-[var(--text-primary)] mb-4"
+                as="h3"
+              />
               <p className="text-[var(--text-secondary)] mb-6 max-w-2xl mx-auto">
                 Trabajemos juntos para crear algo extraordinario. Especialistas en IA, automatización y desarrollo web.
               </p>
@@ -263,7 +260,7 @@ const ProjectsPage = () => {
                   Hablemos →
                 </Button>
               </Link>
-            </Card>
+            </HolographicCard>
           </motion.div>
         )}
       </div>

@@ -1,7 +1,8 @@
 // src/components/Contact.jsx
 import React, { useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
-import { Button, Input, Card } from './ui';
+import { Button, Input, SectionTitle } from './ui';
+import HolographicCard from './effects/HolographicCard';
 
 // 🚀 ACTUALIZADO: Usar nuestra propia API
 const CONTACT_ENDPOINT = '/api/contact';
@@ -71,12 +72,9 @@ const Contact = () => {
       <div className="mx-auto max-w-6xl px-6">
         {/* Cabecera */}
         <div className="mb-8 md:mb-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Hablemos<span className="text-[#00E5FF]">.</span>
-          </h2>
+          <SectionTitle kanji="話" title="Hablemos" align="center" />
           <p className="mx-auto mt-4 max-w-2xl text-gray-300">
-            ¿Tienes una idea, un reto técnico o quieres colaborar? Cuéntanos brevemente tu
-            objetivo y te responderemos pronto.
+            ¿Tienes una idea, un reto técnico o quieres colaborar? Cuéntanos tu proyecto y te responderemos pronto
           </p>
         </div>
 
@@ -84,7 +82,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Lado izquierdo */}
           <div className="flex">
-            <Card variant="glass" className="w-full">
+            <HolographicCard className="w-full">
               <div className="flex flex-col items-center text-center">
                 <img
                   src="/logoletras.svg"
@@ -94,16 +92,15 @@ const Contact = () => {
                 />
                 <h3 className="text-xl font-semibold text-[var(--text-primary)]">Pongamos manos a la obra</h3>
                 <p className="mt-3 text-[var(--text-secondary)]">
-                  En KAINET diseñamos prototipos robustos y experiencias sobrias centradas en
-                  la automatización inteligente.
+                  En KAINET diseñamos soluciones robustas centradas en la automatización inteligente y el desarrollo de vanguardia
                 </p>
               </div>
-            </Card>
+            </HolographicCard>
           </div>
 
           {/* Formulario */}
           <div className="flex">
-            <Card variant="glass" className="w-full">
+            <HolographicCard className="w-full">
               <form
                 onSubmit={handleSubmit}
                 noValidate
@@ -189,7 +186,7 @@ const Contact = () => {
                 </Button>
               </div>
               </form>
-            </Card>
+            </HolographicCard>
           </div>
         </div>
       </div>
@@ -197,7 +194,7 @@ const Contact = () => {
       {/* MODAL de confirmación */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
-          <Card className="max-w-sm w-full mx-4">
+          <HolographicCard className="max-w-sm w-full mx-4">
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/20 flex items-center justify-center">
@@ -221,7 +218,7 @@ const Contact = () => {
                 Cerrar
               </Button>
             </div>
-          </Card>
+          </HolographicCard>
         </div>
       )}
     </section>
