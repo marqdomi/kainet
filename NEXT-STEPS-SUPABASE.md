@@ -8,7 +8,7 @@ Agrega estas **3 variables nuevas** (además de las que ya tienes de Resend):
 
 ### 1. VITE_SUPABASE_URL
 ```
-https://tqdencmzezjevnntifos.supabase.co
+https://[TU-PROJECT-ID].supabase.co
 ```
 - ✅ Production
 - ✅ Preview
@@ -16,7 +16,7 @@ https://tqdencmzezjevnntifos.supabase.co
 
 ### 2. VITE_SUPABASE_ANON_KEY
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZGVuY216ZXpqZXZubnRpZm9zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyODU4NDQsImV4cCI6MjA3NTg2MTg0NH0.FxMGCcoybrJFFPS_qDO-xz0alQvyh5VDo4Q_OsFBcXA
+eyJ... (obtener de Supabase → Settings → API)
 ```
 - ✅ Production
 - ✅ Preview  
@@ -24,7 +24,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZGVuY21
 
 ### 3. SUPABASE_SERVICE_ROLE_KEY
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZGVuY216ZXpqZXZubnRpZm9zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDI4NTg0NCwiZXhwIjoyMDc1ODYxODQ0fQ.uxEZA601xL0j3auJBabMHfCsa17w43x6vJU9t7L-L2E
+eyJ... (obtener de Supabase → Settings → API)
+⚠️ IMPORTANTE: Esta key es SECRETA - nunca la compartas públicamente
 ```
 - ✅ Production
 - ✅ Preview
