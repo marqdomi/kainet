@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import BackToTop from '../components/BackToTop';
 
 const BackgroundCanvas = lazy(() => import('../components/BackgroundCanvas'));
 
@@ -49,6 +50,9 @@ const MainLayout = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Back to Top Button */}
+      <BackToTop />
     </>
   );
 };

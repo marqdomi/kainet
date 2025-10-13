@@ -2,8 +2,10 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEasterEggContext } from '../contexts/EasterEggContext';
 
 const Navbar = () => {
+  const { handleLogoClick } = useEasterEggContext();
   const [isVisible, setIsVisible] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -89,6 +91,7 @@ const Navbar = () => {
               to="/"
               aria-label="Inicio KAINET"
               className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+              onClick={handleLogoClick}
             >
               <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
               <span className="sr-only">KAINET</span>

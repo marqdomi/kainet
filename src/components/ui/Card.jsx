@@ -1,6 +1,9 @@
 // src/components/ui/Card.jsx
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
+
+// Lazy load HolographicCard for performance
+const HolographicCard = lazy(() => import('../effects/HolographicCard'));
 
 /**
  * Card Component - Design System
@@ -9,6 +12,11 @@ import PropTypes from 'prop-types';
  * - default: Standard card with border
  * - glass: Glass morphism effect (backdrop blur)
  * - featured: Highlighted card with cyan border
+ * - holographic: Interactive holographic effect (lazy loaded)
+ * 
+ * @accessibility
+ * - Maintains backward compatibility with existing variants
+ * - Holographic variant respects prefers-reduced-motion
  */
 
 const Card = ({ 
@@ -18,6 +26,27 @@ const Card = ({
   className = '',
   ...props 
 }) => {
+  // If holographic variant is requested, use HolographicCard component
+  if (variant === 'holographic') {
+    return (
+      <Suspense fallback={
+        <div className={`rounded-xl p-[var(--card-padding)] bg-[var(--gray-900)] border border-[var(--gray-700)] ${className}`}>
+          {children}
+        </div>
+      }>
+        <HolographicCard 
+          variant="featured" 
+          holographic 
+          scanningLine 
+          rippleOnClick
+          className={className}
+          {...props}
+        >
+          {children}
+        </HolographicCard>
+      </Suspense>
+    );
+  }
   const baseStyles = `
     rounded-xl p-[var(--card-padding)]
     transition-all duration-300
@@ -59,7 +88,7 @@ const Card = ({
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['default', 'glass', 'featured']),
+  variant: PropTypes.oneOf(['default', 'glass', 'featured', 'holographic']),
   hover: PropTypes.bool,
   className: PropTypes.string
 };

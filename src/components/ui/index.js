@@ -4,3 +4,5 @@ export { default as Card } from './Card';
 export { default as Input } from './Input';
 export { default as Badge } from './Badge';
 export { default as Skeleton } from './Skeleton';
+export { default as SectionTitle } from './SectionTitle';
+export { default as DigitalCounter } from './DigitalCounter';

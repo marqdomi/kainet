@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import { Card, Badge, Button, Skeleton } from './ui';
+import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const FeaturedProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -55,6 +56,26 @@ const FeaturedProjects = () => {
     }
   };
 
+  // Parallax wrapper component for project cards
+  const ParallaxCard = ({ children, index }) => {
+    const { offset, blur, ref } = useParallaxScroll({ 
+      speed: 0.1 + (index * 0.05), // Different speeds for depth effect
+      maxBlur: 1.5 
+    });
+
+    return (
+      <div
+        ref={ref}
+        style={{
+          transform: `translateY(${offset}px)`,
+          filter: `blur(${blur}px)`,
+        }}
+      >
+        {children}
+      </div>
+    );
+  };
+
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-transparent via-[var(--gray-900)]/30 to-transparent">
       <div className="max-w-7xl mx-auto">
@@ -94,16 +115,17 @@ const FeaturedProjects = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
           >
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <motion.div
                 key={project.id}
                 variants={cardVariants}
               >
-                <Card 
-                  variant="featured"
-                  hover
-                  className="h-full flex flex-col"
-                >
+                <ParallaxCard index={index}>
+                  <Card 
+                    variant="featured"
+                    hover
+                    className="h-full flex flex-col"
+                  >
                   {/* Category Badge */}
                   <div className="mb-4">
                     <Badge 
@@ -171,7 +193,8 @@ const FeaturedProjects = () => {
                       Ver Demo →
                     </Button>
                   )}
-                </Card>
+                  </Card>
+                </ParallaxCard>
               </motion.div>
             ))}
           </motion.div>

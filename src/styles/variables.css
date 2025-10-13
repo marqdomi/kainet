@@ -177,6 +177,73 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+
+  /* ====================================
+     10. EFFECT VARIABLES (Japanese Cyberpunk)
+     ==================================== */
+  
+  /* Glitch Effect Colors */
+  --glitch-color-1: #00E5FF;  /* Cyan */
+  --glitch-color-2: #FF00E5;  /* Magenta */
+  --glitch-color-3: #00FF85;  /* Green */
+  --glitch-shadow-1: 2px 0 var(--glitch-color-1);
+  --glitch-shadow-2: -2px 0 var(--glitch-color-2);
+  --glitch-shadow-3: 0 2px var(--glitch-color-3);
+
+  /* Animation Timings */
+  --animation-glitch-duration: 0.3s;
+  --animation-shimmer-duration: 2s;
+  --animation-scan-duration: 3s;
+  --animation-pulse-duration: 2s;
+  --animation-ripple-duration: 0.6s;
+
+  /* Holographic Effect */
+  --holographic-gradient: linear-gradient(
+    45deg,
+    rgba(0, 229, 255, 0.1) 0%,
+    rgba(168, 85, 247, 0.1) 25%,
+    rgba(0, 229, 255, 0.1) 50%,
+    rgba(168, 85, 247, 0.1) 75%,
+    rgba(0, 229, 255, 0.1) 100%
+  );
+
+  /* Circuit Line Colors */
+  --circuit-color-primary: var(--cyan-neon);
+  --circuit-color-secondary: var(--purple-accent);
+  --circuit-glow: rgba(0, 229, 255, 0.6);
+
+  /* Kanji Particle Colors */
+  --kanji-color-start: var(--cyan-neon);
+  --kanji-color-end: var(--purple-accent);
+  --kanji-opacity: 0.3;
+
+  /* Scanning Line */
+  --scan-line-color: rgba(0, 229, 255, 0.8);
+  --scan-line-height: 2px;
+  --scan-line-glow: 0 0 10px rgba(0, 229, 255, 0.8);
+
+  /* Performance Thresholds */
+  --fps-threshold: 45;
+  --particle-count-desktop: 200;
+  --particle-count-mobile: 80;
+
+  /* ====================================
+     11. TYPOGRAPHY ENHANCEMENTS
+     ==================================== */
+  
+  /* Section Title Kanji */
+  --kanji-prefix-color: var(--cyan-neon);
+  --kanji-prefix-size: 0.6em;
+  --kanji-prefix-spacing: 0.75rem;
+  --kanji-prefix-opacity: 0.8;
+
+  /* Digital Counter Effect */
+  --counter-glow: 0 0 8px rgba(0, 229, 255, 0.4);
+  --counter-font: var(--font-mono);
+
+  /* Text Selection */
+  --selection-bg: rgba(0, 229, 255, 0.2);
+  --selection-color: var(--text-primary);
 }
 
 /* ====================================
@@ -190,5 +257,339 @@
     --text-4xl: 1.75rem;  /* 28px on mobile */
     --section-padding-y: var(--space-12);
     --section-padding-x: var(--space-4);
+  }
+}
+
+/* ====================================
+   HIGH CONTRAST MODE
+   ==================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    /* Enhanced Color Contrast (7:1 minimum) */
+    --cyan-neon: #00FFFF;
+    --cyan-bright: #00FFFF;
+    --cyan-dark: #00CCCC;
+    --purple-accent: #CC66FF;
+    --green-success: #00FF00;
+    --red-error: #FF3333;
+    --yellow-warning: #FFCC00;
+
+    /* High Contrast Neutral Scale */
+    --black-base: #000000;
+    --gray-900: #000000;
+    --gray-800: #1A1A1A;
+    --gray-700: #000000;
+    --gray-600: #333333;
+    --gray-500: #666666;
+    --gray-400: #999999;
+    --gray-300: #CCCCCC;
+
+    /* High Contrast Text Colors */
+    --text-primary: #FFFFFF;
+    --text-secondary: #CCCCCC;
+    --text-tertiary: #999999;
+    --text-disabled: #666666;
+
+    /* Enhanced Overlays */
+    --overlay-dark: rgba(0, 0, 0, 0.95);
+    --overlay-glass: rgba(0, 0, 0, 0.9);
+
+    /* Enhanced Text Selection */
+    --selection-bg: rgba(0, 255, 255, 0.4);
+    --selection-color: #000000;
+
+    /* Increased Border Widths for Visibility */
+    --border-width-default: 2px;
+    --border-width-thick: 3px;
+    --border-width-focus: 4px;
+
+    /* Enhanced Shadows for Better Depth Perception */
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 6px 10px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 12px 20px -3px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 24px 30px -5px rgba(0, 0, 0, 0.3);
+    --shadow-2xl: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+    --shadow-cyan: 0 0 25px rgba(0, 255, 255, 0.6);
+    --shadow-cyan-hover: 0 0 35px rgba(0, 255, 255, 0.8);
+
+    /* Disable Subtle Effects */
+    --glitch-shadow-1: none;
+    --glitch-shadow-2: none;
+    --glitch-shadow-3: none;
+    --holographic-gradient: none;
+    --kanji-opacity: 0;
+    --scan-line-color: transparent;
+
+    /* Enhanced Focus Indicators */
+    --focus-outline-width: 4px;
+    --focus-outline-color: var(--cyan-neon);
+    --focus-outline-offset: 4px;
+
+    /* Simplified Gradients */
+    --gradient-hero: linear-gradient(
+      135deg,
+      #000000 0%,
+      #1A1A1A 50%,
+      #000000 100%
+    );
+
+    --gradient-cyan: linear-gradient(
+      90deg,
+      #00FFFF 0%,
+      #CC66FF 100%
+    );
+
+    --gradient-card-hover: linear-gradient(
+      145deg,
+      rgba(0, 255, 255, 0.2) 0%,
+      rgba(204, 102, 255, 0.2) 100%
+    );
+  }
+
+  /* Disable Glitch Effects */
+  .glitch-effect,
+  [class*="glitch"] {
+    animation: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Disable Holographic Effects */
+  .holographic-overlay,
+  .holographic-shimmer,
+  [class*="holographic"] {
+    display: none !important;
+  }
+
+  /* Disable Scanning Lines */
+  .scanning-line,
+  [class*="scan-line"] {
+    display: none !important;
+  }
+
+  /* Disable Kanji Particles */
+  .kanji-particle,
+  [class*="kanji-particle"] {
+    opacity: 0 !important;
+  }
+
+  /* Enhanced Borders for Interactive Elements */
+  button,
+  a,
+  input,
+  textarea,
+  select,
+  .card,
+  [role="button"],
+  [role="link"] {
+    border-width: 2px !important;
+    border-style: solid !important;
+  }
+
+  /* Enhanced Focus States */
+  *:focus,
+  *:focus-visible {
+    outline: 4px solid var(--cyan-neon) !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.3) !important;
+  }
+
+  /* Ensure Minimum Contrast for All Text */
+  body,
+  p,
+  span,
+  div,
+  h1, h2, h3, h4, h5, h6,
+  a,
+  button,
+  label {
+    color: var(--text-primary);
+  }
+
+  /* Enhanced Link Visibility */
+  a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 4px !important;
+  }
+
+  a:hover,
+  a:focus {
+    text-decoration-thickness: 3px !important;
+    background-color: rgba(0, 255, 255, 0.1) !important;
+  }
+
+  /* Enhanced Button Visibility */
+  button,
+  [role="button"] {
+    background-color: var(--gray-800) !important;
+    border-color: var(--cyan-neon) !important;
+  }
+
+  button:hover,
+  button:focus,
+  [role="button"]:hover,
+  [role="button"]:focus {
+    background-color: var(--cyan-neon) !important;
+    color: var(--black-base) !important;
+    border-color: var(--cyan-neon) !important;
+  }
+
+  /* Enhanced Card Visibility */
+  .card,
+  [class*="card"] {
+    border-color: var(--gray-600) !important;
+    background-color: var(--gray-800) !important;
+  }
+
+  .card:hover,
+  [class*="card"]:hover {
+    border-color: var(--cyan-neon) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4) !important;
+  }
+
+  /* Disable Subtle Animations */
+  .shimmer,
+  .pulse-subtle,
+  .fade-subtle,
+  [class*="subtle-"] {
+    animation: none !important;
+  }
+
+  /* Enhanced Form Elements */
+  input,
+  textarea,
+  select {
+    border-color: var(--gray-600) !important;
+    background-color: var(--gray-800) !important;
+    color: var(--text-primary) !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--cyan-neon) !important;
+    background-color: var(--black-base) !important;
+  }
+
+  /* Enhanced Error States */
+  .error,
+  [aria-invalid="true"],
+  .input-error {
+    border-color: var(--red-error) !important;
+    color: var(--red-error) !important;
+  }
+
+  /* Enhanced Success States */
+  .success,
+  .input-success {
+    border-color: var(--green-success) !important;
+    color: var(--green-success) !important;
+  }
+
+  /* Disable Motion Blur */
+  [style*="blur"] {
+    filter: none !important;
+  }
+
+  /* Ensure Backdrop Filters Don't Reduce Contrast */
+  [style*="backdrop-filter"],
+  .glass-effect,
+  [class*="glass"] {
+    backdrop-filter: none !important;
+    background-color: var(--gray-800) !important;
+  }
+
+  /* Enhanced Tooltips and Popovers */
+  .tooltip,
+  .popover,
+  [role="tooltip"] {
+    background-color: var(--black-base) !important;
+    border: 2px solid var(--cyan-neon) !important;
+    color: var(--text-primary) !important;
+  }
+
+  /* Enhanced Modal Visibility */
+  .modal,
+  [role="dialog"] {
+    border: 3px solid var(--cyan-neon) !important;
+    background-color: var(--black-base) !important;
+  }
+
+  /* Disable Parallax Effects */
+  [style*="transform: translate"],
+  .parallax,
+  [class*="parallax"] {
+    transform: none !important;
+  }
+
+  /* Enhanced Navigation Visibility */
+  nav,
+  .navbar,
+  [role="navigation"] {
+    border-bottom: 3px solid var(--gray-600) !important;
+    background-color: var(--black-base) !important;
+  }
+
+  /* Enhanced Footer Visibility */
+  footer {
+    border-top: 3px solid var(--gray-600) !important;
+    background-color: var(--black-base) !important;
+  }
+
+  /* Ensure Icons Have Sufficient Contrast */
+  svg,
+  img {
+    filter: contrast(1.2) !important;
+  }
+
+  /* Enhanced Badge Visibility */
+  .badge,
+  [class*="badge"] {
+    border: 2px solid currentColor !important;
+    font-weight: var(--font-bold) !important;
+  }
+
+  /* Disable Circuit Lines */
+  .circuit-lines,
+  [class*="circuit"] {
+    opacity: 0 !important;
+  }
+
+  /* Enhanced Loader Visibility */
+  .loader,
+  [role="status"] {
+    border-width: 3px !important;
+  }
+
+  /* Ensure Code Blocks Have High Contrast */
+  code,
+  pre {
+    background-color: var(--black-base) !important;
+    border: 2px solid var(--gray-600) !important;
+    color: var(--text-primary) !important;
+  }
+
+  /* Enhanced Table Visibility */
+  table {
+    border: 2px solid var(--gray-600) !important;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--gray-600) !important;
+    padding: var(--space-3) !important;
+  }
+
+  th {
+    background-color: var(--gray-800) !important;
+    font-weight: var(--font-bold) !important;
+  }
+
+  /* Enhanced Divider Visibility */
+  hr,
+  .divider {
+    border-color: var(--gray-600) !important;
+    border-width: 2px !important;
   }
 }

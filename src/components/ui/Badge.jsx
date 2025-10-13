@@ -1,27 +1,56 @@
 // src/components/ui/Badge.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getKanjiByCategory } from '../../utils/kanjiLibrary';
+import useReducedMotion from '../../hooks/useReducedMotion';
 
 /**
  * Badge Component - Design System
  * 
+ * Enhanced with Japanese cyberpunk elements:
+ * - Optional kanji prefix based on category
+ * - Glow animation for featured badges
+ * 
  * Used for: categories, tags, status indicators
+ * 
+ * @accessibility
+ * - Kanji is decorative and aria-hidden
+ * - Respects prefers-reduced-motion for glow animation
  */
 
 const Badge = ({ 
   children,
   variant = 'default',
   size = 'md',
+  kanji = null,
+  featured = false,
   className = '',
   ...props 
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Get kanji character if kanji prop is provided
+  // Can be either a category string or boolean true for auto-detection
+  let kanjiChar = null;
+  if (kanji) {
+    if (typeof kanji === 'string') {
+      // Use provided category to get kanji
+      const kanjiObj = getKanjiByCategory(kanji);
+      kanjiChar = kanjiObj.char;
+    } else if (typeof kanji === 'boolean' && typeof children === 'string') {
+      // Try to auto-detect from children text
+      const kanjiObj = getKanjiByCategory(children);
+      kanjiChar = kanjiObj.char;
+    }
+  }
   const baseStyles = `
-    inline-block
+    inline-flex items-center gap-1
     rounded-full
     font-medium
     uppercase
     letter-spacing-wider
     transition-colors duration-200
+    ${featured && !prefersReducedMotion ? 'badge-glow' : ''}
   `;
 
   const variants = {
@@ -58,12 +87,26 @@ const Badge = ({
     lg: 'px-4 py-1.5 text-sm'
   };
 
+  const kanjiSizes = {
+    sm: 'text-[9px]',
+    md: 'text-[11px]',
+    lg: 'text-[13px]'
+  };
+
   return (
     <span
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
-      {children}
+      {kanjiChar && (
+        <span 
+          className={`kanji-prefix ${kanjiSizes[size]} opacity-80`}
+          aria-hidden="true"
+        >
+          {kanjiChar}
+        </span>
+      )}
+      <span>{children}</span>
     </span>
   );
 };
@@ -72,6 +115,11 @@ Badge.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['default', 'purple', 'success', 'warning', 'error']),
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  kanji: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
+  featured: PropTypes.bool,
   className: PropTypes.string
 };
 

@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, Button } from './ui';
+import CircuitLines from './effects/CircuitLines';
+import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Services = () => {
   const services = [
@@ -66,9 +68,27 @@ const Services = () => {
     }
   };
 
+  // Parallax for background circuit lines
+  const { offset: circuitOffset, blur: circuitBlur, ref: circuitRef } = useParallaxScroll({ 
+    speed: 0.2, 
+    maxBlur: 1 
+  });
+
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-6 relative">
+      {/* Background Circuit Lines with Parallax */}
+      <div 
+        ref={circuitRef}
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          transform: `translateY(${circuitOffset}px)`,
+          filter: `blur(${circuitBlur}px)`,
+        }}
+      >
+        <CircuitLines pattern="grid" density="low" animated color="var(--cyan-neon)" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
