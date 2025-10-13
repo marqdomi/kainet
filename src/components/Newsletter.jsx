@@ -1,6 +1,7 @@
 // src/components/Newsletter.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Button, Input, Card } from './ui';
 
 // 🚀 ACTUALIZADO: Usar nuestra propia API
 const NEWSLETTER_ENDPOINT = '/api/newsletter';
@@ -67,108 +68,96 @@ const Newsletter = ({ variant = 'default' }) => {
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-gradient-to-br from-cyan-400/10 via-gray-900/50 to-blue-500/10 border-2 border-cyan-400/30 rounded-2xl p-8 my-8"
       >
-        <div className="text-center mb-6">
-          <h3 className="text-2xl font-bold text-white mb-2">
-            ¿Te gustó este artículo?
-          </h3>
-          <p className="text-gray-300">
-            Suscríbete a nuestro newsletter para recibir más contenido sobre IA, automatización y desarrollo.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-3">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Tu nombre (opcional)"
-            disabled={status === 'sending' || status === 'success'}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
-          />
-          
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com *"
-              required
-              disabled={status === 'sending' || status === 'success'}
-              className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              disabled={status === 'sending' || status === 'success'}
-              className="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-gray-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === 'sending' ? '⏳ Enviando...' : status === 'success' ? '✓ Suscrito' : 'Suscribirse'}
-            </button>
+        <Card variant="featured" className="my-8">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
+              ¿Te gustó este artículo?
+            </h3>
+            <p className="text-[var(--text-secondary)]">
+              Suscríbete a nuestro newsletter para recibir más contenido sobre IA, automatización y desarrollo.
+            </p>
           </div>
 
-          {message && (
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`text-sm text-center ${
-                status === 'success' ? 'text-green-400' : 'text-red-400'
-              }`}
-            >
-              {message}
-            </motion.p>
-          )}
-        </form>
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Tu nombre (opcional)"
+              disabled={status === 'sending' || status === 'success'}
+            />
+            
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com *"
+                required
+                disabled={status === 'sending' || status === 'success'}
+                error={status === 'error' ? message : undefined}
+                className="flex-1"
+              />
+              <Button
+                type="submit"
+                disabled={status === 'sending' || status === 'success'}
+                loading={status === 'sending'}
+                variant="primary"
+              >
+                {status === 'success' ? '✓ Suscrito' : 'Suscribirse'}
+              </Button>
+            </div>
+
+            {message && status === 'success' && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm text-center text-[var(--green-success)]"
+              >
+                {message}
+              </motion.p>
+            )}
+          </form>
+        </Card>
       </motion.div>
     );
   }
 
-  // Variante por defecto (para footer o secciones standalone)
+  // Variante por defecto para footer
   return (
-    <div className="bg-gradient-to-br from-cyan-400/5 via-transparent to-blue-500/5 border border-cyan-400/20 rounded-xl p-6">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-white mb-1">
-            Newsletter Semanal
-          </h3>
-          <p className="text-gray-400 text-sm">
-            Análisis curado de IA empresarial, MLOps y automatización
-          </p>
-        </div>
+    <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="tu@email.com"
+          required
+          disabled={status === 'sending' || status === 'success'}
+          error={status === 'error' ? message : undefined}
+          className="flex-1"
+        />
+        <Button
+          type="submit"
+          disabled={status === 'sending' || status === 'success'}
+          loading={status === 'sending'}
+          variant="primary"
+          className="whitespace-nowrap"
+        >
+          {status === 'success' ? '✓' : 'Suscribirse'}
+        </Button>
+      </form>
 
-        <form onSubmit={handleSubmit} className="flex-1 max-w-md w-full">
-          <div className="flex gap-2">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              required
-              disabled={status === 'sending' || status === 'success'}
-              className="flex-1 px-4 py-2 bg-gray-900/50 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              disabled={status === 'sending' || status === 'success'}
-              className="px-4 py-2 bg-cyan-400 text-gray-900 font-semibold rounded-lg hover:bg-cyan-300 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-            >
-              {status === 'sending' ? '⏳' : status === 'success' ? '✓' : 'Suscribirse'}
-            </button>
-          </div>
-
-          {message && (
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`mt-2 text-xs ${
-                status === 'success' ? 'text-green-400' : 'text-red-400'
-              }`}
-            >
-              {message}
-            </motion.p>
-          )}
-        </form>
-      </div>
+      {message && status === 'success' && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-sm text-[var(--green-success)]"
+        >
+          {message}
+        </motion.p>
+      )}
     </div>
   );
 };

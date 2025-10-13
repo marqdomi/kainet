@@ -3,9 +3,11 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import Logo3D from './Logo3D';
+import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
   const [showHint, setShowHint] = useState(true);
+  const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
 
   useEffect(() => {
     const t = setTimeout(() => setShowHint(false), 2500);
@@ -16,8 +18,15 @@ const Hero = () => {
 
   return (
     <section id="top" className="relative w-full h-screen">
-      {/* Overlay sutil para lectura */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-black/20 via-black/10 to-transparent" />
+      {/* Overlay sutil para lectura con parallax */}
+      <div 
+        ref={ref}
+        className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-black/20 via-black/10 to-transparent"
+        style={{
+          transform: `translateY(${offset}px)`,
+          filter: `blur(${blur}px)`,
+        }}
+      />
 
       {/* Texto */}
       <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-6 pointer-events-none">

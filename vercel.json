@@ -1,11 +1,5 @@
 {
   "rewrites": [
-    { "source": "/about", "destination": "/" },
-    { "source": "/work", "destination": "/" },
-    { "source": "/kainet-resto", "destination": "/" },
-    { "source": "/blog", "destination": "/" },
-    { "source": "/blog/:slug", "destination": "/" },
-    { "source": "/playground", "destination": "/" },
-    { "source": "/contact", "destination": "/" }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }

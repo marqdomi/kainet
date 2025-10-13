@@ -1,0 +1,847 @@
+/* ================================================
+   KAINET v2.0 - Japanese Cyberpunk Animations
+   ================================================ */
+
+/* ====================================
+   GLITCH EFFECTS
+   ==================================== */
+
+/**
+ * Glitch animation with clip-path and transform
+ * Creates a digital distortion effect
+ */
+@keyframes glitch {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
+  }
+  20% {
+    clip-path: inset(40% 0 35% 0);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(2px, -2px);
+  }
+  60% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(-2px, -2px);
+  }
+  80% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(2px, 2px);
+  }
+}
+
+/**
+ * RGB split glitch effect
+ * Creates chromatic aberration with text-shadow
+ */
+@keyframes glitch-rgb {
+  0%, 100% {
+    text-shadow: none;
+  }
+  10% {
+    text-shadow: var(--glitch-shadow-1), var(--glitch-shadow-2);
+  }
+  20% {
+    text-shadow: var(--glitch-shadow-2), var(--glitch-shadow-3);
+  }
+  30% {
+    text-shadow: var(--glitch-shadow-1), var(--glitch-shadow-3);
+  }
+  40% {
+    text-shadow: var(--glitch-shadow-2), var(--glitch-shadow-1);
+  }
+  50% {
+    text-shadow: var(--glitch-shadow-3), var(--glitch-shadow-2);
+  }
+  60% {
+    text-shadow: var(--glitch-shadow-1), var(--glitch-shadow-2), var(--glitch-shadow-3);
+  }
+  70% {
+    text-shadow: var(--glitch-shadow-2);
+  }
+  80% {
+    text-shadow: var(--glitch-shadow-1);
+  }
+  90% {
+    text-shadow: var(--glitch-shadow-3);
+  }
+}
+
+/**
+ * GlitchText Component Styles
+ * Base styles for the glitch text effect
+ */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  animation: glitch-rgb var(--glitch-duration, var(--animation-glitch-duration)) ease-in-out;
+  text-shadow: var(--glitch-shadow-1);
+  clip-path: inset(0 0 0 0);
+}
+
+.glitch-text::after {
+  animation: glitch var(--glitch-duration, var(--animation-glitch-duration)) ease-in-out;
+  text-shadow: var(--glitch-shadow-2);
+  clip-path: inset(0 0 0 0);
+}
+
+/**
+ * Glitch intensity variants
+ */
+.glitch-low {
+  animation: glitch var(--glitch-duration, var(--animation-glitch-duration)) ease-in-out;
+}
+
+.glitch-low::before {
+  text-shadow: 1px 0 var(--glitch-color-1);
+}
+
+.glitch-low::after {
+  text-shadow: -1px 0 var(--glitch-color-2);
+}
+
+.glitch-medium::before {
+  animation: glitch-rgb var(--glitch-duration, var(--animation-glitch-duration)) ease-in-out;
+  text-shadow: var(--glitch-shadow-1);
+}
+
+.glitch-medium::after {
+  animation: glitch var(--glitch-duration, var(--animation-glitch-duration)) ease-in-out;
+  text-shadow: var(--glitch-shadow-2);
+}
+
+.glitch-high {
+  animation: glitch calc(var(--glitch-duration, var(--animation-glitch-duration)) * 0.8) ease-in-out;
+}
+
+.glitch-high::before {
+  animation: glitch-rgb calc(var(--glitch-duration, var(--animation-glitch-duration)) * 0.8) ease-in-out;
+  text-shadow: var(--glitch-shadow-1), var(--glitch-shadow-3);
+}
+
+.glitch-high::after {
+  animation: glitch calc(var(--glitch-duration, var(--animation-glitch-duration)) * 0.8) ease-in-out;
+  text-shadow: var(--glitch-shadow-2), var(--glitch-shadow-3);
+  filter: blur(0.5px);
+}
+
+/* ====================================
+   HOLOGRAPHIC SHIMMER
+   ==================================== */
+
+/**
+ * Holographic shimmer effect
+ * Creates a moving gradient overlay
+ */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: var(--holographic-gradient);
+  background-size: 200% 100%;
+  animation: shimmer var(--animation-shimmer-duration) linear infinite;
+}
+
+/**
+ * Holographic glow pulse
+ */
+@keyframes holographic-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
+}
+
+.holographic-pulse {
+  animation: holographic-pulse var(--animation-pulse-duration) ease-in-out infinite;
+}
+
+/**
+ * Hologram flicker effect
+ * For button hover states
+ */
+@keyframes hologram-flicker {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    border-color: var(--cyan-neon);
+  }
+  25% {
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.5), 0 0 10px rgba(168, 85, 247, 0.3);
+    border-color: rgba(0, 229, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.4), 0 0 15px rgba(168, 85, 247, 0.4);
+    border-color: var(--cyan-neon);
+  }
+  75% {
+    box-shadow: 0 0 35px rgba(0, 229, 255, 0.6), 0 0 5px rgba(168, 85, 247, 0.2);
+    border-color: rgba(0, 229, 255, 0.9);
+  }
+}
+
+.hologram-flicker {
+  animation: hologram-flicker 0.6s ease-in-out;
+}
+
+/**
+ * Badge glow animation
+ * For featured badges
+ */
+@keyframes badge-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px currentColor;
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    filter: brightness(1.2);
+  }
+}
+
+.badge-glow {
+  animation: badge-glow 2s ease-in-out infinite;
+}
+
+/* ====================================
+   SCANNING EFFECTS
+   ==================================== */
+
+/**
+ * Vertical scanning line
+ * Moves from top to bottom
+ */
+@keyframes scan-vertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/**
+ * Horizontal scanning line
+ * Moves from left to right
+ */
+@keyframes scan-horizontal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.scan-line-vertical {
+  animation: scan-vertical var(--animation-scan-duration) linear infinite;
+}
+
+.scan-line-horizontal {
+  animation: scan-horizontal var(--animation-scan-duration) linear infinite;
+}
+
+/**
+ * Digital reveal effect
+ * Combines scanning with opacity fade
+ */
+@keyframes digital-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.digital-reveal {
+  animation: digital-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ====================================
+   CIRCUIT & ENERGY EFFECTS
+   ==================================== */
+
+/**
+ * Circuit pulse animation
+ * For circuit lines with energy flowing
+ */
+@keyframes circuit-pulse {
+  0%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+}
+
+.circuit-pulse {
+  animation: circuit-pulse var(--animation-pulse-duration) linear infinite;
+}
+
+/**
+ * Energy flow animation
+ * For particles moving along paths
+ */
+@keyframes energy-flow {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.energy-flow {
+  animation: energy-flow 3s linear infinite;
+}
+
+/* ====================================
+   RIPPLE EFFECT
+   ==================================== */
+
+/**
+ * Ripple expand animation
+ * For click/tap interactions
+ */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--cyan-neon) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: ripple var(--animation-ripple-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ====================================
+   HOLOGRAPHIC CARD EFFECTS
+   ==================================== */
+
+/**
+ * Scanning line for HolographicCard
+ * Vertical line that moves from top to bottom with glow
+ */
+.scanning-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--cyan-neon) 50%,
+    transparent 100%
+  );
+  box-shadow: 
+    0 0 10px var(--cyan-neon),
+    0 0 20px var(--cyan-neon),
+    0 0 30px rgba(0, 229, 255, 0.5);
+  pointer-events: none;
+  animation: scan-vertical 2s linear infinite;
+  will-change: transform;
+  z-index: 10;
+}
+
+/**
+ * Holographic card wrapper
+ * Ensures proper stacking context
+ */
+.holographic-card-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.holographic-overlay {
+  border-radius: inherit;
+  will-change: transform;
+}
+
+/* ====================================
+   KANJI PARTICLE EFFECTS
+   ==================================== */
+
+/**
+ * Breathing animation for kanji particles
+ * Subtle scale and opacity change
+ */
+@keyframes kanji-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: var(--kanji-opacity);
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: calc(var(--kanji-opacity) * 1.3);
+  }
+}
+
+.kanji-breathe {
+  animation: kanji-breathe 4s ease-in-out infinite;
+}
+
+/**
+ * Kanji color transition
+ * Cycles through cyan to purple
+ */
+@keyframes kanji-color-shift {
+  0%, 100% {
+    color: var(--kanji-color-start);
+  }
+  50% {
+    color: var(--kanji-color-end);
+  }
+}
+
+.kanji-color-shift {
+  animation: kanji-color-shift 8s ease-in-out infinite;
+}
+
+/* ====================================
+   LOADER ANIMATIONS
+   ==================================== */
+
+/**
+ * Torii loader pulse
+ * For the main loading indicator
+ */
+@keyframes torii-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.torii-pulse {
+  animation: torii-pulse var(--animation-pulse-duration) ease-in-out infinite;
+}
+
+/**
+ * Skeleton loading shimmer
+ * For content placeholders
+ */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--gray-800) 0%,
+    var(--gray-700) 50%,
+    var(--gray-800) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* ====================================
+   PAGE TRANSITION EFFECTS
+   ==================================== */
+
+/**
+ * Wipe transition
+ * For page navigation
+ */
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes wipe-out {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+.wipe-in {
+  animation: wipe-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.wipe-out {
+  animation: wipe-out 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/**
+ * Fade with slide up
+ * For content reveal after page transition
+ */
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide-up {
+  animation: fade-slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ====================================
+   ACCESSIBILITY - REDUCED MOTION
+   ==================================== */
+
+/**
+ * Disable all animations for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .glitch-low,
+  .glitch-medium,
+  .glitch-high,
+  .shimmer,
+  .holographic-pulse,
+  .scan-line-vertical,
+  .scan-line-horizontal,
+  .circuit-pulse,
+  .energy-flow,
+  .kanji-breathe,
+  .kanji-color-shift {
+    animation: none !important;
+  }
+}
+
+/* ====================================
+   HIGH CONTRAST MODE
+   ==================================== */
+
+/**
+ * Disable subtle effects in high contrast mode
+ * Ensures WCAG 2.1 AA compliance with 7:1 contrast ratios
+ */
+@media (prefers-contrast: high) {
+  /* Disable all glitch effects */
+  .glitch-text,
+  .glitch-low,
+  .glitch-medium,
+  .glitch-high {
+    animation: none !important;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none !important;
+  }
+
+  /* Disable holographic effects */
+  .shimmer,
+  .holographic-pulse,
+  .hologram-flicker,
+  .holographic-overlay {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* Disable scanning lines */
+  .scan-line-vertical,
+  .scan-line-horizontal,
+  .scanning-line {
+    display: none !important;
+  }
+
+  /* Disable badge glow */
+  .badge-glow {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Disable circuit effects */
+  .circuit-pulse,
+  .energy-flow {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  /* Disable kanji particle effects */
+  .kanji-breathe,
+  .kanji-color-shift {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  /* Simplify page transitions */
+  .wipe-in,
+  .wipe-out {
+    animation: none !important;
+  }
+
+  /* Keep fade-slide-up but simplify */
+  .fade-slide-up {
+    animation: fade-slide-up 0.2s ease-out forwards !important;
+  }
+
+  /* Disable digital reveal */
+  .digital-reveal {
+    animation: none !important;
+    clip-path: inset(0 0 0 0) !important;
+    opacity: 1 !important;
+  }
+
+  /* Simplify ripple effect */
+  .ripple {
+    animation: ripple 0.3s ease-out forwards !important;
+  }
+
+  /* Keep loader animations but simplify */
+  .torii-pulse {
+    animation: torii-pulse 1s ease-in-out infinite !important;
+  }
+
+  .skeleton-shimmer {
+    animation: skeleton-shimmer 1s ease-in-out infinite !important;
+  }
+
+  /* Disable counter pulse */
+  .digital-counter.pulse {
+    animation: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Disable section title kanji hover effects */
+  .section-title:hover .section-title__kanji {
+    text-shadow: none !important;
+  }
+
+  .section-title__kanji {
+    opacity: 0 !important;
+  }
+}
+
+
+/* ================================================
+   TYPOGRAPHY ENHANCEMENTS
+   ================================================ */
+
+/* Section Title with Kanji Prefix */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--kanji-prefix-spacing);
+  font-family: var(--font-headings);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.section-title__kanji {
+  display: inline-block;
+  font-size: var(--kanji-prefix-size);
+  color: var(--kanji-prefix-color);
+  opacity: var(--kanji-prefix-opacity);
+  font-weight: var(--font-regular);
+  line-height: 1;
+  transition: var(--transition-default);
+  user-select: none;
+}
+
+.section-title:hover .section-title__kanji {
+  opacity: 1;
+  text-shadow: var(--shadow-cyan);
+}
+
+.section-title__text {
+  display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .section-title {
+    gap: calc(var(--kanji-prefix-spacing) * 0.75);
+  }
+  
+  .section-title__kanji {
+    font-size: calc(var(--kanji-prefix-size) * 0.9);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .section-title__kanji {
+    transition: none;
+  }
+}
+
+/* Japanese-style Quotation Marks */
+blockquote {
+  position: relative;
+  padding: var(--space-6);
+  margin: var(--space-8) 0;
+  border-left: 3px solid var(--cyan-neon);
+  background: var(--gray-800);
+  border-radius: var(--radius-md);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+blockquote::before {
+  content: '「';
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  font-size: var(--text-3xl);
+  color: var(--cyan-neon);
+  opacity: 0.5;
+  font-style: normal;
+  line-height: 1;
+}
+
+blockquote::after {
+  content: '」';
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  font-size: var(--text-3xl);
+  color: var(--cyan-neon);
+  opacity: 0.5;
+  font-style: normal;
+  line-height: 1;
+}
+
+blockquote p {
+  margin: 0;
+  padding: var(--space-2) var(--space-8);
+}
+
+/* Digital Counter Effect */
+.digital-counter {
+  font-family: var(--counter-font);
+  font-weight: var(--font-semibold);
+  color: var(--cyan-neon);
+  text-shadow: var(--counter-glow);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Count-up animation */
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.digital-counter.animate {
+  animation: count-up 0.6s ease-out;
+}
+
+/* Pulse effect for counters */
+@keyframes counter-pulse {
+  0%, 100% {
+    text-shadow: var(--counter-glow);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+  }
+}
+
+.digital-counter.pulse {
+  animation: counter-pulse 2s ease-in-out infinite;
+}
+
+/* Text Selection Customization */
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}
+
+::-moz-selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}
+
+/* Enhanced selection for code blocks */
+code::selection,
+pre::selection {
+  background-color: rgba(0, 229, 255, 0.3);
+}
+
+code::-moz-selection,
+pre::-moz-selection {
+  background-color: rgba(0, 229, 255, 0.3);
+}

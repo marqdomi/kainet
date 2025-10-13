@@ -1,13 +1,18 @@
 // src/components/Navbar.jsx
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEasterEggContext } from '../contexts/EasterEggContext';
 
 const Navbar = () => {
+  const { handleLogoClick } = useEasterEggContext();
   const [isVisible, setIsVisible] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Detectar si estamos en una página de blog
-  const isBlogPage = window.location.pathname.startsWith('/blog/');
-  const isBlogListing = window.location.pathname === '/blog';
+  const isBlogPage = location.pathname.startsWith('/blog/') && location.pathname !== '/blog';
+  const isBlogListing = location.pathname === '/blog';
 
   // Auto-hide navbar on scroll down, show on mouse move or scroll up
   useEffect(() => {
@@ -56,43 +61,10 @@ const Navbar = () => {
 
   const scrollToTop = useCallback((e) => {
     e.preventDefault();
-    if (isBlogPage || isBlogListing) {
-      // Si estamos en blog, navegar a la home
-      window.location.href = '/';
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [isBlogPage, isBlogListing]);
-
-  const scrollToId = useCallback((e, id) => {
-    e.preventDefault();
-    if (isBlogPage || isBlogListing) {
-      // Si estamos en blog, navegar a la home con hash
-      window.location.href = `/#${id}`;
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Actualizar URL con hash sin recargar
-        window.history.pushState(null, '', `#${id}`);
-      }
-    }
-  }, [isBlogPage, isBlogListing]);
-
-  const handleBlogClick = useCallback((e) => {
-    e.preventDefault();
-    if (isBlogPage) {
-      // Si estamos en un post, ir al listing
-      window.location.href = '/blog';
-    } else if (isBlogListing) {
-      // Si estamos en el listing, scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // Si estamos en home, scroll a la sección
-      const el = document.getElementById('blog');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [isBlogPage, isBlogListing]);
+    // Siempre navegar a home
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigate]);
 
   return (
     <AnimatePresence>
@@ -115,53 +87,57 @@ const Navbar = () => {
             >
               <div className="h-14 px-4 flex items-center justify-between">
             {/* Logo */}
-            <a
-              href="/"
-              onClick={scrollToTop}
+            <Link
+              to="/"
               aria-label="Inicio KAINET"
               className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+              onClick={handleLogoClick}
             >
               <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
               <span className="sr-only">KAINET</span>
-            </a>
+            </Link>
 
             {/* Links */}
             <ul className="flex items-center gap-6">
               <li>
-                <a
-                  href="#about"
-                  onClick={(e) => scrollToId(e, 'about')}
-                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                <Link
+                  to="/about"
+                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
+                    location.pathname === '/about' ? 'text-[#00E5FF]' : ''
+                  }`}
                 >
                   Sobre Nosotros
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#kainet-resto"
-                  onClick={(e) => scrollToId(e, 'kainet-resto')}
-                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                <Link
+                  to="/projects"
+                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
+                    location.pathname === '/projects' ? 'text-[#00E5FF]' : ''
+                  }`}
                 >
-                  Kainet Resto
-                </a>
+                  Proyectos
+                </Link>
               </li>
               <li>
-                <a
-                  href="#blog"
-                  onClick={handleBlogClick}
-                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                <Link
+                  to="/blog"
+                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
+                    location.pathname.startsWith('/blog') ? 'text-[#00E5FF]' : ''
+                  }`}
                 >
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contact"
-                  onClick={(e) => scrollToId(e, 'contact')}
-                  className="link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                <Link
+                  to="/contact"
+                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
+                    location.pathname === '/contact' ? 'text-[#00E5FF]' : ''
+                  }`}
                 >
                   Contacto
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

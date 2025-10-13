@@ -1,6 +1,7 @@
 // src/components/Contact.jsx
 import React, { useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
+import { Button, Input, Card } from './ui';
 
 // 🚀 ACTUALIZADO: Usar nuestra propia API
 const CONTACT_ENDPOINT = '/api/contact';
@@ -83,28 +84,30 @@ const Contact = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Lado izquierdo */}
           <div className="flex">
-            <div className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-8 flex flex-col items-center text-center">
-              <img
-                src="/logoletras.svg"
-                alt="KAINET"
-                className="h-16 w-auto mb-4"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-semibold text-white">Pongamos manos a la obra</h3>
-              <p className="mt-3 text-gray-300">
-                En KAINET diseñamos prototipos robustos y experiencias sobrias centradas en
-                la automatización inteligente.
-              </p>
-            </div>
+            <Card variant="glass" className="w-full">
+              <div className="flex flex-col items-center text-center">
+                <img
+                  src="/logoletras.svg"
+                  alt="KAINET"
+                  className="h-16 w-auto mb-4"
+                  loading="lazy"
+                />
+                <h3 className="text-xl font-semibold text-[var(--text-primary)]">Pongamos manos a la obra</h3>
+                <p className="mt-3 text-[var(--text-secondary)]">
+                  En KAINET diseñamos prototipos robustos y experiencias sobrias centradas en
+                  la automatización inteligente.
+                </p>
+              </div>
+            </Card>
           </div>
 
           {/* Formulario */}
           <div className="flex">
-            <form
-              onSubmit={handleSubmit}
-              className="relative w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-8"
-              noValidate
-            >
+            <Card variant="glass" className="w-full">
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+              >
               {/* Honeypot */}
               <input
                 type="text"
@@ -118,87 +121,75 @@ const Contact = () => {
 
               {/* Nombre */}
               <div className="mb-5">
-                <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-200">
-                  Tu Nombre
-                </label>
-                <input
+                <Input
                   id="name"
                   name="name"
                   type="text"
                   value={form.name}
                   onChange={handleChange}
                   required
+                  label="Tu Nombre"
                   placeholder="Ej. Marco Domínguez"
-                  className="w-full rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 px-4 py-3 transition"
                 />
               </div>
 
               {/* Email */}
               <div className="mb-5">
-                <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-200">
-                  Tu Email
-                </label>
-                <input
+                <Input
                   id="email"
                   name="email"
                   type="email"
                   value={form.email}
                   onChange={handleChange}
                   required
+                  label="Tu Email"
                   placeholder="tu@correo.com"
-                  className="w-full rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 px-4 py-3 transition"
                 />
               </div>
 
               {/* Asunto (opcional) */}
               <div className="mb-5">
-                <label htmlFor="subject" className="mb-2 block text-sm font-medium text-gray-200">
-                  Asunto <span className="text-gray-500 font-normal">(opcional)</span>
-                </label>
-                <input
+                <Input
                   id="subject"
                   name="subject"
                   type="text"
                   value={form.subject}
                   onChange={handleChange}
+                  label="Asunto"
+                  helperText="(opcional)"
                   placeholder="Ej. Consulta sobre automatización"
-                  className="w-full rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 px-4 py-3 transition"
                 />
               </div>
 
               {/* Mensaje */}
               <div className="mb-6">
-                <label htmlFor="message" className="mb-2 block text-sm font-medium text-gray-200">
-                  Tu Mensaje
-                </label>
-                <textarea
+                <Input
                   id="message"
                   name="message"
+                  type="textarea"
                   rows={5}
                   value={form.message}
                   onChange={handleChange}
                   required
+                  label="Tu Mensaje"
                   placeholder="Cuéntanos brevemente sobre tu proyecto o idea…"
-                  className="w-full rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 px-4 py-3 transition resize-y"
+                  error={status === 'error' ? errorMsg : undefined}
                 />
               </div>
 
-              {/* Error */}
-              {status === 'error' && (
-                <p className="text-sm text-rose-400 mb-4">{errorMsg}</p>
-              )}
-
               {/* Botón */}
               <div className="flex items-center justify-end">
-                <button
+                <Button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="btn-kainet disabled:opacity-60 disabled:cursor-not-allowed"
+                  loading={status === 'sending'}
+                  variant="primary"
                 >
-                  {status === 'sending' ? 'Enviando…' : 'Enviar'}
-                </button>
+                  Enviar
+                </Button>
               </div>
-            </form>
+              </form>
+            </Card>
           </div>
         </div>
       </div>
@@ -206,28 +197,31 @@ const Contact = () => {
       {/* MODAL de confirmación */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
-            <div className="mb-4 flex justify-center">
-              <div className="w-16 h-16 rounded-full bg-[#00E5FF]/20 flex items-center justify-center">
-                <svg className="w-8 h-8 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+          <Card className="max-w-sm w-full mx-4">
+            <div className="text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[var(--cyan-neon)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
               </div>
+              <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">¡Mensaje enviado! ✓</h3>
+              <p className="text-[var(--text-secondary)] mb-2">
+                Gracias por escribirnos. Te responderemos pronto.
+              </p>
+              <p className="text-sm text-[var(--cyan-neon)] mb-6">
+                contacto@kainet.mx
+              </p>
+              <Button
+                onClick={() => setShowModal(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Cerrar
+              </Button>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">¡Mensaje enviado! ✓</h3>
-            <p className="text-gray-300 mb-2">
-              Gracias por escribirnos. Te responderemos pronto.
-            </p>
-            <p className="text-sm text-[#00E5FF] mb-6">
-              contacto@kainet.mx
-            </p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="btn-kainet w-full"
-            >
-              Cerrar
-            </button>
-          </div>
+          </Card>
         </div>
       )}
     </section>

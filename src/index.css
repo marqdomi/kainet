@@ -1,3 +1,6 @@
+@import './styles/variables.css';
+@import './styles/animations.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,6 +20,31 @@ html { scroll-behavior: smooth; }
 @layer base {
   html, body, #root { height: 100%; }
   body { @apply bg-black text-white; }
+
+  /* Text Selection Styling */
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
+  }
+
+  ::-moz-selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
+  }
+
+  /* Enhanced Focus Visibility - Accessibility */
+  /* Ensures focus indicators are always visible over effects */
+  *:focus-visible {
+    outline: 2px solid var(--cyan-neon);
+    outline-offset: 4px;
+    position: relative;
+    z-index: 50;
+  }
+
+  /* Remove default focus outline for mouse users */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 /* === KAINET micro-interacciones & cursor (components layer) === */

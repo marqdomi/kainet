@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
+import KanjiParticles from './effects/KanjiParticle';
 
 // ---- Config rápido para tunear el fondo ----
 // 🚀 OPTIMIZADO: Detectar mobile para reducir carga
@@ -24,6 +25,12 @@ const CONFIG = {
   breathing: { freq: 1.6, amp: 0.12, base: 1.0 },
   cursorGlow: { size: 1.6, pulseAmp: 0.25, color: '#00E5FF', opacity: 0.55 },
   twinkles: { count: isMobile ? 80 : 220, sigma: 2.8, speedMin: 0.6, speedMax: 1.4, base: 0.25 },
+  kanji: { 
+    count: isMobile ? 80 : 200,  // 60% menos kanji en mobile
+    opacity: 0.3,
+    repulsionStrength: 0.08,
+    formTorii: true
+  },
 };
 
 function usePrefersReducedMotion() {
@@ -342,6 +349,7 @@ const BackgroundCanvas = React.memo(() => {
     particles: Math.floor(CONFIG.particles.count * (reduce ? 0.5 : 1)),
     streaks: Math.floor(CONFIG.streaks.count * (reduce ? 0.6 : 1)),
     twinkles: Math.floor(CONFIG.twinkles.count * (reduce ? 0.7 : 1)),
+    kanji: Math.floor(CONFIG.kanji.count * (reduce ? 0.5 : 1)),
   }), [reduce]);
 
   // 🚀 OPTIMIZADO: Configuración de cámara memoizada
@@ -351,7 +359,7 @@ const BackgroundCanvas = React.memo(() => {
   }), []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10">
+    <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
       <Canvas 
         camera={cameraConfig} 
         eventPrefix="client"
@@ -367,6 +375,13 @@ const BackgroundCanvas = React.memo(() => {
         <Particles count={counts.particles} motionScale={motionScale} />
         <Streaks count={counts.streaks} motionScale={motionScale} />
         <Twinkles motionScale={motionScale} />
+        <KanjiParticles 
+          count={counts.kanji}
+          formTorii={CONFIG.kanji.formTorii}
+          opacity={CONFIG.kanji.opacity}
+          repulsionStrength={CONFIG.kanji.repulsionStrength}
+          enableAnimation={!reduce}
+        />
 
         {/* Glow global: partículas y streaks "iluminan" */}
         {!isMobile && ( // Deshabilita bloom en mobile para mejor performance
