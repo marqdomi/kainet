@@ -1,7 +1,7 @@
 // api/contact.js
 // Vercel Serverless Function para manejar formulario de contacto
 
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -11,7 +11,7 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Solo permitir POST
   if (req.method !== 'POST') {
     return res.status(405).json({ 
