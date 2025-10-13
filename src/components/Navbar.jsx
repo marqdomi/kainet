@@ -59,12 +59,23 @@ const Navbar = () => {
     };
   }, []); // Solo ejecutar una vez al montar
 
-  const scrollToTop = useCallback((e) => {
-    e.preventDefault();
-    // Siempre navegar a home
-    navigate('/');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [navigate]);
+  const handleLogoClickWithNavigation = useCallback((e) => {
+    // Primero manejar el easter egg
+    handleLogoClick(e);
+    
+    // Si estamos en home, solo scroll to top
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Si estamos en otra página, dejar que Link navegue normalmente
+    // y luego hacer scroll to top
+    else {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [handleLogoClick, location.pathname]);
 
   return (
     <AnimatePresence>
@@ -91,7 +102,7 @@ const Navbar = () => {
               to="/"
               aria-label="Inicio KAINET"
               className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
-              onClick={handleLogoClick}
+              onClick={handleLogoClickWithNavigation}
             >
               <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
               <span className="sr-only">KAINET</span>
