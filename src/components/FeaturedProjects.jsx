@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Badge, Button, Skeleton } from './ui';
+import { Badge, Button, Skeleton, SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
@@ -88,10 +88,8 @@ const FeaturedProjects = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
-            Proyectos Destacados<span className="text-[var(--cyan-neon)]">.</span>
-          </h2>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
+          <SectionTitle kanji="作" title="Proyectos Destacados" align="center" />
+          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Casos de éxito que demuestran nuestro expertise en IA, automatización y desarrollo web
           </p>
         </motion.div>

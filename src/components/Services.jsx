@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from './ui';
+import { SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
 import CircuitLines from './effects/CircuitLines';
 import useParallaxScroll from '../hooks/useParallaxScroll';
@@ -98,10 +99,8 @@ const Services = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
-            Nuestros Servicios<span className="text-[var(--cyan-neon)]">.</span>
-          </h2>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
+          <SectionTitle kanji="技" title="Nuestros Servicios" align="center" />
+          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Transformamos ideas en soluciones tecnológicas que impulsan tu negocio hacia el futuro
           </p>
         </motion.div>

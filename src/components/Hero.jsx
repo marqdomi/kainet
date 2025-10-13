@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import Logo3D from './Logo3D';
+import GlitchText from './effects/GlitchText';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
@@ -31,14 +32,17 @@ const Hero = () => {
       {/* Texto */}
       <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-6 pointer-events-none">
         <div>
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
-            className="text-5xl md:text-7xl font-bold leading-tight text-kainet-white"
           >
-            Construyendo el Futuro
-          </motion.h1>
+            <GlitchText
+              text="Construyendo el Futuro"
+              className="text-5xl md:text-7xl font-bold leading-tight text-kainet-white"
+              as="h1"
+            />
+          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -46,7 +50,7 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-5xl md:text-7xl font-bold leading-tight text-kainet-cyan"
           >
-            de la Automatización
+            de la Automatización Inteligente
           </motion.h1>
         </div>
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Badge, Button, Skeleton } from './ui';
+import { Badge, Button, Skeleton, SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
 import { calculateReadTime } from '../utils/readTime';
 
@@ -71,10 +71,8 @@ const LatestPosts = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
-            Últimas Publicaciones<span className="text-[var(--cyan-neon)]">.</span>
-          </h2>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
+          <SectionTitle kanji="記" title="Últimas Publicaciones" align="center" />
+          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Artículos sobre IA, automatización, desarrollo web y las últimas tendencias tech
           </p>
         </motion.div>

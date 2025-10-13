@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SectionWrapper from '../hoc/SectionWrapper';
+import { SectionTitle } from './ui';
+import GlitchText from './effects/GlitchText';
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 20 },
@@ -36,11 +38,16 @@ const About = () => {
           variants={fadeUp(0)}
           className="text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Del Prototipo a la <span className="text-kainet-cyan">Perfección</span>
-          </h2>
+          <SectionTitle kanji="道" title="Nuestro Proceso" align="center" />
+          <div className="mt-6">
+            <GlitchText
+              text="De la Idea a la Realidad"
+              className="text-3xl md:text-4xl font-bold text-white"
+              as="h3"
+            />
+          </div>
           <p className="mt-4 text-gray-400 max-w-3xl mx-auto text-balance">
-            Creemos en la investigación profunda y el desarrollo iterativo. Nuestro trabajo actual se centra en explorar los límites de la IA para resolver problemas complejos, sentando las bases para las aplicaciones robustas y escalables del mañana
+            Creemos en la investigación profunda y el desarrollo iterativo. Nuestro trabajo se centra en explorar los límites de la IA para resolver problemas complejos, sentando las bases para aplicaciones robustas y escalables
           </p>
         </motion.div>
 
