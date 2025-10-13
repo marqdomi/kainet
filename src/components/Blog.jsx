@@ -1,14 +1,13 @@
 // src/components/Blog.jsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SectionWrapper from '../hoc/SectionWrapper';
-import { blogPosts } from '../data/blogPosts';
+import { getBlogPosts, getCategories } from '../lib/supabase';
 import { calculateReadTime } from '../utils/readTime';
 import LazyImage from './LazyImage';
 
-// ---- Datos importados desde /src/data/blogPosts.js ----
-
-const categories = ['Todos', 'IA', 'Automatización', 'Tutoriales', 'DevOps'];
+// ---- Categorías dinámicas desde la base de datos ----
+const defaultCategories = ['Todos', 'IA', 'Automatización', 'Tutoriales', 'DevOps'];
 
 // ---- Animaciones ----
 const containerVariants = {
@@ -217,18 +216,53 @@ const NewsletterCTA = () => {
 // ---- Main Blog Component ----
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
-  // 🚀 OPTIMIZADO: Paginación para mejorar rendimiento
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6; // Mostrar 6 posts por página
+  const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState(defaultCategories);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const postsPerPage = 6;
+
+  // 🚀 Cargar posts desde Supabase
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Cargar posts
+        const allPosts = await getBlogPosts();
+        setPosts(allPosts);
+        
+        // Cargar categorías dinámicas
+        try {
+          const dbCategories = await getCategories();
+          if (dbCategories.length > 0) {
+            setCategories(['Todos', ...dbCategories]);
+          }
+        } catch (catError) {
+          console.warn('No se pudieron cargar categorías, usando predeterminadas', catError);
+        }
+        
+      } catch (err) {
+        console.error('Error cargando posts:', err);
+        setError('No se pudieron cargar los posts. Por favor intenta más tarde.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadPosts();
+  }, []);
 
   const featuredPost = useMemo(
-    () => blogPosts.find((p) => p.featured),
-    []
+    () => posts.find((p) => p.featured),
+    [posts]
   );
 
   // 🚀 OPTIMIZADO: Filtrar y paginar posts
   const { paginatedPosts, totalPages } = useMemo(() => {
-    const filtered = blogPosts.filter((p) => 
+    const filtered = posts.filter((p) => 
       !p.featured && (selectedCategory === 'Todos' || p.category === selectedCategory)
     );
     
@@ -238,13 +272,42 @@ const Blog = () => {
     const total = Math.ceil(filtered.length / postsPerPage);
     
     return { paginatedPosts: paginated, totalPages: total };
-  }, [selectedCategory, currentPage]);
+  }, [posts, selectedCategory, currentPage]);
 
   // Resetear página cuando cambie la categoría
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
   };
+
+  // Estado de carga
+  if (loading) {
+    return (
+      <section>
+        <div className="mx-auto max-w-6xl px-6 text-center py-20">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#00E5FF] border-r-transparent"></div>
+          <p className="mt-4 text-gray-300">Cargando posts...</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Estado de error
+  if (error) {
+    return (
+      <section>
+        <div className="mx-auto max-w-6xl px-6 text-center py-20">
+          <div className="text-red-400 mb-4">⚠️ {error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="btn-kainet"
+          >
+            Reintentar
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
