@@ -20,6 +20,7 @@ const Button = ({
   className = '',
   onClick,
   type = 'button',
+  as = 'button',
   ...props 
 }) => {
   const baseStyles = `
@@ -56,12 +57,15 @@ const Button = ({
     lg: 'px-8 py-4 text-lg'
   };
 
+  const Component = as;
+  const elementProps = as === 'button' 
+    ? { type, disabled: disabled || loading, onClick }
+    : { onClick };
+
   return (
-    <button
-      type={type}
-      disabled={disabled || loading}
-      onClick={onClick}
+    <Component
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      {...elementProps}
       {...props}
     >
       {loading ? (
@@ -91,7 +95,7 @@ const Button = ({
       ) : (
         children
       )}
-    </button>
+    </Component>
   );
 };
 
