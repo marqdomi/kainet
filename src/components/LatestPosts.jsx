@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Card, Badge, Button, Skeleton } from './ui';
+import { Badge, Button, Skeleton } from './ui';
+import HolographicCard from './effects/HolographicCard';
 import { calculateReadTime } from '../utils/readTime';
 
 const LatestPosts = () => {
@@ -82,9 +83,9 @@ const LatestPosts = () => {
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <Card key={i}>
+              <HolographicCard key={i}>
                 <Skeleton variant="card" />
-              </Card>
+              </HolographicCard>
             ))}
           </div>
         )}
@@ -104,10 +105,7 @@ const LatestPosts = () => {
                 variants={cardVariants}
               >
                 <Link to={`/blog/${post.slug}`}>
-                  <Card 
-                    hover
-                    className="h-full flex flex-col group"
-                  >
+                  <HolographicCard className="h-full flex flex-col group">
                     {/* Category Badge */}
                     <div className="mb-4">
                       <Badge variant="purple" size="sm">
@@ -130,7 +128,7 @@ const LatestPosts = () => {
                       <span>{formatDate(post.created_at)}</span>
                       <span>{calculateReadTime(post.content)} min</span>
                     </div>
-                  </Card>
+                  </HolographicCard>
                 </Link>
               </motion.div>
             ))}

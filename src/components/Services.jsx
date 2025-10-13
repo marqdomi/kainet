@@ -2,7 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, Button } from './ui';
+import { Button } from './ui';
+import HolographicCard from './effects/HolographicCard';
 import CircuitLines from './effects/CircuitLines';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
@@ -118,10 +119,7 @@ const Services = () => {
               key={index}
               variants={cardVariants}
             >
-              <Card 
-                hover 
-                className="h-full flex flex-col"
-              >
+              <HolographicCard className="h-full flex flex-col">
                 {/* Kanji Icon */}
                 <div className="text-6xl mb-4 font-bold text-[var(--cyan-neon)]">{service.kanji}</div>
                 
@@ -159,7 +157,7 @@ const Services = () => {
                     </span>
                   ))}
                 </div>
-              </Card>
+              </HolographicCard>
             </motion.div>
           ))}
         </motion.div>
