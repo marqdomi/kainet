@@ -71,7 +71,11 @@ const Navbar = () => {
       window.location.href = `/#${id}`;
     } else {
       const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Actualizar URL con hash sin recargar
+        window.history.pushState(null, '', `#${id}`);
+      }
     }
   }, [isBlogPage, isBlogListing]);
 

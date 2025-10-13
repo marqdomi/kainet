@@ -1,7 +1,7 @@
 // src/components/BlogPost.jsx
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { blogPosts } from '../data/blogPosts';
+import { getPostBySlug, getBlogPosts } from '../lib/supabase';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { calculateReadTime } from '../utils/readTime';
 import './BlogPost.css';
@@ -10,41 +10,82 @@ const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [readTime, setReadTime] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Obtener el slug de la URL
-    const path = window.location.pathname;
-    const slug = path.split('/blog/')[1];
+    async function loadPost() {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Obtener el slug de la URL
+        const path = window.location.pathname;
+        const slug = path.split('/blog/')[1];
 
-    if (slug) {
-      // Buscar el post por slug
-      const foundPost = blogPosts.find((p) => p.slug === slug);
-      setPost(foundPost);
-      
-      // Calcular tiempo de lectura real
-      if (foundPost && foundPost.content) {
-        const calculatedTime = calculateReadTime(foundPost.content);
-        setReadTime(calculatedTime);
-      }
+        if (slug) {
+          // 🚀 Cargar post desde Supabase
+          const foundPost = await getPostBySlug(slug);
+          
+          if (!foundPost) {
+            setError('Post no encontrado');
+            setLoading(false);
+            return;
+          }
+          
+          setPost(foundPost);
+          
+          // Calcular tiempo de lectura real
+          if (foundPost.content) {
+            const calculatedTime = calculateReadTime(foundPost.content);
+            setReadTime(calculatedTime);
+          }
 
-      // Posts relacionados (misma categoría)
-      if (foundPost) {
-        const related = blogPosts
-          .filter((p) => p.category === foundPost.category && p.id !== foundPost.id)
-          .slice(0, 3);
-        setRelatedPosts(related);
+          // Posts relacionados (misma categoría)
+          try {
+            const allPosts = await getBlogPosts();
+            const related = allPosts
+              .filter((p) => p.category === foundPost.category && p.id !== foundPost.id)
+              .slice(0, 3);
+            setRelatedPosts(related);
+          } catch (err) {
+            console.warn('No se pudieron cargar posts relacionados', err);
+          }
+        }
+        
+        // Scroll to top cuando cambia el post
+        window.scrollTo(0, 0);
+      } catch (err) {
+        console.error('Error cargando post:', err);
+        setError('Error al cargar el post');
+      } finally {
+        setLoading(false);
       }
     }
-
-    // Scroll to top cuando cambia el post
-    window.scrollTo(0, 0);
+    
+    loadPost();
   }, [window.location.pathname]);
 
-  if (!post) {
+  // Estado de carga
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Post no encontrado</h2>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#00E5FF] border-r-transparent mb-4"></div>
+          <p className="text-gray-300">Cargando artículo...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Estado de error o post no encontrado
+  if (error || !post) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            {error || 'Post no encontrado'}
+          </h2>
           <a
             href="/blog"
             className="text-cyan-400 hover:text-cyan-300 transition-colors"
