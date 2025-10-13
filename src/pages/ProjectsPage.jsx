@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../lib/supabase';
 import { Card, Badge, Button, Skeleton } from '../components/ui';
 
 const ProjectsPage = () => {
