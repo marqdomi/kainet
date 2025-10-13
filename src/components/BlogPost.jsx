@@ -1,5 +1,6 @@
 // src/components/BlogPost.jsx
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getPostBySlug, getBlogPosts } from '../lib/supabase';
 import SectionWrapper from '../hoc/SectionWrapper';
@@ -7,6 +8,7 @@ import { calculateReadTime } from '../utils/readTime';
 import './BlogPost.css';
 
 const BlogPost = () => {
+  const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [readTime, setReadTime] = useState('');
@@ -18,10 +20,6 @@ const BlogPost = () => {
       try {
         setLoading(true);
         setError(null);
-        
-        // Obtener el slug de la URL
-        const path = window.location.pathname;
-        const slug = path.split('/blog/')[1];
 
         if (slug) {
           // 🚀 Cargar post desde Supabase
@@ -64,7 +62,7 @@ const BlogPost = () => {
     }
     
     loadPost();
-  }, [window.location.pathname]);
+  }, [slug]);
 
   // Estado de carga
   if (loading) {
