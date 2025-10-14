@@ -90,4 +90,4 @@ jobs:
         if: github.event.inputs.dryRun != 'true'
         run: |
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Weekly AI News (Semana ${{ steps.week.outputs.week_number }})" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Weekly AI News (Semana ${{ steps.week.outputs.week_number }})" && git pull --rebase origin main && git push)

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { supabase } from '../lib/supabase';
+import { getBlogPosts } from '../lib/supabase';
 import { Badge, Button, Skeleton, SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
 import { calculateReadTime } from '../utils/readTime';
@@ -18,16 +18,11 @@ const LatestPosts = () => {
   const fetchLatestPosts = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(3);
-
-      if (error) throw error;
+      const data = await getBlogPosts({ limit: 3 });
       setPosts(data || []);
     } catch (err) {
       console.error('Error fetching latest posts:', err);
+      setPosts([]);
     } finally {
       setLoading(false);
     }
@@ -123,13 +118,32 @@ const LatestPosts = () => {
 
                     {/* Meta Info */}
                     <div className="flex items-center justify-between text-sm text-[var(--text-secondary)] pt-4 border-t border-[var(--gray-700)]">
-                      <span>{formatDate(post.created_at)}</span>
-                      <span>{calculateReadTime(post.content)} min</span>
+                      <span>{formatDate(post.date || post.created_at)}</span>
+                      <span>{post.readTime || calculateReadTime(post.content)}</span>
                     </div>
                   </HolographicCard>
                 </Link>
               </motion.div>
             ))}
+          </motion.div>
+        )}
+
+        {/* Empty State */}
+        {!loading && posts.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-12"
+          >
+            <HolographicCard className="max-w-md mx-auto">
+              <div className="text-6xl mb-4">📝</div>
+              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+                Próximamente
+              </h3>
+              <p className="text-[var(--text-secondary)]">
+                Estamos preparando contenido increíble sobre IA, automatización y desarrollo web.
+              </p>
+            </HolographicCard>
           </motion.div>
         )}
 
