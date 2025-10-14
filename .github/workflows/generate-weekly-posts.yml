@@ -57,7 +57,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: IA Semanal post" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: IA Semanal post" && git pull --rebase origin main && git push)
 
   generate-automation-post:
     # Solo correr el lunes o si se selecciona manualmente
@@ -92,4 +92,4 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Automatización Semanal post" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Automatización Semanal post" && git pull --rebase origin main && git push)

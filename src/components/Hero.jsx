@@ -38,20 +38,20 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
           >
             <GlitchText
-              text="Construyendo el Futuro"
+              text="Construyendo el futuro"
               className="text-5xl md:text-7xl font-bold leading-tight text-kainet-white"
               as="h1"
             />
           </motion.div>
 
-          <motion.h1
+          <motion.h2
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-5xl md:text-7xl font-bold leading-tight text-kainet-cyan"
           >
             de la Automatización Inteligente
-          </motion.h1>
+          </motion.h2>
         </div>
 
         {/* Hint de scroll (auto-ocultable) */}
