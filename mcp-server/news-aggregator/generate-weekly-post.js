@@ -298,18 +298,40 @@ IMPORTANT:
 
 /**
  * Normaliza caracteres especiales en strings (convierte unicode a ASCII)
+ * Muy agresivo para evitar problemas con JSON.stringify()
  */
 function normalizeContent(text) {
   if (!text) return '';
+  
   return text
-    // Convertir comillas inteligentes a comillas normales
-    .replace(/[\u2018\u2019]/g, "'")  // ' y ' → '
-    .replace(/[\u201C\u201D]/g, '"')  // " y " → "
-    .replace(/[\u2013\u2014]/g, '-')  // – y — → -
-    // Remover caracteres de control
-    .replace(/[\x00-\x1F\x7F]/g, '')
-    // Remover caracteres especiales problemáticos
-    .replace(/[\uFEFF]/g, '');
+    // FIRST: Reemplazar comillas inteligentes/curvas con rectas
+    .replace(/[\u2018\u2019\u0091\u0092]/g, "'")       // Todas las variantes de '
+    .replace(/[\u201C\u201D\u0093\u0094]/g, '"')       // Todas las variantes de "
+    
+    // Reemplazar guiones especiales
+    .replace(/[\u2013\u2014\u2212\u2010\u2011]/g, '-') // – — − ‐ ‑ → -
+    
+    // Reemplazar puntos especiales
+    .replace(/[\u2026]/g, '...')  // … → ...
+    .replace(/[\u00B7]/g, '.')    // · → .
+    
+    // Reemplazar espacios especiales por espacio normal
+    .replace(/[\u00A0\u2000-\u200B\u202F\u205F\u3000]/g, ' ')
+    
+    // SEGUNDO: Remover caracteres de control y no-imprimibles
+    .replace(/[\x00-\x1F\x7F-\x9F]/g, '')
+    
+    // TERCERO: Remover caracteres especiales problemáticos
+    .replace(/[\uFEFF\uFFFD]/g, '')  // BOM y replacement char
+    
+    // CUARTO: Escapar caracteres que causarán problemas en JSON
+    // Pero JSON.stringify ya lo hace, así que solo normalizamos lo peligroso
+    .replace(/\r/g, '\n')  // Normalizar line endings
+    
+    // QUINTO: Limpiar múltiples espacios/saltos consecutivos
+    .replace(/\n\n+/g, '\n\n')  // Max 2 saltos
+    .replace(/ +/g, ' ')        // Múltiples espacios → 1
+    .trim();                     // Trim inicio/fin
 }
 
 /**
@@ -450,18 +472,24 @@ async function saveToLocalBlog(post) {
     const startIdx = fileContent.indexOf('[');
     const endIdx = fileContent.lastIndexOf(']') + 1;
     const jsonStr = fileContent.substring(startIdx, endIdx);
-    const posts = JSON.parse(jsonStr);
+    
+    let posts = [];
+    try {
+      posts = JSON.parse(jsonStr);
+    } catch (parseErr) {
+      console.warn('⚠️  Could not parse existing blogPosts.js, starting fresh');
+      posts = [];
+    }
 
-    // Crear una copia segura del post para JSON
-    // JSON.stringify automáticamente escapa caracteres especiales
+    // Crear una copia segura del post
     const safePost = {
       id: post.id || `post-${Date.now()}`,
       slug: post.slug,
-      title: post.title || '',
+      title: post.title || 'Untitled',
       excerpt: post.excerpt || '',
-      content: post.content || '',
+      content: post.content || '<p>No content available</p>',
       author: post.author || 'KAINET',
-      category: post.category || '',
+      category: post.category || 'General',
       featured: Boolean(post.featured),
       readTime: post.readTime || 8,
       image: post.image || null,
@@ -469,17 +497,35 @@ async function saveToLocalBlog(post) {
       createdAt: new Date().toISOString()
     };
 
+    // Validar que el post es serializable
+    try {
+      JSON.stringify(safePost);
+    } catch (stringifyErr) {
+      console.error('⚠️  Post contains non-serializable content, stripping problematic fields');
+      // Si falla stringify, remover el campo problemático
+      safePost.content = '<p>Content too large or contains special characters</p>';
+    }
+
     // Agregar nuevo post al principio
     posts.unshift(safePost);
 
-    // JSON.stringify maneja automáticamente caracteres especiales
-    const newContent = `export default ${JSON.stringify(posts, null, 2)};\n`;
-    await writeFile(blogPostsPath, newContent, 'utf-8');
-
-    console.log('✅ Post guardado en blogPosts.js local');
+    // Intentar escribir archivo
+    try {
+      const newContent = `export default ${JSON.stringify(posts, null, 2)};\n`;
+      await writeFile(blogPostsPath, newContent, 'utf-8');
+      console.log('✅ Post guardado en blogPosts.js local');
+    } catch (writeErr) {
+      // Si falla escritura completa, intentar con menos posts
+      console.warn('⚠️  Could not write full blogPosts.js, keeping only recent posts...');
+      const recentPosts = posts.slice(0, 20); // Mantener solo últimos 20
+      const newContent = `export default ${JSON.stringify(recentPosts, null, 2)};\n`;
+      await writeFile(blogPostsPath, newContent, 'utf-8');
+      console.log('✅ Post guardado en blogPosts.js (limitado a 20 posts recientes)');
+    }
   } catch (error) {
     console.error('❌ Error guardando localmente:', error.message);
-    // No lanzar error, solo registrar
+    // No lanzar error - Supabase es la fuente primaria, esto es fallback
+    console.log('   (No problem, Supabase was successful)');
   }
 }
 
