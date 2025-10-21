@@ -1,8 +1,10 @@
 -- Crear tabla blog_posts en Supabase
 -- Esta tabla almacena todos los posts del blog, incluyendo los generados semanalmente
 
+-- DROP TABLE IF EXISTS blog_posts CASCADE;
+
 CREATE TABLE IF NOT EXISTS blog_posts (
-  id BIGINT PRIMARY KEY DEFAULT gen_random_bigint(),
+  id BIGSERIAL PRIMARY KEY,
   slug VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(500) NOT NULL,
   excerpt TEXT NOT NULL,
