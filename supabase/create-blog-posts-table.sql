@@ -1,10 +1,15 @@
 -- Crear tabla blog_posts en Supabase
 -- Esta tabla almacena todos los posts del blog, incluyendo los generados semanalmente
 
--- DROP TABLE IF EXISTS blog_posts CASCADE;
+-- Primero, eliminar la tabla si existe (esto es seguro)
+DROP TABLE IF EXISTS blog_posts CASCADE;
 
-CREATE TABLE IF NOT EXISTS blog_posts (
-  id BIGSERIAL PRIMARY KEY,
+-- Crear secuencia para ID
+CREATE SEQUENCE blog_posts_id_seq AS BIGINT START 1 INCREMENT BY 1;
+
+-- Crear tabla con id que usa la secuencia
+CREATE TABLE blog_posts (
+  id BIGINT PRIMARY KEY DEFAULT nextval('blog_posts_id_seq'),
   slug VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(500) NOT NULL,
   excerpt TEXT NOT NULL,
