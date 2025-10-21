@@ -62,9 +62,8 @@ CREATE POLICY "Authenticated delete" ON blog_posts
   FOR DELETE
   USING (true);
 
--- Insertar posts iniciales (primero eliminar si existen)
-DELETE FROM blog_posts WHERE TRUE;
-
+-- Insertar posts iniciales (seguro - no falla si ya existen)
+-- Usar ON CONFLICT para actualizar si existe o insertar si no
 INSERT INTO blog_posts (slug, title, excerpt, content, author, category, featured, date, read_time) VALUES
   (
     'ia-semanal-semana-1-2025',
@@ -276,7 +275,17 @@ En finanzas, medicina y legal, la explicabilidad es obligatoria.
     false,
     '2025-01-01',
     '7 min'
-  );
+  )
+ON CONFLICT (slug) DO UPDATE SET
+  title = EXCLUDED.title,
+  excerpt = EXCLUDED.excerpt,
+  content = EXCLUDED.content,
+  author = EXCLUDED.author,
+  category = EXCLUDED.category,
+  featured = EXCLUDED.featured,
+  date = EXCLUDED.date,
+  read_time = EXCLUDED.read_time,
+  updated_at = NOW();
 
 -- Verificar datos insertados
 SELECT COUNT(*) as total_posts FROM blog_posts;
