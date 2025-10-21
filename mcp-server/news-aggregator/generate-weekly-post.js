@@ -34,9 +34,10 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Inicializar Gemini 2.5-PRO
+// Inicializar Gemini (usando 2.5-flash para mejor disponibilidad)
+// Cambia a 'gemini-2.5-pro' si necesitas más poder
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Inicializar Supabase
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://tqdencmzezjevnntifos.supabase.co';
@@ -124,6 +125,12 @@ async function fetchReddit(keywords, subreddit = 'r/devops+r/automation', limit 
     });
     const data = await res.json();
 
+    // Validar que data.data.children existe
+    if (!data || !data.data || !data.data.children || !Array.isArray(data.data.children)) {
+      console.warn('⚠️  Reddit data structure unexpected, retrying...');
+      return [];
+    }
+
     const posts = data.data.children
       .filter(post => {
         const titleLower = post.data.title.toLowerCase();
@@ -207,63 +214,79 @@ async function aggregateNews(category, keywords) {
 // ===== GENERACIÓN CON IA =====
 
 /**
- * Genera contenido de blog usando Gemini 2.5-PRO
+ * Genera contenido de blog usando Gemini 2.5-Flash
  */
 async function generateContentWithAI(news, categoryConfig, weekNumber) {
-  console.log(`\n🤖 Generando contenido con Gemini 2.5-PRO para: ${categoryConfig.title}...`);
+  console.log(`\n🤖 Generando contenido con Gemini 2.5-Flash para: ${categoryConfig.title}...`);
   
   // Preparar resumen de noticias para Gemini
   const newsContext = news.slice(0, 8).map((item, idx) => {
     return `${idx + 1}. "${item.title}" (${item.source}) - Score: ${item.score || 'N/A'}\n   URL: ${item.url}`;
   }).join('\n\n');
 
-  const prompt = `
-Eres un experto en tecnología y automatización. Basándote en estas noticias recientes, crea un post de blog profundo y valioso.
+  const prompt = `Based on these tech news items, write a blog post in ONLY this JSON format, nothing else:
 
-CATEGORÍA: ${categoryConfig.title}
-SEMANA: ${weekNumber}
-FECHA: ${new Date().toISOString().split('T')[0]}
+{
+  "title": "Catchy title here",
+  "excerpt": "Brief 100-150 char summary",
+  "content": "<p>1500-2000 word blog post in HTML</p>",
+  "readTime": 8
+}
 
-NOTICIAS RECIENTES:
+NEWS ITEMS:
 ${newsContext}
 
-INSTRUCCIONES:
-1. Crea un título atractivo y SEO-friendly (máx 60 caracteres)
-2. Escribe un excerpt de 150-200 caracteres
-3. Genera el contenido principal en Markdown (1500-2000 palabras)
-4. Incluye:
-   - Introducción con contexto actual
-   - 3-4 secciones temáticas
-   - Análisis de impacto en la industria
-   - Herramientas/tecnologías mencionadas
-   - Conclusión con reflexión personal
-5. Usa lenguaje accesible pero técnico
-6. Cita las fuentes de las noticias
-
-IMPORTANTE:
-- Formato: JSON con propiedades: title, excerpt, content
-- Content en Markdown puro
-- No incluyas figuras ni placeholders de imágenes
-- Sé crítico y analítico, no solo descriptivo
-
-Responde SOLO en JSON válido, sin comentarios adicionales.
-`;
+IMPORTANT:
+- ONLY respond with the JSON object, no code blocks, no markdown, no extra text
+- Content in Spanish
+- HTML only: p, h2, h3, ul, li, strong tags
+- Escape quotes in strings with backslash
+- Valid JSON that can be parsed with JSON.parse()`;
 
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
+    let text = response.text();
     
-    // Parsear JSON
+    // Parsear JSON con agresivo cleaning
     let jsonContent;
     try {
-      // Intentar extraer JSON si tiene markup adicional
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      jsonContent = JSON.parse(jsonMatch ? jsonMatch[0] : text);
-    } catch (e) {
-      console.error('⚠️  Error parseando JSON de Gemini:', e.message);
-      console.log('Texto recibido:', text.substring(0, 200));
-      throw new Error('Invalid JSON from Gemini');
+      // Muy agresivo: remover TODO markdown
+      text = text.replace(/```[\s\S]*?```/g, '');  // Remover code blocks
+      text = text.replace(/^```(json)?\n?/m, '');  // Remover opening ```
+      text = text.replace(/\n?```$/m, '');  // Remover closing ```
+      text = text.trim();
+      
+      // Encontrar JSON entre primeras y últimas llaves
+      const jsonStart = text.indexOf('{');
+      const jsonEnd = text.lastIndexOf('}');
+      
+      if (jsonStart === -1 || jsonEnd === -1 || jsonEnd <= jsonStart) {
+        throw new Error('Could not locate JSON braces');
+      }
+      
+      const jsonString = text.substring(jsonStart, jsonEnd + 1);
+      
+      // Intentar parsear
+      jsonContent = JSON.parse(jsonString);
+      
+      // Validar campos
+      if (!jsonContent.title || !jsonContent.excerpt || !jsonContent.content) {
+        throw new Error('Missing required JSON fields');
+      }
+      
+    } catch (parseError) {
+      console.error('⚠️  Error parseando JSON:', parseError.message);
+      console.log('Raw text (first 500 chars):\n', text.substring(0, 500));
+      
+      // Fallback: generar post mínimo
+      console.log('📝 Usando fallback template...');
+      jsonContent = {
+        title: `${categoryConfig.title} - Week ${weekNumber}`,
+        excerpt: `Latest insights on ${categoryConfig.title.toLowerCase()}`,
+        content: `<p>Content generation encountered an error. Please check the system logs.</p>`,
+        readTime: 5
+      };
     }
 
     return jsonContent;
@@ -271,6 +294,22 @@ Responde SOLO en JSON válido, sin comentarios adicionales.
     console.error('❌ Error con Gemini API:', error.message);
     throw error;
   }
+}
+
+/**
+ * Normaliza caracteres especiales en strings (convierte unicode a ASCII)
+ */
+function normalizeContent(text) {
+  if (!text) return '';
+  return text
+    // Convertir comillas inteligentes a comillas normales
+    .replace(/[\u2018\u2019]/g, "'")  // ' y ' → '
+    .replace(/[\u201C\u201D]/g, '"')  // " y " → "
+    .replace(/[\u2013\u2014]/g, '-')  // – y — → -
+    // Remover caracteres de control
+    .replace(/[\x00-\x1F\x7F]/g, '')
+    // Remover caracteres especiales problemáticos
+    .replace(/[\uFEFF]/g, '');
 }
 
 /**
@@ -287,15 +326,20 @@ function createPost(aiContent, categoryConfig, weekNumber) {
     .replace(/\s+/g, '-')
     .slice(0, 60) + `-semana-${weekNumber}`;
 
+  // Normalizar contenido para evitar problemas con JSON
+  const normalizedContent = normalizeContent(aiContent.content);
+  const normalizedExcerpt = normalizeContent(aiContent.excerpt);
+  const normalizedTitle = normalizeContent(aiContent.title);
+
   return {
     id: Date.now() + Math.random(),
     slug: slug,
-    title: aiContent.title,
-    excerpt: aiContent.excerpt,
-    content: aiContent.content,
+    title: normalizedTitle,
+    excerpt: normalizedExcerpt,
+    content: normalizedContent,
     author: 'KAINET AI',
     date: dateStr,
-    readTime: calculateReadTime(aiContent.content),
+    readTime: calculateReadTime(normalizedContent),
     category: categoryConfig.category,
     image: `https://placehold.co/800x500/0a0a0a/00E5FF?text=${encodeURIComponent(categoryConfig.title)}`,
     featured: false,
@@ -317,6 +361,9 @@ function calculateReadTime(content) {
 /**
  * Guarda post en Supabase
  */
+/**
+ * Guarda el post en Supabase
+ */
 async function saveToSupabase(post) {
   if (!supabaseClient) {
     console.warn('⚠️  Supabase no configurado. Omitiendo guardado en BD.');
@@ -324,28 +371,67 @@ async function saveToSupabase(post) {
   }
 
   try {
-    const { data, error } = await supabaseClient
+    // Primero, intentar actualizar si existe
+    const { data: existing, error: checkError } = await supabaseClient
       .from('blog_posts')
-      .upsert({
-        slug: post.slug,
-        title: post.title,
-        excerpt: post.excerpt,
-        content: post.content,
-        author: post.author,
-        category: post.category,
-        featured: post.featured,
-        read_time: post.readTime,
-        image: post.image,
-        date: post.date,
-      }, { onConflict: 'slug' });
+      .select('id')
+      .eq('slug', post.slug)
+      .limit(1)
+      .single();
 
-    if (error) {
-      console.error('❌ Error guardando en Supabase:', error.message);
+    let result;
+    if (existing && !checkError) {
+      // Actualizar registro existente
+      const { data, error } = await supabaseClient
+        .from('blog_posts')
+        .update({
+          title: post.title,
+          excerpt: post.excerpt,
+          content: post.content,
+          author: post.author,
+          category: post.category,
+          featured: post.featured,
+          read_time: post.readTime,
+          image: post.image,
+          date: post.date,
+        })
+        .eq('slug', post.slug)
+        .select();
+      
+      result = { data, error };
+      console.log('📝 Post actualizado en Supabase');
+    } else {
+      // Insertar nuevo registro
+      // Asegurarse que date es válido
+      const dateStr = post.date || new Date().toISOString().split('T')[0];
+      
+      const { data, error } = await supabaseClient
+        .from('blog_posts')
+        .insert([{
+          slug: post.slug,
+          title: post.title,
+          excerpt: post.excerpt,
+          content: post.content,
+          author: post.author || 'KAINET',
+          category: post.category,
+          featured: post.featured || false,
+          read_time: post.readTime || '8 min',
+          image: post.image || null,
+          date: dateStr,
+        }])
+        .select();
+      
+      result = { data, error };
+    }
+
+    if (result.error) {
+      console.error('❌ Error Supabase:', result.error.message);
+      if (result.error.details) console.error('   Detalles:', result.error.details);
       return null;
     }
 
     console.log('✅ Post guardado en Supabase');
-    return data;
+    return result.data;
   } catch (error) {
     console.error('❌ Error con Supabase:', error.message);
     return null;
@@ -366,16 +452,34 @@ async function saveToLocalBlog(post) {
     const jsonStr = fileContent.substring(startIdx, endIdx);
     const posts = JSON.parse(jsonStr);
 
-    // Agregar nuevo post
-    posts.unshift(post);
+    // Crear una copia segura del post para JSON
+    // JSON.stringify automáticamente escapa caracteres especiales
+    const safePost = {
+      id: post.id || `post-${Date.now()}`,
+      slug: post.slug,
+      title: post.title || '',
+      excerpt: post.excerpt || '',
+      content: post.content || '',
+      author: post.author || 'KAINET',
+      category: post.category || '',
+      featured: Boolean(post.featured),
+      readTime: post.readTime || 8,
+      image: post.image || null,
+      date: post.date || new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString()
+    };
 
-    // Escribir de vuelta
+    // Agregar nuevo post al principio
+    posts.unshift(safePost);
+
+    // JSON.stringify maneja automáticamente caracteres especiales
     const newContent = `export default ${JSON.stringify(posts, null, 2)};\n`;
     await writeFile(blogPostsPath, newContent, 'utf-8');
 
     console.log('✅ Post guardado en blogPosts.js local');
   } catch (error) {
     console.error('❌ Error guardando localmente:', error.message);
+    // No lanzar error, solo registrar
   }
 }
 
