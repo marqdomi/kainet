@@ -22,6 +22,58 @@
 
 export const blogPosts = [
   {
+  "id": 1761062698237,
+  "slug": "modelos-de-lenguaje-el-futuro-de-la-comunicaci-n-0",
+  "title": "Modelos de Lenguaje: El Futuro de la Comunicación",
+  "excerpt": "Explorando cómo los LLMs están revolucionando la forma en que nos comunicamos con máquinas.",
+  "author": "KAINET",
+  "date": "2025-10-21",
+  "readTime": "5 min",
+  "category": "IA",
+  "image": "https://placehold.co/800x500/0a0a0a/00E5FF?text=IA",
+  "featured": true,
+  "content": "# Modelos de Lenguaje: El Futuro de la Comunicación\n\nLos modelos de lenguaje han avanzado exponencialmente en los últimos meses.\n\n## Tendencias Clave\n\n### 1. Multimodalidad\nLos nuevos modelos procesan texto, imagen, audio y video simultáneamente.\n\n### 2. Eficiencia\nSe logra mejor performance con modelos más pequeños.\n\n### 3. Contexto Extendido\nVentanas de contexto de 100K+ tokens permiten procesar documentos completos.\n\n## Implicaciones para Negocios\n\nLas empresas pueden automatizar procesos complejos con mayor precisión.\n\n---\n\n*En KAINET usamos estas tecnologías para crear soluciones innovadoras.*"
+},
+  {
+  "id": 1761062698239,
+  "slug": "workflows-automatizados-ahorra-tiempo-y-dinero-1",
+  "title": "Workflows Automatizados: Ahorra Tiempo y Dinero",
+  "excerpt": "Cómo la automatización inteligente puede reducir costos operacionales hasta un 40%.",
+  "author": "KAINET",
+  "date": "2025-10-19",
+  "readTime": "6 min",
+  "category": "Automatización",
+  "image": "https://placehold.co/800x500/0a0a0a/00E5FF?text=Automatizaci%C3%B3n",
+  "featured": false,
+  "content": "# Workflows Automatizados: Ahorra Tiempo y Dinero\n\nLa automatización es la clave para escalar negocios sin aumentar costos.\n\n## Casos de Uso\n\n### Email Automation\n- Clasificación automática\n- Respuestas inteligentes\n- Plantillas dinámicas\n\n### Data Processing\n- ETL automatizado\n- Validación en tiempo real\n- Alertas inteligentes\n\n### Reportes\n- Generación automática\n- Distribución programada\n- Análisis integrado\n\n## ROI\n\n- Reducción de tiempo: 60-80%\n- Errores humanos: -95%\n- Satisfacción de clientes: +30%\n\n---\n\n*KAINET especialista en automatización empresarial.*"
+},
+  {
+  "id": 1761062698240,
+  "slug": "gu-a-desplegar-llms-en-producci-n-sin-arruinar-tu-presupuesto-2",
+  "title": "Guía: Desplegar LLMs en Producción sin Arruinar tu Presupuesto",
+  "excerpt": "Tips prácticos para implementar modelos de IA en producción de forma eficiente y económica.",
+  "author": "KAINET",
+  "date": "2025-10-17",
+  "readTime": "7 min",
+  "category": "Tutoriales",
+  "image": "https://placehold.co/800x500/0a0a0a/00E5FF?text=Tutoriales",
+  "featured": false,
+  "content": "# Guía: Desplegar LLMs en Producción\n\nDesplegar LLMs requiere planificación cuidadosa.\n\n## Consideraciones Críticas\n\n### 1. Modelo Correcto\n- Tamaño vs. Performance\n- Latencia vs. Costo\n- Especializados vs. Generales\n\n### 2. Infrastructure\n- GPU vs. CPU\n- Edge vs. Cloud\n- Escalabilidad horizontal\n\n### 3. Monitoreo\n- Drift detection\n- Performance tracking\n- Cost analysis\n\n## Mejores Prácticas\n\n1. Usar caché para prompts comunes\n2. Implementar rate limiting\n3. Validar todos los inputs\n4. Monitorear continuamente\n\n---\n\n*Chequea nuestros proyectos para ejemplos reales.*"
+},
+  {
+  "id": 1761062698241,
+  "slug": "ci-cd-moderno-de-commits-a-producci-n-en-minutos-3",
+  "title": "CI/CD Moderno: De Commits a Producción en Minutos",
+  "excerpt": "Setup de pipeline CI/CD que automatiza testing, building y deployment.",
+  "author": "KAINET",
+  "date": "2025-10-15",
+  "readTime": "8 min",
+  "category": "DevOps",
+  "image": "https://placehold.co/800x500/0a0a0a/00E5FF?text=DevOps",
+  "featured": false,
+  "content": "# CI/CD Moderno: De Commits a Producción\n\nUn buen pipeline CI/CD es esencial en 2025.\n\n## Componentes Clave\n\n### 1. Source Control\n- Git workflows\n- Branch strategies\n- Code review\n\n### 2. Build\n- Compilación\n- Testing\n- Linting\n\n### 3. Deploy\n- Staging\n- Canary releases\n- Rollback automático\n\n## Stack Recomendado\n\n- GitHub Actions (CI/CD)\n- Docker (Containerización)\n- Kubernetes (Orquestación)\n- Prometheus (Monitoreo)\n\n---\n\n*Implementamos pipelines profesionales desde el inicio del proyecto.*"
+},
+  {
     id: 1760372976675,
     slug: 'automation-tools-semana-41-2025',
     title: 'Automatización Esta Semana: DevOps, Tools & Cloud (Semana 41)',

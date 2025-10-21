@@ -10,9 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test-aggregate": "node test-aggregate.js",
-    "generate-post": "node generate-post.js",
-    "generate-automation": "node generate-automation-post.js"
+    "generate-weekly": "node generate-weekly-post.js"
   },
   "keywords": [
     "mcp",
