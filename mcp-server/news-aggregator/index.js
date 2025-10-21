@@ -16,6 +16,7 @@ import {
 import fetch from 'node-fetch';
 import { writeFile, readFile } from 'fs/promises';
 import { join } from 'path';
+import { createClient } from '@supabase/supabase-js';
 
 // ===== Configuración =====
 const CONFIG = {
@@ -48,6 +49,19 @@ const CONFIG = {
     - DevOps y CI/CD moderno
   `,
 };
+
+// ===== Configuración de Supabase =====
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://tqdencmzezjevnntifos.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY; // Key de servicio para inserciones
+
+let supabaseClient = null;
+
+if (SUPABASE_SERVICE_KEY) {
+  supabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+  console.error('✅ Supabase configurado correctamente');
+} else {
+  console.error('⚠️  SUPABASE_SERVICE_KEY no está configurada. Los posts se guardarán solo localmente.');
+}
 
 // ===== Funciones de agregación de noticias =====
 
@@ -145,6 +159,47 @@ async function fetchArxiv() {
   } catch (error) {
     console.error('Error fetching ArXiv:', error);
     return [];
+  }
+}
+
+/**
+ * Guarda un post en Supabase
+ * @param {Object} post - Objeto del post con slug, title, excerpt, content, category, date, readTime
+ * @returns {Promise<Object>} Post guardado con ID
+ */
+async function savePostToSupabase(post) {
+  if (!supabaseClient) {
+    throw new Error('Supabase no está configurado (SUPABASE_SERVICE_KEY faltante)');
+  }
+
+  try {
+    const postData = {
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      content: post.content,
+      author: post.author || 'KAINET AI Bot',
+      category: post.category,
+      featured: post.featured || false,
+      date: post.date,
+      read_time: post.readTime,
+      image: post.image || null,
+    };
+
+    const { data, error } = await supabaseClient
+      .from('blog_posts')
+      .insert([postData])
+      .select();
+
+    if (error) {
+      throw new Error(`Error en Supabase: ${error.message}`);
+    }
+
+    console.error(`✅ Post guardado en Supabase: ${post.slug}`);
+    return data[0];
+  } catch (error) {
+    console.error(`❌ Error guardando en Supabase: ${error.message}`);
+    throw error;
   }
 }
 
@@ -362,24 +417,52 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const post = await generateBlogPost(news, args.weekNumber);
 
       if (args.autoPublish) {
-        // Guardar en blogPosts.js
-        const blogPostsPath = join(process.cwd(), 'src/data/blogPosts.js');
-        const content = await readFile(blogPostsPath, 'utf-8');
-        
-        // Insertar nuevo post al inicio del array
-        const newPostStr = JSON.stringify(post, null, 2);
-        const updatedContent = content.replace(
-          /export const blogPosts = \[/,
-          `export const blogPosts = [\n  ${newPostStr},`
-        );
-        
-        await writeFile(blogPostsPath, updatedContent);
-        
+        let successMessages = [];
+        let errors = [];
+
+        // 1️⃣ Guardar en Supabase (prioridad principal)
+        if (supabaseClient) {
+          try {
+            await savePostToSupabase(post);
+            successMessages.push('✅ Guardado en Supabase');
+          } catch (error) {
+            errors.push(`❌ Error Supabase: ${error.message}`);
+          }
+        } else {
+          errors.push('⚠️  Supabase no configurado (SUPABASE_SERVICE_KEY faltante)');
+        }
+
+        // 2️⃣ Guardar en blogPosts.js como respaldo
+        try {
+          const blogPostsPath = join(process.cwd(), 'src/data/blogPosts.js');
+          const content = await readFile(blogPostsPath, 'utf-8');
+          
+          // Insertar nuevo post al inicio del array
+          const newPostStr = JSON.stringify(post, null, 2);
+          const updatedContent = content.replace(
+            /export const blogPosts = \[/,
+            `export const blogPosts = [\n  ${newPostStr},`
+          );
+          
+          await writeFile(blogPostsPath, updatedContent);
+          successMessages.push('✅ Guardado en blogPosts.js (respaldo local)');
+        } catch (error) {
+          errors.push(`❌ Error blogPosts.js: ${error.message}`);
+        }
+
+        const resultMessage = [
+          ...successMessages,
+          ...errors,
+          '',
+          `📝 Slug: ${post.slug}`,
+          `📌 Título: ${post.title}`,
+        ].join('\n');
+
         return {
           content: [
             {
               type: 'text',
-              text: `✅ Post publicado exitosamente!\n\nSlug: ${post.slug}\nTítulo: ${post.title}`,
+              text: resultMessage,
             },
           ],
         };
