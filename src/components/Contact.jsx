@@ -72,7 +72,7 @@ const Contact = () => {
       <div className="mx-auto max-w-6xl px-6">
         {/* Cabecera */}
         <div className="mb-8 md:mb-10 text-center">
-          <SectionTitle kanji="話" title="Hablemos" align="center" />
+          <SectionTitle kanji="話">Hablemos</SectionTitle>
           <p className="mx-auto mt-4 max-w-2xl text-gray-300">
             ¿Tienes una idea, un reto técnico o quieres colaborar? Cuéntanos tu proyecto y te responderemos pronto
           </p>

@@ -113,7 +113,18 @@ INSERT INTO projects (slug, title, short_description, full_description, tech_sta
  NULL,
  NULL,
  '{"queries_handled": "5000+", "satisfaction_rate": "92%", "response_time": "< 3s"}'::jsonb
-);
+)
+ON CONFLICT (slug) DO UPDATE SET
+  title = EXCLUDED.title,
+  short_description = EXCLUDED.short_description,
+  full_description = EXCLUDED.full_description,
+  tech_stack = EXCLUDED.tech_stack,
+  category = EXCLUDED.category,
+  featured = EXCLUDED.featured,
+  live_url = EXCLUDED.live_url,
+  github_url = EXCLUDED.github_url,
+  metrics = EXCLUDED.metrics,
+  updated_at = NOW();
 
 -- Verificar datos insertados
 SELECT id, slug, title, category, featured, created_at 
