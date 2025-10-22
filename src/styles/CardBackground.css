@@ -1,0 +1,120 @@
+/**
+ * CardBackground.css
+ * Estilos para agregar fondos animados a tarjetas
+ */
+
+.card-background {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(20, 20, 40, 0.4) 100%);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 229, 255, 0.1) 0%,
+    transparent 50%,
+    rgba(168, 85, 247, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-background:hover::before {
+  opacity: 1;
+}
+
+.card-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(0, 229, 255, 0.2) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-background:hover::after {
+  opacity: 1;
+}
+
+/* Variante: Title card con fondo más intenso */
+.card-background.card-title {
+  background: linear-gradient(135deg, rgba(0, 10, 30, 0.8) 0%, rgba(30, 10, 50, 0.6) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 2rem;
+}
+
+.card-background.card-title::before {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 229, 255, 0.2) 0%,
+    transparent 50%,
+    rgba(168, 85, 247, 0.2) 100%
+  );
+}
+
+.card-background.card-title:hover {
+  border-color: rgba(0, 229, 255, 0.6);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.2),
+              inset 0 0 30px rgba(0, 229, 255, 0.05);
+}
+
+/* Animación de entrada */
+@keyframes card-glow-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  }
+}
+
+.card-background.animate-in {
+  animation: card-glow-in 0.6s ease-out forwards;
+}
+
+/* Variante: Glassmorphic */
+.card-background.glassmorphic {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+}
+
+.card-background.glassmorphic:hover {
+  border-color: rgba(0, 229, 255, 0.8);
+  background: rgba(0, 229, 255, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-background.card-title {
+    padding: 1.5rem;
+  }
+}
+
+/* Preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .card-background,
+  .card-background::before,
+  .card-background::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

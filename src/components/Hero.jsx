@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import Logo3D from './Logo3D';
 import GlitchText from './effects/GlitchText';
+import PageBackground from './PageBackground';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
@@ -75,7 +76,10 @@ const Hero = () => {
         )}
       </div>
 
-      {/* Canvas 3D de fondo (render continuo) */}
+      {/* Fondo de partículas con ogl (más ligero que Three.js) */}
+      <PageBackground variant="hero" />
+
+      {/* Canvas 3D para el logo (solo en Hero) */}
       <Canvas camera={{ position: [0, 0, 8] }} className="absolute inset-0 z-0">
         <Suspense fallback={null}>
           <Logo3D />
