@@ -99,7 +99,7 @@ const Services = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <SectionTitle kanji="技" title="Nuestros Servicios" align="center" />
+          <SectionTitle kanji="技">Nuestros Servicios</SectionTitle>
           <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Transformamos ideas en soluciones tecnológicas que impulsan tu negocio hacia el futuro
           </p>
