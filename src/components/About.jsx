@@ -38,13 +38,11 @@ const About = () => {
           variants={fadeUp(0)}
           className="text-center"
         >
-          <SectionTitle kanji="道" title="Nuestro Proceso" align="center" />
+          <SectionTitle kanji="道">Nuestro Proceso</SectionTitle>
           <div className="mt-6">
-            <GlitchText
-              text="De la Idea a la Realidad"
-              className="text-3xl md:text-4xl font-bold text-white"
-              as="h3"
-            />
+            <GlitchText className="text-3xl md:text-4xl font-bold text-white" as="h3">
+              De la Idea a la Realidad
+            </GlitchText>
           </div>
           <p className="mt-4 text-gray-400 max-w-3xl mx-auto text-balance">
             Creemos en la investigación profunda y el desarrollo iterativo. Nuestro trabajo se centra en explorar los límites de la IA para resolver problemas complejos, sentando las bases para aplicaciones robustas y escalables

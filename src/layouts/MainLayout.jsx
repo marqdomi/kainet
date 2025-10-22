@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
-import PageBackground from '../components/PageBackground';
+import Particles from '../components/effects/Particles';
 
 // Cursor personalizado KAINET
 const KainetCursor = () => {
@@ -31,8 +31,20 @@ const MainLayout = () => {
       {/* Accessibility: Skip to main content */}
       <a href="#main" className="skip-link">Saltar al contenido</a>
 
-      {/* Animated Particles Background (ogl - optimized) */}
-      <PageBackground variant="default" />
+      {/* Animated Particle Background (OGL) */}
+      <Particles
+        particleCount={200}
+        particleSpread={10}
+        speed={0.3}
+        particleColors={['#00E5FF', '#5227FF', '#B19EEF']}
+        moveParticlesOnHover={true}
+        particleHoverFactor={1}
+        alphaParticles={true}
+        particleBaseSize={100}
+        sizeRandomness={1}
+        cameraDistance={20}
+        disableRotation={false}
+      />
 
       {/* Navigation */}
       <Navbar />
