@@ -88,7 +88,7 @@ const FeaturedProjects = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <SectionTitle kanji="作" title="Proyectos Destacados" align="center" />
+          <SectionTitle kanji="作">Proyectos Destacados</SectionTitle>
           <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Casos de éxito que demuestran nuestro expertise en IA, automatización y desarrollo web
           </p>

@@ -1,8 +1,6 @@
 // src/components/Hero.jsx
-import React, { Suspense, useEffect, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Logo3D from './Logo3D';
 import GlitchText from './effects/GlitchText';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
@@ -38,10 +36,11 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
           >
             <GlitchText
-              text="Construyendo el futuro"
               className="text-5xl md:text-7xl font-bold leading-tight text-kainet-white"
               as="h1"
-            />
+            >
+              Construyendo el futuro
+            </GlitchText>
           </motion.div>
 
           <motion.h2
@@ -75,12 +74,9 @@ const Hero = () => {
         )}
       </div>
 
-      {/* Canvas 3D de fondo (render continuo) */}
-      <Canvas camera={{ position: [0, 0, 8] }} className="absolute inset-0 z-0">
-        <Suspense fallback={null}>
-          <Logo3D />
-        </Suspense>
-      </Canvas>
+      {/* Fondo de partículas fluido (LiquidEther en MainLayout) */}
+
+      {/* Solo contenido de texto, sin Canvas 3D */}
     </section>
   );
 };
