@@ -1,0 +1,143 @@
+.title-background-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.title-background-container {
+  position: relative;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 40, 0.7) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+/* Blobs animados */
+.title-gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.blob-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #00E5FF, #0080FF);
+  top: -50px;
+  right: -50px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #FF006E, #00E5FF);
+  bottom: -50px;
+  left: -50px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.blob-3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #00E5FF, #A855F7);
+  top: 50%;
+  left: 50%;
+  animation: float 12s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-30px) translateX(30px);
+  }
+}
+
+/* Grid animada */
+.title-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(0deg, rgba(0, 229, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+/* Contenido del título */
+.title-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Variante animada */
+.title-background-container.animated {
+  animation: pulse-border 3s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(0, 229, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(0, 229, 255, 0.5);
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title-background-container {
+    padding: 2rem 1rem;
+  }
+
+  .title-gradient-blob {
+    filter: blur(40px);
+  }
+
+  .blob-1 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .blob-2 {
+    width: 150px;
+    height: 150px;
+  }
+
+  .blob-3 {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Reducir movimiento para usuarios que prefieren movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .title-gradient-blob,
+  .title-grid {
+    animation: none !important;
+  }
+
+  .title-background-container.animated {
+    animation: none !important;
+  }
+}

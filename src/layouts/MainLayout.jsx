@@ -4,8 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
-
-const BackgroundCanvas = lazy(() => import('../components/BackgroundCanvas'));
+import PageBackground from '../components/PageBackground';
 
 // Cursor personalizado KAINET
 const KainetCursor = () => {
@@ -32,10 +31,8 @@ const MainLayout = () => {
       {/* Accessibility: Skip to main content */}
       <a href="#main" className="skip-link">Saltar al contenido</a>
 
-      {/* 3D Background Canvas (KAINET signature element) */}
-      <Suspense fallback={null}>
-        <BackgroundCanvas />
-      </Suspense>
+      {/* Animated Particles Background (ogl - optimized) */}
+      <PageBackground variant="default" />
 
       {/* Navigation */}
       <Navbar />
