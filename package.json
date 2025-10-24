@@ -22,6 +22,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^10.16.4",
     "gsap": "^3.13.0",
+    "lucide-react": "^0.547.0",
     "ogl": "^1.0.11",
     "postprocessing": "^6.37.7",
     "react": "^18.2.0",
