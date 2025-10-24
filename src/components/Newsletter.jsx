@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button, Input, Card } from './ui';
 
-// 🚀 ACTUALIZADO: Usar nuestra propia API
-const NEWSLETTER_ENDPOINT = '/api/newsletter';
+// 🚀 ACTUALIZADO: Usar API de suscripción a newsletter
+const NEWSLETTER_ENDPOINT = '/api/newsletter-subscribe';
 
 const Newsletter = ({ variant = 'default' }) => {
   const [email, setEmail] = useState('');
@@ -39,17 +39,23 @@ const Newsletter = ({ variant = 'default' }) => {
 
       const data = await res.json();
 
-      if (res.ok && data.success) {
+      if (res.ok) {
         setStatus('success');
-        setMessage(data.message || '¡Gracias! Revisa tu email para confirmar.');
+        if (data.alreadySubscribed) {
+          setMessage('Ya estás suscrito al newsletter 📧');
+        } else if (data.requiresConfirmation) {
+          setMessage('¡Gracias! Revisa tu email para confirmar tu suscripción 📬');
+        } else {
+          setMessage(data.message || '¡Gracias por suscribirte! 🎉');
+        }
         setEmail('');
         setName('');
         
-        // Reset después de 6 segundos
+        // Reset después de 8 segundos
         setTimeout(() => {
           setStatus('idle');
           setMessage('');
-        }, 6000);
+        }, 8000);
       } else {
         setStatus('error');
         setMessage(data.message || 'Algo salió mal. Por favor, intenta nuevamente.');

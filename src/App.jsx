@@ -13,6 +13,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
+import NewsletterConfirmPage from './pages/NewsletterConfirmPage';
 import NotFound from './pages/NotFound';
 
 // Lazy load easter egg components
@@ -50,6 +51,9 @@ const AppContent = () => {
         
         {/* Contact */}
         <Route path="contact" element={<ContactPage />} />
+        
+        {/* Newsletter */}
+        <Route path="newsletter/confirm" element={<NewsletterConfirmPage />} />
         
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
