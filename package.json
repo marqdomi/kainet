@@ -11,7 +11,9 @@
     "test": "vitest",
     "test:run": "vitest --run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "send-newsletter": "node scripts/send-newsletter.js",
+    "test-newsletter": "node scripts/test-newsletter.js"
   },
   "dependencies": {
     "@react-three/drei": "^9.88.13",
