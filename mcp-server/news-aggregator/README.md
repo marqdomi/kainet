@@ -6,6 +6,24 @@ Generador automático de posts de blog semanales con inteligencia artificial.
 1. 🏢 **Automatización Empresarial** - Noticias de automatización global
 2. 🔧 **DevOps & Herramientas** - Tendencias en deployment y infrastructure
 
+## 🔧 Instalación y Configuración
+
+```bash
+# Instalar dependencias
+npm install
+
+# Verificar configuración
+npm run verify
+
+# Generar noticias semanales
+npm run generate-weekly
+```
+
+## 📦 Dependencias Actualizadas
+
+- `@supabase/supabase-js`: ^2.78.0 (actualizado desde 2.39.0)
+- Todas las dependencias sincronizadas correctamente
+
 ---
 
 ## 🚀 Características
