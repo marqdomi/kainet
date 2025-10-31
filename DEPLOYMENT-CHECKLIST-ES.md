@@ -11,8 +11,9 @@ El merge a `main` fue exitoso. Ahora solo falta configurar las variables de ento
 ### 1️⃣ Configurar Variables de Entorno
 
 **¿Dónde está tu sitio hosteado?**
+
 - [ ] Vercel
-- [ ] Netlify  
+- [ ] Netlify
 - [ ] Otro
 
 #### Si usas Vercel:
@@ -26,6 +27,7 @@ El merge a `main` fue exitoso. Ahora solo falta configurar las variables de ento
 ```
 
 **Variables a agregar:**
+
 ```
 VITE_FEATURE_KANJI=true
 VITE_FEATURE_GLITCH=true
@@ -39,7 +41,8 @@ VITE_FEATURE_EASTER_EGGS=true
 VITE_FEATURE_ENHANCED_UI=true
 ```
 
-**Importante:** 
+**Importante:**
+
 - Selecciona "Production" en Environment
 - También puedes seleccionar "Preview" si quieres probar primero
 
@@ -66,6 +69,7 @@ vercel env add VITE_FEATURE_KANJI production
 Después de agregar las variables:
 
 **Vercel:**
+
 ```bash
 # Opción A: Dashboard
 Deployments → ... (tres puntos) → Redeploy
@@ -75,6 +79,7 @@ vercel --prod
 ```
 
 **Netlify:**
+
 ```bash
 # Opción A: Dashboard
 Deploys → Trigger deploy → Deploy site
@@ -90,6 +95,7 @@ netlify deploy --prod
 Una vez que el deployment termine (2-3 minutos):
 
 #### Verificación Visual (2 minutos)
+
 1. Abre tu sitio: https://kainet.mx
 2. Abre DevTools (F12) → Console
 3. Deberías ver: `🎌 Feature Flags Status` con todas en `true`
@@ -101,11 +107,13 @@ Una vez que el deployment termine (2-3 minutos):
    - [ ] Navega entre páginas → transiciones suaves
 
 #### Verificación de Easter Eggs (1 minuto)
+
 - [ ] Konami Code: `↑ ↑ ↓ ↓ ← → ← → B A` → Matrix Rain
 - [ ] Triple click en logo → Animación torii
 - [ ] ESC cierra los efectos
 
 #### Verificación de Performance (2 minutos)
+
 ```bash
 1. DevTools → Lighthouse
 2. Run analysis
@@ -131,17 +139,20 @@ Una vez que el deployment termine (2-3 minutos):
 ## 🎯 Checklist Completo
 
 ### Pre-Deployment
+
 - [x] Código mergeado a main
 - [x] Build exitoso
 - [x] Tests pasando (272/281)
 - [x] Push a GitHub completado
 
 ### Deployment
+
 - [ ] Variables de entorno configuradas
 - [ ] Redeploy triggered
 - [ ] Deployment completado sin errores
 
 ### Post-Deployment
+
 - [ ] Sitio carga correctamente
 - [ ] Features visibles (partículas, glitch, etc.)
 - [ ] Console sin errores críticos
@@ -155,6 +166,7 @@ Una vez que el deployment termine (2-3 minutos):
 ## 🚨 Si Algo Sale Mal
 
 ### Opción 1: Deshabilitar Features Rápidamente
+
 ```bash
 # En tu plataforma, cambia las variables a false
 VITE_FEATURE_KANJI=false
@@ -165,12 +177,14 @@ VITE_FEATURE_GLITCH=false
 ```
 
 ### Opción 2: Rollback al Commit Anterior
+
 ```bash
 git revert HEAD
 git push origin main
 ```
 
 ### Opción 3: Deshabilitar Feature Específica
+
 ```bash
 # Si solo una feature causa problemas
 # Ejemplo: deshabilitar solo parallax
@@ -182,12 +196,14 @@ VITE_FEATURE_PARALLAX=false
 ## 📊 Monitoreo Post-Deployment
 
 ### Primeras 24 horas
+
 - [ ] Revisar analytics (si tienes)
 - [ ] Verificar error logs
 - [ ] Monitorear performance
 - [ ] Recopilar feedback
 
 ### Primera semana
+
 - [ ] Verificar métricas de engagement
 - [ ] Ajustar features si es necesario
 - [ ] Documentar issues encontrados
@@ -207,6 +223,7 @@ VITE_FEATURE_PARALLAX=false
 ## 🎊 ¡Felicidades!
 
 Una vez que completes todos los pasos, tu sitio tendrá:
+
 - ✨ Efectos visuales cyberpunk japoneses
 - 🎨 Animaciones suaves y profesionales
 - ♿ Accesibilidad completa (WCAG 2.1 AA)
