@@ -627,6 +627,18 @@ async function generateWeeklyPosts() {
   }
 }
 
+// ===== EXPORTS =====
+
+export { 
+  aggregateNews, 
+  generateContentWithAI, 
+  createPost, 
+  saveToSupabase, 
+  saveToLocalBlog,
+  CONFIG,
+  generateWeeklyPosts
+};
+
 // ===== EJECUCIÓN =====
 
 if (import.meta.url === `file://${process.argv[1]}`) {
