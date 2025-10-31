@@ -2,31 +2,18 @@ name: Generate Weekly Blog Posts
 
 on:
   schedule:
-    # Post de IA: Viernes a las 10:00 AM México (16:00 UTC)
+    # Generar posts semanales: Viernes a las 10:00 AM México (16:00 UTC)
     - cron: '0 16 * * 5'
-    # Post de Automatización: Lunes a las 10:00 AM México (16:00 UTC)
-    - cron: '0 16 * * 1'
   
   # Permitir ejecución manual desde GitHub UI
   workflow_dispatch:
-    inputs:
-      post_type:
-        description: 'Tipo de post a generar'
-        required: true
-        type: choice
-        options:
-          - ia
-          - automatizacion
-          - ambos
 
 # Permisos necesarios para que el workflow pueda hacer push
 permissions:
   contents: write
 
 jobs:
-  generate-ia-post:
-    # Solo correr el viernes o si se selecciona manualmente
-    if: github.event.schedule == '0 16 * * 5' || github.event.inputs.post_type == 'ia' || github.event.inputs.post_type == 'ambos'
+  generate-weekly-posts:
     runs-on: ubuntu-latest
     
     steps:
@@ -46,50 +33,17 @@ jobs:
         working-directory: mcp-server/news-aggregator
         run: npm ci
       
-      - name: Generate IA weekly post
+      - name: Generate weekly posts
         working-directory: mcp-server/news-aggregator
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node generate-post.js
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node generate-weekly-post.js
       
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: IA Semanal post" && git pull --rebase origin main && git push)
-
-  generate-automation-post:
-    # Solo correr el lunes o si se selecciona manualmente
-    if: github.event.schedule == '0 16 * * 1' || github.event.inputs.post_type == 'automatizacion' || github.event.inputs.post_type == 'ambos'
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: mcp-server/news-aggregator/package-lock.json
-      
-      - name: Install dependencies
-        working-directory: mcp-server/news-aggregator
-        run: npm ci
-      
-      - name: Generate Automation weekly post
-        working-directory: mcp-server/news-aggregator
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node generate-automation-post.js
-      
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Automatización Semanal post" && git pull --rebase origin main && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Weekly AI & Automation posts" && git pull --rebase origin main && git push)
