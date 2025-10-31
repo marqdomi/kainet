@@ -51,7 +51,7 @@ async function generateAutomationPost() {
     );
 
     // Crear post
-    const automationPost = createPost(
+    const automationPost = await createPost(
       automationContent,
       CONFIG.categories.automation,
       weekNumber

@@ -16,7 +16,8 @@
     "generate-devops": "node generate-devops-post.js",
     "verify": "node verify-setup.js",
     "test-redirects": "node test-redirect-scripts.js",
-    "test-gemini": "node test-gemini-api.js"
+    "test-gemini": "node test-gemini-api.js",
+    "test-images": "node test-image-generation.js"
   },
   "keywords": [
     "mcp",
@@ -35,6 +36,7 @@
     "dotenv": "^17.2.3",
     "jsdom": "^24.0.0",
     "node-fetch": "^3.3.2",
+    "openai": "^6.7.0",
     "rss-parser": "^3.13.0"
   },
   "engines": {
