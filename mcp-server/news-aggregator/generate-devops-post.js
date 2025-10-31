@@ -51,7 +51,7 @@ async function generateDevOpsPost() {
     );
 
     // Crear post
-    const devopsPost = createPost(
+    const devopsPost = await createPost(
       devopsContent,
       CONFIG.categories.devops,
       weekNumber

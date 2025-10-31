@@ -26,6 +26,7 @@ import { join } from 'path';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Parser from 'rss-parser';
 import { createClient } from '@supabase/supabase-js';
+import { generateBlogImage } from './generate-blog-images.js';
 import dotenv from 'dotenv';
 
 // ===== CONFIGURACIÓN =====
@@ -337,7 +338,7 @@ function normalizeContent(text) {
 /**
  * Crea un objeto de post completo
  */
-function createPost(aiContent, categoryConfig, weekNumber) {
+async function createPost(aiContent, categoryConfig, weekNumber) {
   const date = new Date();
   const dateStr = date.toISOString().split('T')[0];
   
@@ -353,7 +354,8 @@ function createPost(aiContent, categoryConfig, weekNumber) {
   const normalizedExcerpt = normalizeContent(aiContent.excerpt);
   const normalizedTitle = normalizeContent(aiContent.title);
 
-  return {
+  // Crear post base
+  const basePost = {
     id: Date.now() + Math.random(),
     slug: slug,
     title: normalizedTitle,
@@ -363,9 +365,27 @@ function createPost(aiContent, categoryConfig, weekNumber) {
     date: dateStr,
     readTime: calculateReadTime(normalizedContent),
     category: categoryConfig.category,
-    image: `https://placehold.co/800x500/0a0a0a/00E5FF?text=${encodeURIComponent(categoryConfig.title)}`,
+    image: null, // Se generará automáticamente
     featured: false,
   };
+
+  // Generar imagen automáticamente si OpenAI está configurado
+  console.log('\n🎨 Generando imagen para el post...');
+  try {
+    if (process.env.OPENAI_API_KEY) {
+      const postWithImage = await generateBlogImage(basePost);
+      console.log(`✅ Imagen generada: ${postWithImage.image}`);
+      return postWithImage;
+    } else {
+      console.log('⚠️  OPENAI_API_KEY no configurada, usando placeholder');
+      basePost.image = `https://placehold.co/1792x1024/0a0a0a/00E5FF?text=${encodeURIComponent(categoryConfig.title)}`;
+      return basePost;
+    }
+  } catch (error) {
+    console.error('❌ Error generando imagen:', error.message);
+    basePost.image = `https://placehold.co/1792x1024/0a0a0a/00E5FF?text=${encodeURIComponent(categoryConfig.title)}`;
+    return basePost;
+  }
 }
 
 /**
@@ -563,7 +583,7 @@ async function generateWeeklyPosts() {
         weekNumber
       );
 
-      const automationPost = createPost(
+      const automationPost = await createPost(
         automationContent,
         CONFIG.categories.automation,
         weekNumber
@@ -596,7 +616,7 @@ async function generateWeeklyPosts() {
         weekNumber
       );
 
-      const devopsPost = createPost(
+      const devopsPost = await createPost(
         devopsContent,
         CONFIG.categories.devops,
         weekNumber
