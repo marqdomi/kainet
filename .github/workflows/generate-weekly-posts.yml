@@ -60,3 +60,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
           git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Weekly AI & Automation posts" && git pull --rebase origin main && git push)
+      
+      - name: Send newsletter to subscribers
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node scripts/send-newsletter.js
