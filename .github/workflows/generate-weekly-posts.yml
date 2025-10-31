@@ -33,7 +33,20 @@ jobs:
         working-directory: mcp-server/news-aggregator
         run: npm ci
       
-      - name: Generate weekly posts
+      - name: Verify script exists
+        working-directory: mcp-server/news-aggregator
+        run: |
+          echo "📁 Listing files in directory:"
+          ls -la
+          echo "🔍 Checking for generate-weekly-post.js:"
+          if [ -f "generate-weekly-post.js" ]; then
+            echo "✅ Script found!"
+          else
+            echo "❌ Script NOT found!"
+            exit 1
+          fi
+      
+      - name: Generate weekly posts (AI & Automation)
         working-directory: mcp-server/news-aggregator
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
