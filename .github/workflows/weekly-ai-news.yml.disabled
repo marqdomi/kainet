@@ -60,9 +60,11 @@ jobs:
         working-directory: mcp-server/news-aggregator
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           echo "🔍 Generating preview for Week ${{ steps.week.outputs.week_number }}..."
-          node generate-post.js
+          node generate-weekly-post.js
           echo "✅ Preview generated (not published)"
       
       - name: Generate and publish blog post
@@ -70,7 +72,9 @@ jobs:
         working-directory: mcp-server/news-aggregator
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node generate-post.js
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node generate-weekly-post.js
       
       - name: Create summary
         run: |
