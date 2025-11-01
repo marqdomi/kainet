@@ -2,11 +2,12 @@
 
 ## ✨ Características
 
-- **Generación automática** con OpenAI DALL-E 3
-- **Estilo cyberpunk/futurista** consistente con KAINET
+- **Generación automática** con Google Gemini (AI Studio) - ¡GRATIS!
+- **Imágenes SVG dinámicas** con estilo cyberpunk/futurista
 - **Prompts optimizados** por categoría (Automatización, DevOps, IA)
 - **Dimensiones perfectas** para blog headers (1792x1024 - 16:10)
-- **Fallback inteligente** a placeholders si falla la generación
+- **Fallback inteligente** a SVGs predefinidos si falla la generación
+- **Sin costos adicionales** - usa tu API key existente de Gemini
 
 ## 🚀 Cómo Funciona
 
@@ -14,8 +15,9 @@
 Cada vez que se crea un post, el sistema:
 1. Analiza el título y contenido
 2. Genera un prompt optimizado según la categoría
-3. Llama a DALL-E 3 para crear la imagen
-4. Asigna la URL de la imagen al post
+3. Usa Gemini para generar código SVG personalizado
+4. Crea una imagen SVG dinámica con estilo cyberpunk
+5. Asigna la data URL del SVG al post
 
 ### 2. **Estilos por Categoría**
 
@@ -36,22 +38,21 @@ Cada vez que se crea un post, el sistema:
 
 ## 📋 Configuración
 
-### 1. **API Key de OpenAI**
+### 1. **API Key de Google Gemini (Ya la tienes!)**
 
 #### Local (desarrollo):
 ```bash
 # En mcp-server/news-aggregator/.env
-OPENAI_API_KEY=sk-your-openai-api-key-here
+GEMINI_API_KEY=tu-api-key-existente
 ```
 
 #### Producción (GitHub Secrets):
-Ve a: https://github.com/marqdomi/kainet/settings/secrets/actions
-- Agrega: `OPENAI_API_KEY` con tu API key de OpenAI
+Ya está configurada: `GEMINI_API_KEY` 
 
-### 2. **Obtener API Key**
-1. Ve a: https://platform.openai.com/api-keys
-2. Crea una nueva API key
-3. Asegúrate de tener créditos para DALL-E 3
+### 2. **Sin configuración adicional**
+- ✅ Usa tu API key existente de Google AI Studio
+- ✅ Sin costos adicionales
+- ✅ Incluido en tu plan gratuito
 
 ## 🧪 Pruebas
 

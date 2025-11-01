@@ -3,11 +3,11 @@
 /**
  * GENERADOR DE IMÁGENES PARA BLOG POSTS
  * 
- * Genera imágenes automáticamente usando OpenAI DALL-E 3
+ * Genera imágenes automáticamente usando Google Gemini (AI Studio)
  * para los posts del blog con estilo futurista/cyberpunk
  */
 
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -18,10 +18,9 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Inicializar OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Inicializar Google AI (Gemini)
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Configuración de estilos por categoría
 const IMAGE_STYLES = {
@@ -84,45 +83,144 @@ function extractKeywords(content) {
 }
 
 /**
- * Generar imagen con DALL-E 3
+ * Generar imagen SVG dinámica con Gemini
  */
-async function generateImage(prompt, filename) {
-  console.log(`🎨 Generando imagen: ${filename}`);
+async function generateImage(prompt, filename, category) {
+  console.log(`🎨 Generando imagen SVG: ${filename}`);
   console.log(`📝 Prompt: ${prompt.substring(0, 100)}...`);
   
   try {
-    const response = await openai.images.generate({
-      model: "dall-e-3",
-      prompt: prompt,
-      n: 1,
-      size: "1792x1024", // Aspect ratio 16:10, perfecto para blog headers
-      quality: "standard", // o "hd" para mayor calidad
-      style: "vivid" // o "natural" para estilo más realista
-    });
+    // Usar Gemini para generar código SVG
+    const svgPrompt = `
+Genera código SVG para una imagen de blog con estas especificaciones:
+
+TEMA: ${prompt}
+
+REQUISITOS TÉCNICOS:
+- Dimensiones: 1792x1024 (aspect ratio 16:10)
+- Estilo: Cyberpunk futurista, minimalista
+- Colores: Fondo negro/gris oscuro (#0a0a0a, #111111)
+- Acentos: Cian neón (#00E5FF), Púrpura (#5227FF)
+- Sin texto visible en la imagen
+
+ELEMENTOS VISUALES:
+- Formas geométricas abstractas
+- Líneas de circuito o conexiones
+- Gradientes sutiles
+- Efectos de brillo/glow
+- Composición equilibrada
+
+RESPONDE SOLO CON EL CÓDIGO SVG COMPLETO, sin explicaciones adicionales.
+    `;
     
-    const imageUrl = response.data[0].url;
-    console.log(`✅ Imagen generada: ${imageUrl}`);
+    const result = await model.generateContent(svgPrompt);
+    const response = await result.response;
+    let svgCode = response.text();
     
-    return imageUrl;
+    // Limpiar el código SVG (remover markdown si existe)
+    svgCode = svgCode.replace(/```svg\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    // Asegurar que tenga las dimensiones correctas
+    if (!svgCode.includes('width="1792"') || !svgCode.includes('height="1024"')) {
+      svgCode = svgCode.replace(/<svg[^>]*>/, '<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">');
+    }
+    
+    // Crear data URL del SVG
+    const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgCode)}`;
+    
+    console.log(`✅ Imagen SVG generada con Gemini`);
+    
+    return svgDataUrl;
     
   } catch (error) {
-    console.error(`❌ Error generando imagen:`, error.message);
+    console.error(`❌ Error generando imagen con Gemini:`, error.message);
     
-    // Fallback a placeholder personalizado
-    const fallbackUrl = `https://placehold.co/1792x1024/0a0a0a/00E5FF?text=${encodeURIComponent(filename)}`;
-    console.log(`🔄 Usando fallback: ${fallbackUrl}`);
+    // Fallback a SVG predefinido por categoría
+    const fallbackSvg = generateFallbackSVG(category, filename);
+    console.log(`🔄 Usando SVG fallback para categoría: ${category}`);
     
-    return fallbackUrl;
+    return fallbackSvg;
   }
 }
 
 /**
- * Descargar imagen y guardarla localmente (opcional)
+ * Generar SVG fallback por categoría
  */
-async function downloadImage(imageUrl, filename) {
+function generateFallbackSVG(category, filename) {
+  const styles = {
+    'Automatización': {
+      bg: '#0a0a0a',
+      primary: '#00E5FF',
+      secondary: '#5227FF',
+      elements: `
+        <circle cx="300" cy="200" r="80" fill="none" stroke="#00E5FF" stroke-width="3" opacity="0.6"/>
+        <circle cx="1400" cy="800" r="120" fill="none" stroke="#5227FF" stroke-width="2" opacity="0.4"/>
+        <path d="M200 400 Q600 300 1000 500 T1600 600" stroke="#00E5FF" stroke-width="2" fill="none" opacity="0.5"/>
+        <rect x="100" y="100" width="60" height="60" fill="#5227FF" opacity="0.3" rx="8"/>
+        <rect x="1500" y="700" width="80" height="80" fill="#00E5FF" opacity="0.2" rx="12"/>
+      `
+    },
+    'DevOps': {
+      bg: '#0a0a0a',
+      primary: '#00E5FF',
+      secondary: '#5227FF',
+      elements: `
+        <rect x="200" y="300" width="200" height="100" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.6" rx="8"/>
+        <rect x="1200" y="500" width="300" height="150" fill="none" stroke="#5227FF" stroke-width="2" opacity="0.4" rx="12"/>
+        <line x1="100" y1="200" x2="1600" y2="800" stroke="#00E5FF" stroke-width="1" opacity="0.3"/>
+        <circle cx="800" cy="400" r="50" fill="#5227FF" opacity="0.2"/>
+        <polygon points="1400,200 1500,300 1400,400 1300,300" fill="#00E5FF" opacity="0.3"/>
+      `
+    },
+    'IA': {
+      bg: '#0a0a0a',
+      primary: '#00E5FF',
+      secondary: '#5227FF',
+      elements: `
+        <circle cx="896" cy="512" r="200" fill="none" stroke="#5227FF" stroke-width="2" opacity="0.4"/>
+        <circle cx="896" cy="512" r="100" fill="none" stroke="#00E5FF" stroke-width="3" opacity="0.6"/>
+        <path d="M400 200 Q896 400 1400 200" stroke="#00E5FF" stroke-width="2" fill="none" opacity="0.5"/>
+        <path d="M400 800 Q896 600 1400 800" stroke="#5227FF" stroke-width="2" fill="none" opacity="0.4"/>
+        <circle cx="400" cy="200" r="20" fill="#00E5FF" opacity="0.8"/>
+        <circle cx="1400" cy="200" r="20" fill="#5227FF" opacity="0.8"/>
+      `
+    }
+  };
+  
+  const style = styles[category] || styles['IA'];
+  
+  const svg = `
+    <svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:${style.bg};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#111111;stop-opacity:1" />
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge> 
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#bg)"/>
+      <g filter="url(#glow)">
+        ${style.elements}
+      </g>
+    </svg>
+  `;
+  
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+/**
+ * Guardar SVG localmente (opcional)
+ */
+async function saveSVGLocally(svgDataUrl, filename) {
   try {
-    const response = await fetch(imageUrl);
-    const buffer = await response.arrayBuffer();
+    // Extraer el código SVG del data URL
+    const svgCode = decodeURIComponent(svgDataUrl.replace('data:image/svg+xml;utf8,', ''));
     
     // Crear directorio si no existe
     const imagesDir = path.join(__dirname, '../../public/images/blog');
@@ -130,16 +228,16 @@ async function downloadImage(imageUrl, filename) {
       fs.mkdirSync(imagesDir, { recursive: true });
     }
     
-    // Guardar imagen
-    const imagePath = path.join(imagesDir, `${filename}.png`);
-    fs.writeFileSync(imagePath, Buffer.from(buffer));
+    // Guardar SVG
+    const svgPath = path.join(imagesDir, `${filename}.svg`);
+    fs.writeFileSync(svgPath, svgCode, 'utf8');
     
-    console.log(`💾 Imagen guardada: ${imagePath}`);
-    return `/images/blog/${filename}.png`;
+    console.log(`💾 SVG guardado: ${svgPath}`);
+    return `/images/blog/${filename}.svg`;
     
   } catch (error) {
-    console.error(`❌ Error descargando imagen:`, error.message);
-    return imageUrl; // Retornar URL original si falla la descarga
+    console.error(`❌ Error guardando SVG:`, error.message);
+    return svgDataUrl; // Retornar data URL original si falla
   }
 }
 
@@ -154,13 +252,13 @@ async function generateBlogImage(post, saveLocally = false) {
   // Generar prompt optimizado
   const prompt = generateImagePrompt(title, category, content);
   
-  // Generar imagen con DALL-E
-  const imageUrl = await generateImage(prompt, slug);
+  // Generar imagen SVG con Gemini
+  const imageUrl = await generateImage(prompt, slug, category);
   
-  // Opcionalmente descargar y guardar localmente
+  // Opcionalmente guardar SVG localmente
   let finalImageUrl = imageUrl;
-  if (saveLocally && imageUrl.includes('oaidalleapiprodscus')) {
-    finalImageUrl = await downloadImage(imageUrl, slug);
+  if (saveLocally && imageUrl.startsWith('data:image/svg+xml')) {
+    finalImageUrl = await saveSVGLocally(imageUrl, slug);
   }
   
   return {

@@ -369,15 +369,15 @@ async function createPost(aiContent, categoryConfig, weekNumber) {
     featured: false,
   };
 
-  // Generar imagen automáticamente si OpenAI está configurado
+  // Generar imagen automáticamente con Gemini
   console.log('\n🎨 Generando imagen para el post...');
   try {
-    if (process.env.OPENAI_API_KEY) {
+    if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'TU_NUEVA_API_KEY_AQUI') {
       const postWithImage = await generateBlogImage(basePost);
-      console.log(`✅ Imagen generada: ${postWithImage.image}`);
+      console.log(`✅ Imagen generada con Gemini`);
       return postWithImage;
     } else {
-      console.log('⚠️  OPENAI_API_KEY no configurada, usando placeholder');
+      console.log('⚠️  GEMINI_API_KEY no configurada, usando placeholder');
       basePost.image = `https://placehold.co/1792x1024/0a0a0a/00E5FF?text=${encodeURIComponent(categoryConfig.title)}`;
       return basePost;
     }
@@ -664,5 +664,3 @@ export {
 if (import.meta.url === `file://${process.argv[1]}`) {
   generateWeeklyPosts();
 }
-
-export { generateWeeklyPosts };
