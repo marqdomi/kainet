@@ -24,6 +24,13 @@ VITE_FEATURE_EASTER_EGGS=true
 VITE_FEATURE_ENHANCED_UI=true
 ```
 
+### Supabase Configuration (Frontend)
+```bash
+# Variables para el frontend (con prefijo VITE_)
+VITE_SUPABASE_URL=https://tqdencmzezjevnntifos.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZGVuY216ZXpqZXZubnRpZm9zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyODU4NDQsImV4cCI6MjA3NTg2MTg0NH0.Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8Ql8
+```
+
 ### Email Configuration (Resend)
 ```bash
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxx

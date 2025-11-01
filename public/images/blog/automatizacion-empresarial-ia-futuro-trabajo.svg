@@ -1,0 +1,132 @@
+<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient for dark aesthetic -->
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+
+    <!-- Neon Cyan Gradient -->
+    <linearGradient id="neonCyanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Neon Purple Gradient -->
+    <linearGradient id="neonPurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5227FF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#5227FF" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Dark Gray Gradient for structural elements -->
+    <linearGradient id="darkGrayGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2a2a2a" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- Glow Filter for main elements -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur6"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur12"/>
+      <feMerge>
+        <feMergeNode in="blur6"/>
+        <feMergeNode in="blur12"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle Glow Filter for secondary elements -->
+    <filter id="subtleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur3"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur6"/>
+      <feMerge>
+        <feMergeNode in="blur3"/>
+        <feMergeNode in="blur6"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Heavy Glow Filter for core elements -->
+    <filter id="heavyGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur8"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur16"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="24" result="blur24"/>
+      <feMerge>
+        <feMergeNode in="blur8"/>
+        <feMergeNode in="blur16"/>
+        <feMergeNode in="blur24"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Main Background Rectangle -->
+  <rect x="0" y="0" width="1792" height="1024" fill="url(#backgroundGradient)"/>
+
+  <!-- Large, abstract structural elements for background texture/depth -->
+  <g opacity="0.15">
+    <rect x="0" y="300" width="600" height="200" fill="#222" transform="skewY(-10)"/>
+    <rect x="1192" y="524" width="600" height="200" fill="#222" transform="skewY(10)"/>
+    <rect x="300" y="0" width="200" height="500" fill="#181818" transform="skewX(-5)"/>
+    <rect x="1292" y="524" width="200" height="500" fill="#181818" transform="skewX(5)"/>
+  </g>
+
+  <!-- Abstract robotic arm-like elements on the sides -->
+  <!-- Left arm -->
+  <g transform="translate(180, 250)">
+    <rect x="0" y="0" width="100" height="20" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <rect x="90" y="10" width="20" height="80" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <rect x="100" y="80" width="100" height="20" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <circle cx="100" cy="90" r="10" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)"/>
+    <path d="M50 5 L70 5 L65 15 L45 15 Z" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)"/>
+  </g>
+  <!-- Right arm - mirrored -->
+  <g transform="translate(1612, 250) scale(-1, 1)">
+    <rect x="0" y="0" width="100" height="20" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <rect x="90" y="10" width="20" height="80" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <rect x="100" y="80" width="100" height="20" fill="url(#darkGrayGradient)" opacity="0.7"/>
+    <circle cx="100" cy="90" r="10" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)"/>
+    <path d="M50 5 L70 5 L65 15 L45 15 Z" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)"/>
+  </g>
+
+  <!-- Central "core" or processing unit -->
+  <circle cx="896" cy="512" r="120" fill="url(#darkGrayGradient)" opacity="0.9" stroke="url(#neonCyanGradient)" stroke-width="4" filter="url(#glow)"/>
+  <circle cx="896" cy="512" r="60" fill="url(#neonPurpleGradient)" filter="url(#heavyGlow)" opacity="0.8"/>
+  <rect x="876" y="492" width="40" height="40" fill="url(#neonCyanGradient)" transform="rotate(45 896 512)" filter="url(#subtleGlow)"/>
+
+  <!-- Workflow diagrams / circuit lines - Left side data streams -->
+  <path d="M200 350 C350 200, 700 300, 780 450" fill="none" stroke="url(#neonCyanGradient)" stroke-width="2" filter="url(#subtleGlow)" stroke-dasharray="10 5" opacity="0.8"/>
+  <path d="M200 674 C350 824, 700 724, 780 574" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="2" filter="url(#subtleGlow)" stroke-dasharray="10 5" opacity="0.8"/>
+  <path d="M300 512 H780" fill="none" stroke="url(#neonCyanGradient)" stroke-width="3" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Workflow diagrams / circuit lines - Right side data streams -->
+  <path d="M1592 350 C1442 200, 1092 300, 1012 450" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="2" filter="url(#subtleGlow)" stroke-dasharray="10 5" opacity="0.8"/>
+  <path d="M1592 674 C1442 824, 1092 724, 1012 574" fill="none" stroke="url(#neonCyanGradient)" stroke-width="2" filter="url(#subtleGlow)" stroke-dasharray="10 5" opacity="0.8"/>
+  <path d="M1492 512 H1012" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="3" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Connections to central core -->
+  <path d="M780 450 L870 492" fill="none" stroke="url(#neonCyanGradient)" stroke-width="2" filter="url(#subtleGlow)"/>
+  <path d="M780 574 L870 532" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="2" filter="url(#subtleGlow)"/>
+  <path d="M780 512 L870 512" fill="none" stroke="url(#neonCyanGradient)" stroke-width="3" filter="url(#glow)"/>
+
+  <path d="M1012 450 L922 492" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="2" filter="url(#subtleGlow)"/>
+  <path d="M1012 574 L922 532" fill="none" stroke="url(#neonCyanGradient)" stroke-width="2" filter="url(#subtleGlow)"/>
+  <path d="M1012 512 L922 512" fill="none" stroke="url(#neonPurpleGradient)" stroke-width="3" filter="url(#glow)"/>
+
+  <!-- Small data points / nodes -->
+  <circle cx="200" cy="350" r="8" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)"/>
+  <circle cx="200" cy="674" r="8" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)"/>
+  <circle cx="1592" cy="350" r="8" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)"/>
+  <circle cx="1592" cy="674" r="8" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)"/>
+
+  <!-- More abstract elements / indicators at top and bottom -->
+  <rect x="700" y="100" width="10" height="40" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="715" y="120" width="10" height="20" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="1082" y="100" width="10" height="40" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="1067" y="120" width="10" height="20" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+
+  <rect x="700" y="884" width="10" height="40" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="715" y="884" width="10" height="20" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="1082" y="884" width="10" height="40" fill="url(#neonCyanGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+  <rect x="1067" y="884" width="10" height="20" fill="url(#neonPurpleGradient)" filter="url(#subtleGlow)" opacity="0.6"/>
+</svg>
