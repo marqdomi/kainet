@@ -24,9 +24,28 @@ export const supabase = supabaseUrl && supabaseAnonKey
  * @returns {Promise<Array>} Array de posts
  */
 export async function getBlogPosts({ category, featured, limit } = {}) {
+  // TEMPORAL: Forzar uso de datos locales para ver el post nuevo
+  console.log('🔍 Cargando posts desde archivo local (temporal)');
+  const { default: blogPosts } = await import('../data/blogPosts.js');
+  let filtered = [...blogPosts];
+  
+  if (category) {
+    filtered = filtered.filter(p => p.category === category);
+  }
+  if (featured !== undefined) {
+    filtered = filtered.filter(p => p.featured === featured);
+  }
+  if (limit) {
+    filtered = filtered.slice(0, limit);
+  }
+  
+  return filtered;
+  
+  // Código original comentado temporalmente
+  /*
   if (!supabase) {
     // Fallback a datos estáticos si Supabase no está configurado
-    const { blogPosts } = await import('../data/blogPosts.js');
+    const { default: blogPosts } = await import('../data/blogPosts.js');
     let filtered = [...blogPosts];
     
     if (category) {
@@ -41,6 +60,7 @@ export async function getBlogPosts({ category, featured, limit } = {}) {
     
     return filtered;
   }
+  */
 
   let query = supabase
     .from('blog_posts')
@@ -79,8 +99,24 @@ export async function getBlogPosts({ category, featured, limit } = {}) {
  * @returns {Promise<Object|null>} Post o null si no existe
  */
 export async function getPostBySlug(slug) {
+  // TEMPORAL: Forzar uso de datos locales para ver el post nuevo
+  console.log('🔍 Buscando post por slug desde archivo local:', slug);
+  const { default: blogPosts } = await import('../data/blogPosts.js');
+  const post = blogPosts.find(p => p.slug === slug) || null;
+  
+  if (post) {
+    console.log('✅ Post encontrado:', post.title);
+  } else {
+    console.log('❌ Post no encontrado con slug:', slug);
+    console.log('📋 Slugs disponibles:', blogPosts.map(p => p.slug));
+  }
+  
+  return post;
+  
+  // Código original comentado temporalmente
+  /*
   if (!supabase) {
-    const { blogPosts } = await import('../data/blogPosts.js');
+    const { default: blogPosts } = await import('../data/blogPosts.js');
     return blogPosts.find(p => p.slug === slug) || null;
   }
 
@@ -102,6 +138,7 @@ export async function getPostBySlug(slug) {
     ...data,
     readTime: data.read_time,
   };
+  */
 }
 
 /**
