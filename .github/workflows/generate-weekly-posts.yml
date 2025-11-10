@@ -60,7 +60,29 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: Automatización Empresarial post" && git pull --rebase origin main && git push)
+          
+          # Solo continuar si hay cambios
+          if git diff --staged --quiet; then
+            echo "No hay cambios para commitear"
+            exit 0
+          fi
+          
+          git commit -m "🤖 Auto-generate: Automatización Empresarial post"
+          
+          # Pull con merge strategy para evitar conflictos
+          git pull origin main --no-rebase --strategy-option=theirs || true
+          
+          # Push con retry
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push exitoso"
+              break
+            else
+              echo "Intento $i falló, esperando 5 segundos..."
+              sleep 5
+              git pull origin main --no-rebase --strategy-option=theirs || true
+            fi
+          done
 
   generate-devops-post:
     # Solo correr el jueves o si se selecciona manualmente
@@ -97,7 +119,29 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/blogPosts.js
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generate: DevOps & Herramientas post" && git pull --rebase origin main && git push)
+          
+          # Solo continuar si hay cambios
+          if git diff --staged --quiet; then
+            echo "No hay cambios para commitear"
+            exit 0
+          fi
+          
+          git commit -m "🤖 Auto-generate: DevOps & Herramientas post"
+          
+          # Pull con merge strategy para evitar conflictos
+          git pull origin main --no-rebase --strategy-option=theirs || true
+          
+          # Push con retry
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push exitoso"
+              break
+            else
+              echo "Intento $i falló, esperando 5 segundos..."
+              sleep 5
+              git pull origin main --no-rebase --strategy-option=theirs || true
+            fi
+          done
 
   send-newsletter:
     # Enviar newsletter los viernes después de que se hayan generado posts durante la semana
