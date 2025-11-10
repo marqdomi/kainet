@@ -155,16 +155,56 @@ const CategoryFilter = ({ categories, active, onChange }) => (
 // ---- Newsletter CTA ----
 const NewsletterCTA = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setMessage('Por favor, ingresa un email válido');
+      return;
+    }
+
     setStatus('sending');
-    // Aquí integrarías con tu servicio de email (Mailchimp, ConvertKit, etc.)
-    setTimeout(() => {
-      setStatus('success');
-      setEmail('');
-    }, 1500);
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/newsletter-subscribe-direct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim() || undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setStatus('success');
+        setMessage(data.alreadySubscribed 
+          ? 'Ya estás suscrito al newsletter 📧' 
+          : '¡Suscripción exitosa! Revisa tu email de bienvenida 🎉'
+        );
+        setEmail('');
+        setName('');
+        
+        setTimeout(() => {
+          setStatus('idle');
+          setMessage('');
+        }, 8000);
+      } else {
+        setStatus('error');
+        setMessage(data.message || 'Algo salió mal. Intenta nuevamente.');
+      }
+    } catch (err) {
+      console.error('Error submitting newsletter:', err);
+      setStatus('error');
+      setMessage('Error de conexión. Intenta más tarde.');
+    }
   };
 
   return (
@@ -187,25 +227,39 @@ const NewsletterCTA = () => {
 
         {status === 'success' ? (
           <div className="text-[#00E5FF] font-medium">
-            ¡Suscripción exitosa! Revisa tu email.
+            {message}
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto flex gap-3">
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-3">
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              required
-              className="flex-1 px-4 py-3 rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60"
-            />
-            <button
-              type="submit"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Tu nombre (opcional)"
               disabled={status === 'sending'}
-              className="btn-kainet px-6 py-3 disabled:opacity-60"
-            >
-              {status === 'sending' ? 'Enviando...' : 'Suscribirse'}
-            </button>
+              className="w-full px-4 py-3 rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 disabled:opacity-60"
+            />
+            <div className="flex gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com *"
+                required
+                disabled={status === 'sending'}
+                className="flex-1 px-4 py-3 rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="btn-kainet px-6 py-3 disabled:opacity-60 whitespace-nowrap"
+              >
+                {status === 'sending' ? 'Enviando...' : 'Suscribirse'}
+              </button>
+            </div>
+            {status === 'error' && message && (
+              <p className="text-red-400 text-sm text-center">{message}</p>
+            )}
           </form>
         )}
       </div>
