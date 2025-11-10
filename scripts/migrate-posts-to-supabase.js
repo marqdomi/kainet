@@ -1,96 +1,129 @@
+#!/usr/bin/env node
 // scripts/migrate-posts-to-supabase.js
-// Script para migrar posts existentes de blogPosts.js a Supabase
+// Migra posts existentes de blogPosts.js a Supabase
 
 import { createClient } from '@supabase/supabase-js';
-import { blogPosts } from '../src/data/blogPosts.js';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import fs from 'fs';
 
-dotenv.config({ path: '.env.local' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Cliente de Supabase con service_role key (permisos completos)
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY // ⚠️ Solo usar en backend
-);
+// Cargar variables de entorno
+dotenv.config();
 
-async function migratePosts() {
-  console.log('\n🔄 Iniciando migración de posts a Supabase...\n');
-  console.log(`📊 Total de posts a migrar: ${blogPosts.length}\n`);
+const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
-  let successCount = 0;
-  let errorCount = 0;
-  const errors = [];
-
-  for (const post of blogPosts) {
-    try {
-      // Insertar post en Supabase
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .insert([{
-          id: post.id,
-          slug: post.slug,
-          title: post.title,
-          excerpt: post.excerpt,
-          author: post.author,
-          date: post.date,
-          read_time: post.readTime,
-          category: post.category,
-          image: post.image,
-          featured: post.featured,
-          content: post.content,
-        }])
-        .select();
-
-      if (error) {
-        // Si ya existe (duplicate), intentar actualizar
-        if (error.code === '23505') {
-          console.log(`   ⚠️  Post "${post.title}" ya existe, actualizando...`);
-          
-          const { error: updateError } = await supabase
-            .from('blog_posts')
-            .update({
-              title: post.title,
-              excerpt: post.excerpt,
-              content: post.content,
-              image: post.image,
-              featured: post.featured,
-            })
-            .eq('id', post.id);
-
-          if (updateError) {
-            throw updateError;
-          }
-          console.log(`   ✅ Actualizado: ${post.title}`);
-        } else {
-          throw error;
-        }
-      } else {
-        console.log(`   ✅ Migrado: ${post.title}`);
-      }
-
-      successCount++;
-    } catch (err) {
-      errorCount++;
-      errors.push({ post: post.title, error: err.message });
-      console.log(`   ❌ Error en "${post.title}": ${err.message}`);
-    }
-  }
-
-  console.log('\n' + '='.repeat(60));
-  console.log('📊 RESUMEN DE MIGRACIÓN');
-  console.log('='.repeat(60));
-  console.log(`✅ Exitosos: ${successCount}/${blogPosts.length}`);
-  console.log(`❌ Errores: ${errorCount}/${blogPosts.length}`);
-  
-  if (errors.length > 0) {
-    console.log('\n⚠️  Detalles de errores:');
-    errors.forEach(({ post, error }) => {
-      console.log(`   - ${post}: ${error}`);
-    });
-  }
-
-  console.log('\n✨ Migración completada!\n');
+if (!supabaseUrl || !supabaseKey) {
+  console.error('❌ Error: Faltan variables de entorno');
+  console.error('Necesitas: SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY');
+  process.exit(1);
 }
 
-// Ejecutar migración
-migratePosts().catch(console.error);
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+async function migratePosts() {
+  console.log('\n🚀 Migrando posts a Supabase...\n');
+
+  try {
+    // Leer blogPosts.js
+    const blogPostsPath = join(__dirname, '../src/data/blogPosts.js');
+    const content = fs.readFileSync(blogPostsPath, 'utf-8');
+    
+    // Extraer el array de posts (esto es un hack simple)
+    const match = content.match(/export const blogPosts = (\[[\s\S]*?\]);/);
+    if (!match) {
+      console.error('❌ No se pudo parsear blogPosts.js');
+      process.exit(1);
+    }
+
+    // Evaluar el array (cuidado: solo funciona con datos seguros)
+    const blogPosts = eval(match[1]);
+    
+    console.log(`📚 Encontrados ${blogPosts.length} posts en blogPosts.js\n`);
+
+    // Verificar qué posts ya existen en Supabase
+    const { data: existingPosts } = await supabase
+      .from('blog_posts')
+      .select('slug');
+
+    const existingSlugs = new Set(existingPosts?.map(p => p.slug) || []);
+    
+    let migrated = 0;
+    let skipped = 0;
+    let errors = 0;
+
+    for (const post of blogPosts) {
+      // Generar slug si no existe
+      const slug = post.slug || post.title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      // Verificar si ya existe
+      if (existingSlugs.has(slug)) {
+        console.log(`⏭️  Saltando: "${post.title}" (ya existe)`);
+        skipped++;
+        continue;
+      }
+
+      // Preparar datos para Supabase
+      const supabasePost = {
+        title: post.title,
+        slug: slug,
+        excerpt: post.excerpt || post.description || '',
+        content: post.content || '',
+        category: post.category || 'General',
+        tags: post.tags || [],
+        image: post.image || '',
+        author: post.author || 'KAINET',
+        read_time: post.readTime || 5,
+        published: post.published !== false,
+        featured: post.featured || false,
+        created_at: post.date || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      // Insertar en Supabase
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .insert([supabasePost])
+        .select()
+        .single();
+
+      if (error) {
+        console.error(`❌ Error migrando "${post.title}":`, error.message);
+        errors++;
+      } else {
+        console.log(`✅ Migrado: "${post.title}"`);
+        migrated++;
+      }
+    }
+
+    console.log('\n' + '='.repeat(60));
+    console.log('📊 Resumen de Migración:');
+    console.log('='.repeat(60));
+    console.log(`✅ Migrados: ${migrated}`);
+    console.log(`⏭️  Saltados: ${skipped} (ya existían)`);
+    console.log(`❌ Errores: ${errors}`);
+    console.log('='.repeat(60) + '\n');
+
+    if (migrated > 0) {
+      console.log('🎉 Migración completada exitosamente!');
+      console.log('\nVerifica en Supabase:');
+      console.log('https://supabase.com/dashboard/project/tqdencmzezjevnntifos/editor\n');
+    }
+
+  } catch (error) {
+    console.error('❌ Error durante la migración:', error);
+    process.exit(1);
+  }
+}
+
+// Ejecutar
+migratePosts();
