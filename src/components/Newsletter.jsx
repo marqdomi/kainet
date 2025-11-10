@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button, Input, Card } from './ui';
 
-// 🚀 ACTUALIZADO: Usar API de suscripción a newsletter
-const NEWSLETTER_ENDPOINT = '/api/newsletter-subscribe';
+// 🚀 ACTUALIZADO: Usar API de suscripción DIRECTA (sin confirmación)
+const NEWSLETTER_ENDPOINT = '/api/newsletter-subscribe-direct';
 
 const Newsletter = ({ variant = 'default' }) => {
   const [email, setEmail] = useState('');
@@ -39,14 +39,12 @@ const Newsletter = ({ variant = 'default' }) => {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data.success) {
         setStatus('success');
         if (data.alreadySubscribed) {
           setMessage('Ya estás suscrito al newsletter 📧');
-        } else if (data.requiresConfirmation) {
-          setMessage('¡Gracias! Revisa tu email para confirmar tu suscripción 📬');
         } else {
-          setMessage(data.message || '¡Gracias por suscribirte! 🎉');
+          setMessage('¡Suscripción exitosa! Revisa tu email de bienvenida 🎉');
         }
         setEmail('');
         setName('');
