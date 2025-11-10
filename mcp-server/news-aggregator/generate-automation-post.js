@@ -57,10 +57,10 @@ async function generateAutomationPost() {
       weekNumber
     );
 
-    // Guardar en Supabase y archivo local
-    console.log('\n💾 Guardando post...');
+    // Guardar SOLO en Supabase (única fuente de verdad)
+    console.log('\n💾 Guardando post en Supabase...');
     await saveToSupabase(automationPost);
-    await saveToLocalBlog(automationPost);
+    // await saveToLocalBlog(automationPost); // DESHABILITADO: Supabase es la única fuente
 
     // Resumen
     console.log('\n' + '='.repeat(60));
@@ -68,7 +68,7 @@ async function generateAutomationPost() {
     console.log(`📝 Título: "${automationPost.title}"`);
     console.log(`📊 Slug: ${automationPost.slug}`);
     console.log(`🏷️  Categoría: ${automationPost.category}`);
-    console.log(`💾 Guardado en: Supabase + blogPosts.js`);
+    console.log(`💾 Guardado en: Supabase (única fuente de verdad)`);
     console.log('='.repeat(60) + '\n');
 
   } catch (error) {

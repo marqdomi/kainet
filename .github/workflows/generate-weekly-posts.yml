@@ -55,34 +55,10 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node generate-automation-post.js
       
-      - name: Commit and push changes
+      - name: Log completion
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add src/data/blogPosts.js
-          
-          # Solo continuar si hay cambios
-          if git diff --staged --quiet; then
-            echo "No hay cambios para commitear"
-            exit 0
-          fi
-          
-          git commit -m "🤖 Auto-generate: Automatización Empresarial post"
-          
-          # Pull con merge strategy para evitar conflictos
-          git pull origin main --no-rebase --strategy-option=theirs || true
-          
-          # Push con retry
-          for i in 1 2 3; do
-            if git push origin main; then
-              echo "Push exitoso"
-              break
-            else
-              echo "Intento $i falló, esperando 5 segundos..."
-              sleep 5
-              git pull origin main --no-rebase --strategy-option=theirs || true
-            fi
-          done
+          echo "✅ Post de Automatización Empresarial generado y guardado en Supabase"
+          echo "📊 El post está disponible en la base de datos"
 
   generate-devops-post:
     # Solo correr el jueves o si se selecciona manualmente
@@ -114,34 +90,10 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node generate-devops-post.js
       
-      - name: Commit and push changes
+      - name: Log completion
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add src/data/blogPosts.js
-          
-          # Solo continuar si hay cambios
-          if git diff --staged --quiet; then
-            echo "No hay cambios para commitear"
-            exit 0
-          fi
-          
-          git commit -m "🤖 Auto-generate: DevOps & Herramientas post"
-          
-          # Pull con merge strategy para evitar conflictos
-          git pull origin main --no-rebase --strategy-option=theirs || true
-          
-          # Push con retry
-          for i in 1 2 3; do
-            if git push origin main; then
-              echo "Push exitoso"
-              break
-            else
-              echo "Intento $i falló, esperando 5 segundos..."
-              sleep 5
-              git pull origin main --no-rebase --strategy-option=theirs || true
-            fi
-          done
+          echo "✅ Post de DevOps & Herramientas generado y guardado en Supabase"
+          echo "📊 El post está disponible en la base de datos"
 
   send-newsletter:
     # Enviar newsletter los viernes después de que se hayan generado posts durante la semana
