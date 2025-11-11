@@ -1,10 +1,14 @@
-import { createContext, useContext } from 'react';
-import PropTypes from 'prop-types';
+import { createContext, useContext, ReactNode } from 'react';
 import { useEasterEggs } from '../hooks/useEasterEggs';
+import type { EasterEggContextType } from '@/types';
 
-const EasterEggContext = createContext(null);
+const EasterEggContext = createContext<EasterEggContextType | null>(null);
 
-export const EasterEggProvider = ({ children }) => {
+interface EasterEggProviderProps {
+  children: ReactNode;
+}
+
+export const EasterEggProvider = ({ children }: EasterEggProviderProps) => {
   const easterEggState = useEasterEggs();
 
   return (
@@ -14,11 +18,7 @@ export const EasterEggProvider = ({ children }) => {
   );
 };
 
-EasterEggProvider.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
-export const useEasterEggContext = () => {
+export const useEasterEggContext = (): EasterEggContextType => {
   const context = useContext(EasterEggContext);
   if (!context) {
     throw new Error('useEasterEggContext must be used within EasterEggProvider');
