@@ -1,13 +1,15 @@
-// src/pages/NewsletterConfirmPage.jsx
+// src/pages/NewsletterConfirmPage.tsx
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Loader } from 'lucide-react';
 
-const NewsletterConfirmPage = () => {
+type ConfirmationStatus = 'loading' | 'success' | 'error' | 'already-confirmed';
+
+const NewsletterConfirmPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState('loading'); // loading | success | error | already-confirmed
-  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<ConfirmationStatus>('loading');
+  const [message, setMessage] = useState<string>('');
   const token = searchParams.get('token');
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const NewsletterConfirmPage = () => {
     confirmSubscription(token);
   }, [token]);
 
-  const confirmSubscription = async (token) => {
+  const confirmSubscription = async (token: string): Promise<void> => {
     try {
       const res = await fetch(`/api/newsletter-confirm?token=${token}`);
       const data = await res.json();

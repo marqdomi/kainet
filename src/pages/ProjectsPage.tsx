@@ -1,4 +1,4 @@
-// src/pages/ProjectsPage.jsx
+// src/pages/ProjectsPage.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -6,20 +6,23 @@ import { supabase } from '../lib/supabase';
 import { Badge, Button, Skeleton, SectionTitle } from '../components/ui';
 import HolographicCard from '../components/effects/HolographicCard';
 import GlitchText from '../components/effects/GlitchText';
+import type { Project } from '@/types';
 
-const ProjectsPage = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+type CategoryType = 'all' | 'AI' | 'Web' | 'Automation' | 'MLOps';
 
-  const categories = ['all', 'AI', 'Web', 'Automation', 'MLOps'];
+const ProjectsPage: React.FC = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
+
+  const categories: CategoryType[] = ['all', 'AI', 'Web', 'Automation', 'MLOps'];
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (): Promise<void> => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -30,10 +33,10 @@ const ProjectsPage = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setProjects(data || []);
+      setProjects((data as Project[]) || []);
     } catch (err) {
       console.error('Error fetching projects:', err);
-      setError(err.message);
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

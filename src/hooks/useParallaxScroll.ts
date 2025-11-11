@@ -1,14 +1,27 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, RefObject } from 'react';
 import useReducedMotion from './useReducedMotion';
+
+interface ParallaxScrollOptions {
+  speed?: number;
+  blurThreshold?: number;
+  maxBlur?: number;
+}
+
+interface ParallaxScrollResult {
+  offset: number;
+  blur: number;
+  ref: RefObject<HTMLDivElement>;
+  scrollVelocity: number;
+}
 
 /**
  * Enhanced hook for parallax scrolling with multiple layers and motion blur
  * 
- * @param {Object} options - Configuration options
- * @param {number} options.speed - Speed multiplier for parallax effect (default: 0.5)
- * @param {number} options.blurThreshold - Scroll speed threshold for motion blur in px/frame (default: 10)
- * @param {number} options.maxBlur - Maximum blur amount in pixels (default: 3)
- * @returns {Object} { offset, blur, ref, scrollVelocity }
+ * @param options - Configuration options
+ * @param options.speed - Speed multiplier for parallax effect (default: 0.5)
+ * @param options.blurThreshold - Scroll speed threshold for motion blur in px/frame (default: 10)
+ * @param options.maxBlur - Maximum blur amount in pixels (default: 3)
+ * @returns Object with offset, blur, ref, and scrollVelocity
  * 
  * @example
  * const { offset, blur, ref } = useParallaxScroll({ speed: 0.5 });
@@ -28,24 +41,24 @@ import useReducedMotion from './useReducedMotion';
  * - RequestAnimationFrame for smooth updates
  * - Respects prefers-reduced-motion preference
  */
-const useParallaxScroll = (options = {}) => {
+const useParallaxScroll = (options: ParallaxScrollOptions = {}): ParallaxScrollResult => {
   const {
     speed = 0.5,
     blurThreshold = 10,
     maxBlur = 3,
   } = options;
 
-  const [offset, setOffset] = useState(0);
-  const [blur, setBlur] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef(null);
+  const [offset, setOffset] = useState<number>(0);
+  const [blur, setBlur] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const elementRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   
   // Track scroll velocity for motion blur
-  const lastScrollY = useRef(0);
-  const lastTimestamp = useRef(Date.now());
-  const rafId = useRef(null);
-  const scrollVelocity = useRef(0);
+  const lastScrollY = useRef<number>(0);
+  const lastTimestamp = useRef<number>(Date.now());
+  const rafId = useRef<number | null>(null);
+  const scrollVelocity = useRef<number>(0);
 
   // Calculate parallax offset and motion blur
   const updateParallax = useCallback(() => {

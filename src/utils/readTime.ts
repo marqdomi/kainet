@@ -1,11 +1,16 @@
-// src/utils/readTime.js
+// src/utils/readTime.ts
+
+interface Post {
+  content?: string;
+  readTime?: string;
+}
 
 /**
  * Calcula el tiempo estimado de lectura basado en el contenido
- * @param {string} content - Contenido del artículo (puede incluir HTML/Markdown)
- * @returns {string} - Tiempo de lectura formateado (ej: "5 min", "12 min")
+ * @param content - Contenido del artículo (puede incluir HTML/Markdown)
+ * @returns Tiempo de lectura formateado (ej: "5 min", "12 min")
  */
-export const calculateReadTime = (content) => {
+export const calculateReadTime = (content: string): string => {
   if (!content) return '5 min';
   
   // Remover HTML tags
@@ -38,7 +43,7 @@ export const calculateReadTime = (content) => {
  * Obtiene el tiempo de lectura de un post
  * Prioriza el cálculo dinámico sobre el valor estático
  */
-export const getReadTime = (post) => {
+export const getReadTime = (post: Post): string => {
   if (!post) return '5 min';
   
   // Si tiene contenido, calcular dinámicamente

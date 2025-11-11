@@ -1,15 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import useReducedMotion from './useReducedMotion';
+
+interface ParallaxResult {
+  offset: number;
+  ref: RefObject<HTMLDivElement>;
+}
 
 /**
  * Hook to calculate parallax offset based on scroll position
  * 
- * @param {number} speed - Speed multiplier for parallax effect (default: 0.5)
- * @returns {number} Parallax offset value
+ * @param speed - Speed multiplier for parallax effect (default: 0.5)
+ * @returns Parallax offset value and ref to attach to element
  * 
  * @example
- * const offset = useParallax(0.5);
- * <div style={{ transform: `translateY(${offset}px)` }}>
+ * const { offset, ref } = useParallax(0.5);
+ * <div ref={ref} style={{ transform: `translateY(${offset}px)` }}>
  *   Parallax content
  * </div>
  * 
@@ -18,10 +23,10 @@ import useReducedMotion from './useReducedMotion';
  * - Respects prefers-reduced-motion preference
  * - Uses passive event listeners for better scroll performance
  */
-const useParallax = (speed = 0.5) => {
-  const [offset, setOffset] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef(null);
+const useParallax = (speed: number = 0.5): ParallaxResult => {
+  const [offset, setOffset] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const elementRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
