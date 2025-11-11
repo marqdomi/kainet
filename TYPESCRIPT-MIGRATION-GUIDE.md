@@ -25,7 +25,11 @@ src/
 │   └── index.ts ✅ (Tipos compartidos - 70+ interfaces)
 ├── utils/
 │   ├── readTime.ts ✅
-│   └── animations.ts ✅ (Nuevo)
+│   ├── animations.ts ✅ (Nuevo)
+│   ├── performanceMonitor.ts ✅
+│   ├── kanjiLibrary.ts ✅
+│   ├── easterEggs.ts ✅
+│   └── sectionKanji.ts ✅
 ├── config/
 │   └── features.ts ✅
 ├── components/
@@ -80,17 +84,16 @@ src/hooks/
 └── useReducedMotion.ts ✅
 ```
 
-### Fase 3: Utilidades Restantes (Pendiente)
+### Fase 3: Utilidades Restantes (✅ Completada)
 ```bash
-# Archivos pendientes:
 src/utils/
-├── performanceMonitor.js → .ts
-├── kanjiLibrary.js → .ts
-├── easterEggs.js → .ts
-└── sectionKanji.js → .ts
+├── performanceMonitor.ts ✅
+├── kanjiLibrary.ts ✅
+├── easterEggs.ts ✅
+└── sectionKanji.ts ✅
 ```
 
-### Fase 4: Componentes de Layout
+### Fase 4: Componentes de Layout (Pendiente)
 ```bash
 src/layouts/
 └── MainLayout.jsx → .tsx

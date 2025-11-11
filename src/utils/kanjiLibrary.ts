@@ -7,11 +7,19 @@
  * @module kanjiLibrary
  */
 
+export interface KanjiData {
+  char: string;
+  meaning: string;
+  unicode: string;
+}
+
+export type TechKanjiKey = 'tech' | 'ai' | 'future' | 'innovation' | 'development' | 
+  'automation' | 'network' | 'data' | 'cloud' | 'code';
+
 /**
  * Tech-themed kanji dictionary with meanings and unicode values
- * @type {Object.<string, {char: string, meaning: string, unicode: string}>}
  */
-export const techKanji = {
+export const techKanji: Record<TechKanjiKey, KanjiData> = {
   tech: { 
     char: '技術', 
     meaning: 'Technology', 
@@ -67,15 +75,15 @@ export const techKanji = {
 /**
  * Get a random kanji from the tech kanji dictionary
  * 
- * @returns {{char: string, meaning: string, unicode: string}} Random kanji object
+ * @returns Random kanji object
  * 
  * @example
  * const kanji = getRandomKanji();
  * console.log(kanji.char); // '技術' or any other kanji
  * console.log(kanji.meaning); // 'Technology' or corresponding meaning
  */
-export const getRandomKanji = () => {
-  const keys = Object.keys(techKanji);
+export const getRandomKanji = (): KanjiData => {
+  const keys = Object.keys(techKanji) as TechKanjiKey[];
   const randomKey = keys[Math.floor(Math.random() * keys.length)];
   return techKanji[randomKey];
 };
@@ -84,8 +92,8 @@ export const getRandomKanji = () => {
  * Get a kanji character based on project category
  * Maps common project categories to appropriate kanji characters
  * 
- * @param {string} category - The project category (e.g., 'AI', 'Web', 'Automation', 'MLOps')
- * @returns {{char: string, meaning: string, unicode: string}} Mapped kanji object
+ * @param category - The project category (e.g., 'AI', 'Web', 'Automation', 'MLOps')
+ * @returns Mapped kanji object
  * 
  * @example
  * const aiKanji = getKanjiByCategory('AI');
@@ -94,8 +102,8 @@ export const getRandomKanji = () => {
  * const webKanji = getKanjiByCategory('Web');
  * console.log(webKanji.char); // '網' (network)
  */
-export const getKanjiByCategory = (category) => {
-  const mapping = {
+export const getKanjiByCategory = (category: string): KanjiData => {
+  const mapping: Record<string, KanjiData> = {
     'AI': techKanji.ai,
     'Web': techKanji.network,
     'Automation': techKanji.automation,
