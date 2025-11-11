@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import PageTransition from './components/effects/PageTransition';
+import ErrorBoundary from './components/ErrorBoundary';
 import { EasterEggProvider, useEasterEggContext } from './contexts/EasterEggContext';
 import { features } from './config/features';
 
@@ -91,11 +92,13 @@ const AppContent = () => {
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <EasterEggProvider>
-        <AppContent />
-      </EasterEggProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <EasterEggProvider>
+          <AppContent />
+        </EasterEggProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 
