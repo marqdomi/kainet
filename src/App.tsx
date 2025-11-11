@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/App.tsx
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
