@@ -1,20 +1,20 @@
-// src/pages/ContactPage.jsx
+// src/pages/AboutPage.tsx
 import React, { Suspense, lazy } from 'react';
 
-const Contact = lazy(() => import('../components/Contact'));
+const About = lazy(() => import('../components/About'));
 
-const LoadingFallback = () => (
+const LoadingFallback: React.FC = () => (
   <div className="min-h-[200px] flex items-center justify-center">
     <div className="animate-pulse text-[#00E5FF]">Cargando...</div>
   </div>
 );
 
-const ContactPage = () => {
+const AboutPage: React.FC = () => {
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <Contact />
+      <About />
     </Suspense>
   );
 };
 
-export default ContactPage;
+export default AboutPage;
