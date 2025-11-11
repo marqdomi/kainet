@@ -1,19 +1,31 @@
 import { useEffect, useState } from 'react';
 import { easterEggManager } from '../utils/easterEggs';
 import { features } from '../config/features';
+import type { SpecialDateEffect } from '@/types';
+
+interface UseEasterEggsReturn {
+  matrixRainActive: boolean;
+  toriiAnimationActive: boolean;
+  specialDateEffect: SpecialDateEffect;
+  handleLogoClick: () => void;
+  dismissMatrixRain: () => void;
+  dismissToriiAnimation: () => void;
+  activateMatrixRain: () => void;
+  activateToriiAnimation: () => void;
+}
 
 /**
  * useEasterEggs - Custom hook to manage easter egg state and effects
  * 
- * @returns {Object} Easter egg states and handlers
+ * @returns Easter egg states and handlers
  * 
  * @example
  * const { matrixRainActive, toriiAnimationActive, specialDateEffect, handleLogoClick } = useEasterEggs();
  */
-export const useEasterEggs = () => {
-  const [matrixRainActive, setMatrixRainActive] = useState(false);
-  const [toriiAnimationActive, setToriiAnimationActive] = useState(false);
-  const [specialDateEffect, setSpecialDateEffect] = useState(null);
+export const useEasterEggs = (): UseEasterEggsReturn => {
+  const [matrixRainActive, setMatrixRainActive] = useState<boolean>(false);
+  const [toriiAnimationActive, setToriiAnimationActive] = useState<boolean>(false);
+  const [specialDateEffect, setSpecialDateEffect] = useState<SpecialDateEffect>(null);
 
   useEffect(() => {
     // Only initialize if easter eggs feature is enabled
@@ -57,16 +69,24 @@ export const useEasterEggs = () => {
     };
   }, []);
 
-  const handleLogoClick = () => {
+  const handleLogoClick = (): void => {
     easterEggManager.handleLogoClick();
   };
 
-  const dismissMatrixRain = () => {
+  const dismissMatrixRain = (): void => {
     setMatrixRainActive(false);
   };
 
-  const dismissToriiAnimation = () => {
+  const dismissToriiAnimation = (): void => {
     setToriiAnimationActive(false);
+  };
+
+  const activateMatrixRain = (): void => {
+    setMatrixRainActive(true);
+  };
+
+  const activateToriiAnimation = (): void => {
+    setToriiAnimationActive(true);
   };
 
   return {
@@ -75,6 +95,8 @@ export const useEasterEggs = () => {
     specialDateEffect,
     handleLogoClick,
     dismissMatrixRain,
-    dismissToriiAnimation
+    dismissToriiAnimation,
+    activateMatrixRain,
+    activateToriiAnimation,
   };
 };

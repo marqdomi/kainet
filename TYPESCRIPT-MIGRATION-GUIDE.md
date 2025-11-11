@@ -22,11 +22,21 @@ src/
 ├── main.tsx ✅
 ├── App.tsx ✅
 ├── types/
-│   └── index.ts ✅ (Tipos compartidos)
+│   └── index.ts ✅ (Tipos compartidos - 70+ interfaces)
 ├── utils/
-│   └── readTime.ts ✅
-└── config/
-    └── features.ts ✅
+│   ├── readTime.ts ✅
+│   └── animations.ts ✅ (Nuevo)
+├── config/
+│   └── features.ts ✅
+├── components/
+│   └── ErrorBoundary.tsx ✅ (Nuevo)
+├── contexts/
+│   └── EasterEggContext.tsx ✅
+└── hooks/
+    ├── useEasterEggs.ts ✅
+    ├── useParallax.ts ✅
+    ├── useParallaxScroll.ts ✅
+    └── useReducedMotion.ts ✅
 ```
 
 ## 🎯 Objetivos de la Migración
@@ -58,7 +68,19 @@ El archivo `src/types/index.ts` incluye interfaces para:
 - Tipos compartidos
 - Archivos core (main.tsx, App.tsx)
 
-### Fase 2: Utilidades y Configuración (En progreso)
+### Fase 2: Contextos y Hooks (✅ Completada)
+```bash
+src/contexts/
+└── EasterEggContext.tsx ✅
+
+src/hooks/
+├── useEasterEggs.ts ✅
+├── useParallax.ts ✅
+├── useParallaxScroll.ts ✅
+└── useReducedMotion.ts ✅
+```
+
+### Fase 3: Utilidades Restantes (Pendiente)
 ```bash
 # Archivos pendientes:
 src/utils/
@@ -66,21 +88,6 @@ src/utils/
 ├── kanjiLibrary.js → .ts
 ├── easterEggs.js → .ts
 └── sectionKanji.js → .ts
-
-src/config/
-└── (Ya migrado features.ts)
-```
-
-### Fase 3: Contextos y Hooks
-```bash
-src/contexts/
-└── EasterEggContext.jsx → .tsx
-
-src/hooks/
-├── useEasterEggs.js → .ts
-├── useParallax.js → .ts
-├── useParallaxScroll.js → .ts
-└── useReducedMotion.js → .ts
 ```
 
 ### Fase 4: Componentes de Layout
