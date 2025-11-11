@@ -1,5 +1,5 @@
-// src/layouts/MainLayout.jsx
-import React, { lazy, Suspense } from 'react';
+// src/layouts/MainLayout.tsx
+import React, { useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -7,25 +7,30 @@ import BackToTop from '../components/BackToTop';
 import Particles from '../components/effects/Particles';
 
 // Cursor personalizado KAINET
-const KainetCursor = () => {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
+const KainetCursor: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
     document.body.classList.add('has-custom-cursor');
     const el = ref.current;
-    const onMove = (e) => {
+    
+    const onMove = (e: PointerEvent): void => {
       if (!el) return;
       el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     };
+    
     window.addEventListener('pointermove', onMove, { passive: true });
+    
     return () => {
       window.removeEventListener('pointermove', onMove);
       document.body.classList.remove('has-custom-cursor');
     };
   }, []);
+  
   return <div ref={ref} className="k-cursor" />;
 };
 
-const MainLayout = () => {
+const MainLayout: React.FC = () => {
   return (
     <>
       {/* Accessibility: Skip to main content */}
