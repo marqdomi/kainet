@@ -1,8 +1,8 @@
-// src/pages/NotFound.jsx
+// src/pages/NotFound.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-8">
       <div className="text-center">
