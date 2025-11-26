@@ -1,6 +1,7 @@
 // src/App.tsx
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import MainLayout from './layouts/MainLayout';
 import PageTransition from './components/effects/PageTransition';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -15,6 +16,9 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 import NewsletterConfirmPage from './pages/NewsletterConfirmPage';
+import KaidoPage from './pages/KaidoPage';
+import ProductsPage from './pages/ProductsPage';
+import ServicesPage from './pages/ServicesPage';
 import NotFound from './pages/NotFound';
 
 // Lazy load easter egg components
@@ -22,6 +26,9 @@ const MatrixRain = lazy(() => import('./components/effects/MatrixRain'));
 const ToriiAnimation = lazy(() => import('./components/effects/ToriiAnimation'));
 const SakuraPetals = lazy(() => import('./components/effects/SakuraPetals'));
 const Fireworks = lazy(() => import('./components/effects/Fireworks'));
+
+// FloatingLines background (global)
+import FloatingLines from './components/effects/FloatingLines';
 
 const AppContent = () => {
   const {
@@ -39,23 +46,31 @@ const AppContent = () => {
       <Route path="/" element={<MainLayout />}>
         {/* Home page */}
         <Route index element={<Home />} />
-        
+
         {/* About page */}
         <Route path="about" element={<AboutPage />} />
-        
-        {/* Projects */}
+        <Route path="nosotros" element={<AboutPage />} />
+
+        {/* Kaido Landing Page */}
+        <Route path="kaido" element={<KaidoPage />} />
+
+        {/* Products & Services */}
+        <Route path="productos" element={<ProductsPage />} />
+        <Route path="servicios" element={<ServicesPage />} />
+
+        {/* Projects (legacy, redirects to projects for now) */}
         <Route path="projects" element={<ProjectsPage />} />
-        
+
         {/* Blog */}
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostPage />} />
-        
+
         {/* Contact */}
         <Route path="contact" element={<ContactPage />} />
-        
+
         {/* Newsletter */}
         <Route path="newsletter/confirm" element={<NewsletterConfirmPage />} />
-        
+
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
       </Route>
@@ -64,14 +79,30 @@ const AppContent = () => {
 
   return (
     <>
+      {/* Floating Lines Background - Global - Behind everything */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: -1, pointerEvents: 'none' }}>
+        <FloatingLines
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={5} // Optimized for performance (same count for all waves)
+          lineDistance={5} // Optimized for performance (same distance for all waves)
+          bendRadius={5.0}
+          bendStrength={-0.5}
+          interactive={typeof window !== 'undefined' && window.innerWidth >= 768} // Only on desktop
+          parallax={typeof window !== 'undefined' && window.innerWidth >= 768} // Only on desktop
+          animationSpeed={0.8} // Slightly slower animation
+        />
+      </div>
+
       {/* Conditionally wrap with PageTransition based on feature flag */}
-      {features.pageTransitions ? (
-        <PageTransition duration={600}>
-          {RoutesContent}
-        </PageTransition>
-      ) : (
-        RoutesContent
-      )}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {features.pageTransitions ? (
+          <PageTransition duration={600}>
+            {RoutesContent}
+          </PageTransition>
+        ) : (
+          RoutesContent
+        )}
+      </div>
 
       {/* Easter Egg Effects - Only render if feature is enabled */}
       {features.easterEggs && (
@@ -93,11 +124,13 @@ const AppContent = () => {
 const App = () => {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <EasterEggProvider>
-          <AppContent />
-        </EasterEggProvider>
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <EasterEggProvider>
+            <AppContent />
+          </EasterEggProvider>
+        </BrowserRouter>
+      </HelmetProvider>
     </ErrorBoundary>
   );
 };

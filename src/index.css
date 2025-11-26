@@ -1,6 +1,7 @@
 @import './styles/variables.css';
 @import './styles/animations.css';
 @import './styles/CardBackground.css';
+@import './styles/micro-interactions.css';
 
 @tailwind base;
 @tailwind components;
@@ -20,7 +21,16 @@ html { scroll-behavior: smooth; }
 
 @layer base {
   html, body, #root { height: 100%; }
-  body { @apply bg-black text-white; }
+  
+  /* Apply Inter font globally (Phase 3.5) */
+  body { 
+    @apply bg-black text-white; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
 
   /* Text Selection Styling */
   ::selection {

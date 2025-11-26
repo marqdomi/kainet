@@ -23,9 +23,9 @@ import useReducedMotion from '../../hooks/useReducedMotion';
  * - Proper ARIA attributes for loading state
  */
 
-const Button = ({ 
-  children, 
-  variant = 'primary', 
+const Button = ({
+  children,
+  variant = 'primary',
   size = 'md',
   disabled = false,
   loading = false,
@@ -33,7 +33,7 @@ const Button = ({
   onClick,
   type = 'button',
   as = 'button',
-  ...props 
+  ...props
 }) => {
   const [ripples, setRipples] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
@@ -42,7 +42,7 @@ const Button = ({
   const rippleAnimationRef = useRef(null);
   const ripplesRef = useRef([]);
   const prefersReducedMotion = useReducedMotion();
-  
+
   // Disable effects if reduced motion is preferred
   const effectsEnabled = !prefersReducedMotion;
   /**
@@ -54,14 +54,14 @@ const Button = ({
     if (onClick) {
       onClick(e);
     }
-    
+
     // Create ripple effect if enabled
     if (!effectsEnabled || !buttonRef.current || !canvasRef.current || disabled || loading) return;
-    
+
     const rect = buttonRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     // Add new ripple to array
     ripplesRef.current.push({
       x,
@@ -70,7 +70,7 @@ const Button = ({
       maxRadius: Math.max(rect.width, rect.height) * 1.5,
       startTime: Date.now()
     });
-    
+
     // Start animation loop if not already running
     if (!rippleAnimationRef.current) {
       animateRipples();
@@ -84,31 +84,31 @@ const Button = ({
   const animateRipples = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     const now = Date.now();
     const duration = 600; // ms
-    
+
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Update and draw ripples
     ripplesRef.current = ripplesRef.current.filter(ripple => {
       const elapsed = now - ripple.startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       // Easing function (cubic-bezier approximation)
       const eased = progress < 0.5
         ? 4 * progress * progress * progress
         : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      
+
       ripple.radius = eased * ripple.maxRadius;
-      
+
       // Draw ripple
       const opacity = 0.6 * (1 - progress);
       ctx.beginPath();
       ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-      
+
       // Gradient fill
       const gradient = ctx.createRadialGradient(
         ripple.x, ripple.y, 0,
@@ -117,14 +117,14 @@ const Button = ({
       gradient.addColorStop(0, `rgba(0, 229, 255, ${opacity})`);
       gradient.addColorStop(0.5, `rgba(0, 229, 255, ${opacity * 0.5})`);
       gradient.addColorStop(1, `rgba(0, 229, 255, 0)`);
-      
+
       ctx.fillStyle = gradient;
       ctx.fill();
-      
+
       // Keep ripple if not complete
       return progress < 1;
     });
-    
+
     // Continue animation if ripples remain
     if (ripplesRef.current.length > 0) {
       rippleAnimationRef.current = requestAnimationFrame(animateRipples);
@@ -146,16 +146,16 @@ const Button = ({
   // Setup canvas size
   useEffect(() => {
     if (!canvasRef.current || !buttonRef.current) return;
-    
+
     const updateCanvasSize = () => {
       const rect = buttonRef.current.getBoundingClientRect();
       canvasRef.current.width = rect.width;
       canvasRef.current.height = rect.height;
     };
-    
+
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
-    
+
     return () => {
       window.removeEventListener('resize', updateCanvasSize);
     };
@@ -171,7 +171,7 @@ const Button = ({
   }, []);
 
   const baseStyles = `
-    relative overflow-hidden
+    relative overflow-hidden btn-enhanced
     inline-flex items-center justify-center
     font-semibold rounded-lg
     transition-all duration-200
@@ -207,7 +207,7 @@ const Button = ({
   };
 
   const Component = as;
-  const elementProps = as === 'button' 
+  const elementProps = as === 'button'
     ? { type, disabled: disabled || loading }
     : {};
 
@@ -231,7 +231,7 @@ const Button = ({
       ) : (
         children
       )}
-      
+
       {/* Ripple canvas */}
       {effectsEnabled && (
         <canvas
