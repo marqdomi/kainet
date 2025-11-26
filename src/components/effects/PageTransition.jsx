@@ -26,6 +26,7 @@ import ToriiLoader from '../loaders/ToriiLoader';
 
 const PageTransition = ({ children, duration = 600 }) => {
   const location = useLocation();
+  console.log('[PageTransition] Current pathname:', location.pathname);
   const [isLoading, setIsLoading] = useState(false);
   const [direction, setDirection] = useState('forward');
   const prefersReducedMotion = useReducedMotion();
@@ -39,10 +40,13 @@ const PageTransition = ({ children, duration = 600 }) => {
     const prevPath = previousLocation.current;
 
     // Simple heuristic: if going to root or shorter path, it's "back"
-    if (currentPath === '/' || currentPath.length < prevPath.length) {
-      setDirection('back');
-    } else {
-      setDirection('forward');
+    // But don't set direction on initial mount or if navigating to home from another page
+    if (prevPath && prevPath !== currentPath) {
+      if (currentPath === '/' || currentPath.length < prevPath.length) {
+        setDirection('back');
+      } else {
+        setDirection('forward');
+      }
     }
 
     previousLocation.current = currentPath;
@@ -90,10 +94,12 @@ const PageTransition = ({ children, duration = 600 }) => {
         ? 'inset(0 100% 0 0)' 
         : 'inset(0 0 0 100%)',
       filter: 'blur(0px)',
+      opacity: 1, // Ensure content is always visible
     }),
     animate: {
       clipPath: 'inset(0 0 0 0)',
       filter: 'blur(0px)',
+      opacity: 1,
       transition: {
         clipPath: {
           duration: duration / 1000,
@@ -103,6 +109,9 @@ const PageTransition = ({ children, duration = 600 }) => {
           duration: duration / 2000,
           ease: 'easeOut',
         },
+        opacity: {
+          duration: 0.1,
+        },
       },
     },
     exit: (direction) => ({
@@ -110,6 +119,7 @@ const PageTransition = ({ children, duration = 600 }) => {
         ? 'inset(0 0 0 100%)' 
         : 'inset(0 100% 0 0)',
       filter: 'blur(4px)',
+      opacity: 0.8,
       transition: {
         clipPath: {
           duration: duration / 1000,
@@ -118,6 +128,9 @@ const PageTransition = ({ children, duration = 600 }) => {
         filter: {
           duration: duration / 2000,
           ease: 'easeIn',
+        },
+        opacity: {
+          duration: 0.1,
         },
       },
     }),
@@ -144,7 +157,14 @@ const PageTransition = ({ children, duration = 600 }) => {
     },
   };
 
-  const variants = prefersReducedMotion ? fadeVariants : wipeVariants;
+  // Use fade animation when navigating to home to avoid clipPath issues
+  const isNavigatingToHome = location.pathname === '/' && previousLocation.current && previousLocation.current !== '/';
+  const shouldUseFade = prefersReducedMotion || isNavigatingToHome;
+  const variants = shouldUseFade ? fadeVariants : wipeVariants;
+  
+  console.log('[PageTransition] isNavigatingToHome:', isNavigatingToHome);
+  console.log('[PageTransition] shouldUseFade:', shouldUseFade);
+  console.log('[PageTransition] previousLocation:', previousLocation.current);
 
   return (
     <>
@@ -175,22 +195,50 @@ const PageTransition = ({ children, duration = 600 }) => {
       </AnimatePresence>
 
       {/* Page transition wrapper */}
-      <AnimatePresence mode="wait" custom={direction}>
-        <motion.div
-          key={location.pathname}
-          custom={direction}
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          style={{
-            width: '100%',
-            willChange: 'clip-path, filter',
-          }}
-        >
+      {/* Skip transition completely when navigating to home to avoid content hiding issues */}
+      {location.pathname === '/' && previousLocation.current && previousLocation.current !== '/' ? (
+        <div style={{ width: '100%', minHeight: '100%', opacity: 1 }}>
           {children}
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      ) : (
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={location.pathname}
+            custom={direction}
+            variants={variants}
+            // Skip initial animation when navigating to home to avoid content hiding
+            initial={
+              previousLocation.current && 
+              previousLocation.current !== location.pathname && 
+              !(location.pathname === '/' && previousLocation.current)
+                ? "initial" 
+                : false
+            }
+            animate="animate"
+            exit="exit"
+            style={{
+              width: '100%',
+              minHeight: '100%',
+              willChange: (prefersReducedMotion || isNavigatingToHome) ? 'opacity' : 'clip-path, filter',
+            }}
+            onAnimationStart={() => {
+              console.log('[PageTransition] Animation started for:', location.pathname);
+            }}
+            onAnimationComplete={() => {
+              console.log('[PageTransition] Animation completed for:', location.pathname);
+              // Force visibility after animation
+              const element = document.querySelector(`[data-page-key="${location.pathname}"]`);
+              if (element && element instanceof HTMLElement) {
+                element.style.clipPath = 'inset(0 0 0 0)';
+                element.style.opacity = '1';
+              }
+            }}
+            data-page-key={location.pathname}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      )}
     </>
   );
 };

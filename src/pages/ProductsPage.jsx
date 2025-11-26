@@ -42,7 +42,7 @@ const ProductsPage = () => {
                 {/* Kaido - Flagship Product */}
                 <section className="py-12 px-6">
                     <div className="max-w-7xl mx-auto">
-                        <HolographicCard className="border-[var(--cyan-neon)]/30 bg-gradient-to-br from-[var(--gray-900)] via-[var(--cyan-neon)]/5 to-[var(--gray-900)]">
+                        <HolographicCard className="border-[var(--cyan-neon)]/30 bg-black/40 backdrop-blur-md">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                                 {/* Content */}
@@ -53,10 +53,10 @@ const ProductsPage = () => {
                                     </div>
 
                                     <GlitchText
-                                        text="KAIDO"
-                                        as="h2"
                                         className="text-6xl md:text-8xl font-bold tracking-tighter text-white"
-                                    />
+                                    >
+                                        KAIDO
+                                    </GlitchText>
 
                                     <p className="text-2xl text-[var(--cyan-neon)] font-light">
                                         El Camino del Cambio
@@ -87,7 +87,7 @@ const ProductsPage = () => {
                                             </Button>
                                         </Link>
                                         <Link to="/contact">
-                                            <Button variant="outline" size="lg">
+                                            <Button variant="secondary" size="lg">
                                                 Solicitar Demo
                                             </Button>
                                         </Link>
@@ -175,7 +175,7 @@ const ProductsPage = () => {
                                     </Button>
                                 </Link>
                                 <Link to="/contact">
-                                    <Button variant="outline" size="lg">
+                                    <Button variant="secondary" size="lg">
                                         Hablar con Ventas
                                     </Button>
                                 </Link>

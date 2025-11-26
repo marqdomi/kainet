@@ -3,6 +3,39 @@
 @import './styles/CardBackground.css';
 @import './styles/micro-interactions.css';
 
+/* Modern text legibility techniques for dynamic backgrounds */
+/* Backdrop blur overlay - More elegant than heavy text-shadow */
+.text-backdrop-overlay {
+  position: relative;
+}
+
+.text-backdrop-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  z-index: -1;
+}
+
+/* Subtle text shadows - Lighter and more modern */
+.text-shadow-modern {
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 0, 0, 0.3);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.2);
+}
+
+.text-shadow-modern-cyan {
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(0, 229, 255, 0.2);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

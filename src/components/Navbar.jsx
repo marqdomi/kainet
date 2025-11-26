@@ -60,22 +60,35 @@ const Navbar = () => {
   }, []); // Solo ejecutar una vez al montar
 
   const handleLogoClickWithNavigation = useCallback((e) => {
+    console.log('[Navbar] Logo clicked, current path:', location.pathname);
+    
     // Primero manejar el easter egg
-    handleLogoClick(e);
+    handleLogoClick();
 
-    // Si estamos en home, solo scroll to top
+    // Si estamos en home, solo scroll to top y prevenir navegación
     if (location.pathname === '/') {
+      console.log('[Navbar] Already on home, just scrolling to top');
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
-    // Si estamos en otra página, dejar que Link navegue normalmente
-    // y luego hacer scroll to top
-    else {
-      setTimeout(() => {
+    
+    // Si estamos en otra página, usar navigate para asegurar renderizado correcto
+    e.preventDefault();
+    console.log('[Navbar] Navigating to home from:', location.pathname);
+    
+    // Navegar primero, luego hacer scroll después de que React Router actualice
+    navigate('/', { replace: false });
+    console.log('[Navbar] Navigation called');
+    
+    // Usar requestAnimationFrame para asegurar que el DOM se actualice antes del scroll
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        console.log('[Navbar] Scrolling to top after navigation');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
-    }
-  }, [handleLogoClick, location.pathname]);
+      });
+    });
+  }, [handleLogoClick, location.pathname, navigate]);
 
   return (
     <AnimatePresence>

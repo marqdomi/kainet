@@ -85,10 +85,8 @@ const AppContent = () => {
           enabledWaves={['top', 'middle', 'bottom']}
           lineCount={5} // Optimized for performance (same count for all waves)
           lineDistance={5} // Optimized for performance (same distance for all waves)
-          bendRadius={5.0}
-          bendStrength={-0.5}
-          interactive={typeof window !== 'undefined' && window.innerWidth >= 768} // Only on desktop
-          parallax={typeof window !== 'undefined' && window.innerWidth >= 768} // Only on desktop
+          interactive={false} // Disabled for better performance and fluidity
+          parallax={false} // Disabled for better performance and fluidity
           animationSpeed={0.8} // Slightly slower animation
         />
       </div>

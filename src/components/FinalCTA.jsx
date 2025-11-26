@@ -33,7 +33,7 @@ const FinalCTA = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        <HolographicCard className="h-full p-8 text-center card-depth bg-gradient-to-b from-[var(--gray-900)] to-[var(--cyan-neon)]/5">
+                        <HolographicCard className="h-full p-8 text-center card-depth bg-black/40 backdrop-blur-md">
                             <div className="text-5xl mb-4">🚀</div>
                             <h3 className="text-2xl font-bold text-white mb-3">
                                 Plataforma SaaS
@@ -74,7 +74,7 @@ const FinalCTA = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
                     >
-                        <HolographicCard className="h-full p-8 text-center card-depth bg-gradient-to-b from-[var(--gray-900)] to-[var(--purple-neon)]/5">
+                        <HolographicCard className="h-full p-8 text-center card-depth bg-black/40 backdrop-blur-md">
                             <div className="text-5xl mb-4">⚙️</div>
                             <h3 className="text-2xl font-bold text-white mb-3">
                                 Desarrollo Custom
