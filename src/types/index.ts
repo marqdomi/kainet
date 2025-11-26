@@ -61,10 +61,11 @@ export interface EasterEggContextType {
   matrixRainActive: boolean;
   toriiAnimationActive: boolean;
   specialDateEffect: SpecialDateEffect;
-  activateMatrixRain: () => void;
+  handleLogoClick: () => void;
   dismissMatrixRain: () => void;
-  activateToriiAnimation: () => void;
   dismissToriiAnimation: () => void;
+  activateMatrixRain: () => void;
+  activateToriiAnimation: () => void;
 }
 
 // ===== Animation Types =====

@@ -7,13 +7,12 @@
  * @module sectionKanji
  */
 
-import { techKanji } from './kanjiLibrary';
+import { techKanji, type KanjiData } from './kanjiLibrary';
 
 /**
  * Keyword-to-kanji mapping for intelligent section title decoration
- * @type {Object.<string, Object>}
  */
-const sectionKeywordMap = {
+const sectionKeywordMap: Record<string, KanjiData> = {
   // Technology & Development
   'tech': techKanji.tech,
   'technology': techKanji.tech,
@@ -64,8 +63,8 @@ const sectionKeywordMap = {
 /**
  * Get appropriate kanji for a section title based on keywords
  * 
- * @param {string} title - The section title text
- * @returns {{char: string, meaning: string, unicode: string}|null} Kanji object or null if no match
+ * @param title - The section title text
+ * @returns Kanji object or null if no match
  * 
  * @example
  * const kanji = getKanjiForSection('Our Services');
@@ -74,7 +73,7 @@ const sectionKeywordMap = {
  * const kanji2 = getKanjiForSection('AI Projects');
  * console.log(kanji2.char); // 'AI'
  */
-export const getKanjiForSection = (title) => {
+export const getKanjiForSection = (title: string): KanjiData | null => {
   if (!title || typeof title !== 'string') {
     return null;
   }
@@ -97,18 +96,18 @@ export const getKanjiForSection = (title) => {
  * Get kanji by explicit category name
  * Useful when you want to specify the exact kanji type
  * 
- * @param {string} category - Category name (e.g., 'tech', 'ai', 'future')
- * @returns {{char: string, meaning: string, unicode: string}|null} Kanji object or null if not found
+ * @param category - Category name (e.g., 'tech', 'ai', 'future')
+ * @returns Kanji object or null if not found
  * 
  * @example
  * const kanji = getKanjiByName('innovation');
  * console.log(kanji.char); // '革新'
  */
-export const getKanjiByName = (category) => {
+export const getKanjiByName = (category: string): KanjiData | null => {
   if (!category || typeof category !== 'string') {
     return null;
   }
   
   const normalizedCategory = category.toLowerCase();
-  return techKanji[normalizedCategory] || null;
+  return (techKanji as any)[normalizedCategory] || null;
 };

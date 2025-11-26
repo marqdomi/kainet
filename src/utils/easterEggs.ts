@@ -3,7 +3,33 @@
  * Handles Konami code, triple-click detection, and special date effects
  */
 
-export const easterEggs = {
+type EasterEggEffect = 'matrixRain' | 'toriiAnimation' | 'sakuraPetals' | 'fireworks';
+
+interface KonamiConfig {
+  code: string[];
+  action: string;
+  duration: number;
+}
+
+interface TripleClickConfig {
+  target: string;
+  action: string;
+  message: string;
+}
+
+interface SpecialDateConfig {
+  date: string;
+  name: string;
+  effect: string;
+}
+
+interface EasterEggsConfig {
+  konami: KonamiConfig;
+  tripleClick: TripleClickConfig;
+  specialDates: SpecialDateConfig[];
+}
+
+export const easterEggs: EasterEggsConfig = {
   konami: {
     code: ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'],
     action: 'matrixRain',
@@ -29,6 +55,12 @@ export const easterEggs = {
  * manager.init();
  */
 export class EasterEggManager {
+  private konamiIndex: number;
+  private clickCount: number;
+  private clickTimer: NodeJS.Timeout | null;
+  private callbacks: Record<EasterEggEffect, (() => void) | null>;
+  private handleKeyDown: ((e: KeyboardEvent) => void) | null;
+
   constructor() {
     this.konamiIndex = 0;
     this.clickCount = 0;
@@ -39,21 +71,22 @@ export class EasterEggManager {
       sakuraPetals: null,
       fireworks: null
     };
+    this.handleKeyDown = null;
   }
 
   /**
    * Initialize the easter egg manager
    * Sets up keyboard listener for Konami code
    */
-  init() {
+  init(): void {
     this.setupKonamiListener();
   }
 
   /**
    * Clean up event listeners
    */
-  destroy() {
-    if (typeof window !== 'undefined') {
+  destroy(): void {
+    if (typeof window !== 'undefined' && this.handleKeyDown) {
       window.removeEventListener('keydown', this.handleKeyDown);
     }
     if (this.clickTimer) {
@@ -65,7 +98,7 @@ export class EasterEggManager {
    * Set up keyboard listener for Konami code and keyboard shortcuts
    * @private
    */
-  setupKonamiListener() {
+  private setupKonamiListener(): void {
     if (typeof window === 'undefined') return;
 
     this.handleKeyDown = (e) => {
@@ -84,9 +117,9 @@ export class EasterEggManager {
 
   /**
    * Check if key matches Konami code sequence
-   * @param {string} key - The key that was pressed
+   * @param key - The key that was pressed
    */
-  checkKonami(key) {
+  private checkKonami(key: string): void {
     if (key === easterEggs.konami.code[this.konamiIndex]) {
       this.konamiIndex++;
       if (this.konamiIndex === easterEggs.konami.code.length) {
@@ -102,9 +135,11 @@ export class EasterEggManager {
    * Handle logo click for triple-click detection
    * Should be called from logo component's onClick handler
    */
-  handleLogoClick() {
+  handleLogoClick(): void {
     this.clickCount++;
-    clearTimeout(this.clickTimer);
+    if (this.clickTimer) {
+      clearTimeout(this.clickTimer);
+    }
 
     if (this.clickCount === 3) {
       this.triggerToriiAnimation();
@@ -118,9 +153,9 @@ export class EasterEggManager {
 
   /**
    * Check if today is a special date
-   * @returns {Object|null} Special date config or null
+   * @returns Special date config or null
    */
-  checkSpecialDate() {
+  checkSpecialDate(): SpecialDateConfig | null {
     const today = new Date();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
@@ -132,7 +167,7 @@ export class EasterEggManager {
   /**
    * Trigger Matrix Rain effect
    */
-  triggerMatrixRain() {
+  triggerMatrixRain(): void {
     if (this.callbacks.matrixRain) {
       this.callbacks.matrixRain();
     }
@@ -141,7 +176,7 @@ export class EasterEggManager {
   /**
    * Trigger special Torii animation
    */
-  triggerToriiAnimation() {
+  triggerToriiAnimation(): void {
     if (this.callbacks.toriiAnimation) {
       this.callbacks.toriiAnimation();
     }
@@ -149,30 +184,28 @@ export class EasterEggManager {
 
   /**
    * Trigger special date effect
-   * @param {string} effect - The effect to trigger ('sakuraPetals' or 'fireworks')
+   * @param effect - The effect to trigger ('sakuraPetals' or 'fireworks')
    */
-  triggerSpecialDateEffect(effect) {
-    if (this.callbacks[effect]) {
-      this.callbacks[effect]();
+  triggerSpecialDateEffect(effect: string): void {
+    if (this.callbacks[effect as EasterEggEffect]) {
+      this.callbacks[effect as EasterEggEffect]?.();
     }
   }
 
   /**
    * Register callback for an easter egg effect
-   * @param {string} effect - The effect name
-   * @param {Function} callback - The callback function to execute
+   * @param effect - The effect name
+   * @param callback - The callback function to execute
    */
-  onEffect(effect, callback) {
-    if (this.callbacks.hasOwnProperty(effect)) {
-      this.callbacks[effect] = callback;
-    }
+  onEffect(effect: EasterEggEffect, callback: () => void): void {
+    this.callbacks[effect] = callback;
   }
 
   /**
    * Store discovered easter egg in localStorage
-   * @param {string} eggName - Name of the easter egg
+   * @param eggName - Name of the easter egg
    */
-  markDiscovered(eggName) {
+  markDiscovered(eggName: string): void {
     if (typeof window === 'undefined') return;
 
     try {
@@ -188,9 +221,9 @@ export class EasterEggManager {
 
   /**
    * Get list of discovered easter eggs
-   * @returns {Array<string>} List of discovered easter egg names
+   * @returns List of discovered easter egg names
    */
-  getDiscovered() {
+  getDiscovered(): string[] {
     if (typeof window === 'undefined') return [];
 
     try {

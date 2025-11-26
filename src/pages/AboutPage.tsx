@@ -1,3 +1,4 @@
+// src/pages/AboutPage.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SectionTitle } from '../components/ui';
@@ -5,7 +6,7 @@ import GlitchText from '../components/effects/GlitchText';
 import HolographicCard from '../components/effects/HolographicCard';
 import SEO from '../components/SEO';
 
-const AboutPage = () => {
+const AboutPage: React.FC = () => {
   return (
     <>
       <SEO

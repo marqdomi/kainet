@@ -14,6 +14,10 @@
  * }
  */
 class PerformanceMonitor {
+  private fps: number;
+  private lastTime: number;
+  private frames: number;
+
   constructor() {
     this.fps = 60;
     this.lastTime = performance.now();
@@ -24,7 +28,7 @@ class PerformanceMonitor {
    * Update FPS calculation - call this once per animation frame
    * Calculates FPS based on frames rendered in the last second
    */
-  update() {
+  update(): void {
     this.frames++;
     const now = performance.now();
     
@@ -38,24 +42,24 @@ class PerformanceMonitor {
 
   /**
    * Determine if visual effects should be reduced based on performance
-   * @returns {boolean} True if FPS is below threshold (45fps)
+   * @returns True if FPS is below threshold (45fps)
    */
-  shouldReduceEffects() {
+  shouldReduceEffects(): boolean {
     return this.fps < 45;
   }
 
   /**
    * Get current FPS
-   * @returns {number} Current frames per second
+   * @returns Current frames per second
    */
-  getFPS() {
+  getFPS(): number {
     return this.fps;
   }
 
   /**
    * Reset the performance monitor
    */
-  reset() {
+  reset(): void {
     this.fps = 60;
     this.lastTime = performance.now();
     this.frames = 0;
