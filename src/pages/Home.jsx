@@ -4,10 +4,9 @@ import Hero from '../components/Hero';
 import Services from '../components/Services';
 
 // Lazy loading de componentes pesados
-const FeaturedProjects = lazy(() => import('../components/FeaturedProjects'));
-const LatestPosts = lazy(() => import('../components/LatestPosts'));
-const About = lazy(() => import('../components/About'));
-const Contact = lazy(() => import('../components/Contact'));
+const KaidoSpotlight = lazy(() => import('../components/KaidoSpotlight'));
+const SocialProof = lazy(() => import('../components/SocialProof'));
+const FinalCTA = lazy(() => import('../components/FinalCTA'));
 
 // Loading placeholder
 const LoadingFallback = () => (
@@ -40,38 +39,31 @@ const Home = () => {
   return (
     <>
       <span id="top" className="sr-only">Inicio</span>
-      
+
       {/* Hero Section */}
       <Hero />
-      
-      {/* Services Overview - No lazy (importante, arriba del fold) */}
+
+      {/* Kaido Spotlight - Producto Insignia */}
+      <LazySection>
+        <Suspense fallback={<LoadingFallback />}>
+          <KaidoSpotlight />
+        </Suspense>
+      </LazySection>
+
+      {/* Services Overview */}
       <Services />
-      
-      {/* Featured Projects */}
+
+      {/* Social Proof - NUEVO (Fase 4) */}
       <LazySection>
         <Suspense fallback={<LoadingFallback />}>
-          <FeaturedProjects />
+          <SocialProof />
         </Suspense>
       </LazySection>
 
-      {/* Latest Blog Posts */}
+      {/* Final Dual CTA - NUEVO (Fase 4) */}
       <LazySection>
         <Suspense fallback={<LoadingFallback />}>
-          <LatestPosts />
-        </Suspense>
-      </LazySection>
-
-      {/* About Section */}
-      <LazySection>
-        <Suspense fallback={<LoadingFallback />}>
-          <About />
-        </Suspense>
-      </LazySection>
-
-      {/* Contact Form */}
-      <LazySection>
-        <Suspense fallback={<LoadingFallback />}>
-          <Contact />
+          <FinalCTA />
         </Suspense>
       </LazySection>
     </>

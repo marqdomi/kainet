@@ -18,17 +18,17 @@ import useReducedMotion from '../../hooks/useReducedMotion';
  * - Respects prefers-reduced-motion for glow animation
  */
 
-const Badge = ({ 
+const Badge = ({
   children,
   variant = 'default',
   size = 'md',
   kanji = null,
   featured = false,
   className = '',
-  ...props 
+  ...props
 }) => {
   const prefersReducedMotion = useReducedMotion();
-  
+
   // Get kanji character if kanji prop is provided
   // Can be either a category string or boolean true for auto-detection
   let kanjiChar = null;
@@ -63,6 +63,16 @@ const Badge = ({
       bg-[rgba(168,85,247,0.1)]
       border border-[var(--purple-accent)]
       text-[var(--purple-accent)]
+    `,
+    orange: `
+      bg-[rgba(255,107,53,0.1)]
+      border border-[var(--orange-accent)]
+      text-[var(--orange-accent)]
+    `,
+    pink: `
+      bg-[rgba(236,72,153,0.1)]
+      border border-[var(--pink-accent)]
+      text-[var(--pink-accent)]
     `,
     success: `
       bg-[rgba(16,185,129,0.1)]
@@ -99,7 +109,7 @@ const Badge = ({
       {...props}
     >
       {kanjiChar && (
-        <span 
+        <span
           className={`kanji-prefix ${kanjiSizes[size]} opacity-80`}
           aria-hidden="true"
         >
@@ -113,7 +123,7 @@ const Badge = ({
 
 Badge.propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['default', 'purple', 'success', 'warning', 'error']),
+  variant: PropTypes.oneOf(['default', 'purple', 'orange', 'pink', 'success', 'warning', 'error']),
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   kanji: PropTypes.oneOfType([
     PropTypes.bool,
