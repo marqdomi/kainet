@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import { Button } from './ui';
 import { SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
-import CircuitLines from './effects/CircuitLines';
-import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Services = () => {
   const services = [
@@ -60,8 +58,8 @@ const Services = () => {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
@@ -70,26 +68,8 @@ const Services = () => {
     }
   };
 
-  // Parallax for background circuit lines
-  const { offset: circuitOffset, blur: circuitBlur, ref: circuitRef } = useParallaxScroll({ 
-    speed: 0.2, 
-    maxBlur: 1 
-  });
-
   return (
     <section className="py-20 px-6 relative">
-      {/* Background Circuit Lines with Parallax */}
-      <div 
-        ref={circuitRef}
-        className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          transform: `translateY(${circuitOffset}px)`,
-          filter: `blur(${circuitBlur}px)`,
-        }}
-      >
-        <CircuitLines pattern="grid" density="low" animated color="var(--cyan-neon)" />
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
@@ -118,33 +98,51 @@ const Services = () => {
               key={index}
               variants={cardVariants}
             >
-              <HolographicCard className="h-full flex flex-col">
-                {/* Kanji Icon */}
-                <div className="text-6xl mb-4 font-bold text-[var(--cyan-neon)]">{service.kanji}</div>
-                
+              <HolographicCard className="h-full flex flex-col card-depth min-h-[420px]">
+                {/* Kanji Icon with color variety */}
+                <div
+                  className="text-6xl mb-4 font-bold"
+                  style={{
+                    color: index === 0 ? 'var(--orange-accent)' :
+                      index === 1 ? 'var(--purple-neon)' :
+                        'var(--pink-accent)'
+                  }}
+                >
+                  {service.kanji}
+                </div>
+
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">
                   {service.title}
                 </h3>
-                
+
                 {/* Description */}
                 <p className="text-[var(--text-secondary)] mb-6 flex-grow">
                   {service.description}
                 </p>
-                
+
                 {/* Features */}
                 <ul className="space-y-2 mb-6">
                   {service.features.map((feature, i) => (
-                    <li 
+                    <li
                       key={i}
                       className="flex items-start text-sm text-[var(--text-secondary)]"
                     >
-                      <span className="text-[var(--cyan-neon)] mr-2">✓</span>
+                      <span
+                        className="mr-2"
+                        style={{
+                          color: index === 0 ? 'var(--orange-accent)' :
+                            index === 1 ? 'var(--purple-neon)' :
+                              'var(--pink-accent)'
+                        }}
+                      >
+                        ✓
+                      </span>
                       {feature}
                     </li>
                   ))}
                 </ul>
-                
+
                 {/* Technologies */}
                 <div className="flex flex-wrap gap-2 pt-4 border-t border-[var(--gray-700)]">
                   {service.technologies.map((tech, i) => (

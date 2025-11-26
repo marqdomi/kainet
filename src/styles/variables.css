@@ -7,20 +7,33 @@
      1. COLOR PALETTE
      ==================================== */
   
-  /* Primary Colors - KAINET Cyan */
+  /* Primary Colors - KAINET Cyan (Expanded) */
   --cyan-neon: #00E5FF;
   --cyan-bright: #00D9FF;
-  --cyan-dark: #00B8D4;
+  --cyan-dark: #00A3BF;
+  --cyan-light: #66F0FF;        /* NEW - for highlights */
   --cyan-glow: rgba(0, 229, 255, 0.5);
 
-  /* Secondary Colors */
-  --purple-accent: #A855F7;
+  /* Secondary Colors - Purple (Expanded) */
+  --purple-neon: #A855F7;       /* Previously --purple-accent */
+  --purple-accent: #A855F7;     /* Keeping for backwards compatibility */
+  --purple-dark: #7E22CE;       /* NEW - for depth */
+  --purple-light: #C084FC;      /* NEW - for highlights */
+  
+  /* NEW: Additional Accent Colors (2024-2025 Trend) */
+  --orange-accent: #FF6B35;     /* For warnings, CTAs secundarios */
+  --green-accent: #10B981;      /* For success states */
+  --pink-accent: #EC4899;       /* For special highlights */
+  
+  /* Semantic Colors (Enhanced) */
   --green-success: #10B981;
   --red-error: #EF4444;
   --yellow-warning: #F59E0B;
 
-  /* Neutral Scale (Dark Theme) */
+  /* Neutral Scale (Dark Theme) - Expanded */
+  --black-pure: #000000;        /* NEW - true black */
   --black-base: #0A0A0A;
+  --gray-950: #0D0D0D;          /* NEW - deeper black */
   --gray-900: #111111;
   --gray-800: #1A1A1A;
   --gray-700: #2A2A2A;
@@ -38,6 +51,13 @@
   /* Overlays */
   --overlay-dark: rgba(10, 10, 10, 0.8);
   --overlay-glass: rgba(26, 26, 26, 0.6);
+  
+  /* NEW: Glow Effects */
+  --glow-cyan: rgba(0, 229, 255, 0.5);
+  --glow-purple: rgba(168, 85, 247, 0.5);
+  --glow-orange: rgba(255, 107, 53, 0.5);
+  --glow-green: rgba(16, 185, 129, 0.5);
+  --glow-pink: rgba(236, 72, 153, 0.5);
 
   /* ====================================
      2. GRADIENTS

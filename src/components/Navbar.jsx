@@ -21,7 +21,7 @@ const Navbar = () => {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Si scroll down, ocultar
       if (currentScrollY > lastY && currentScrollY > 100) {
         setIsVisible(false);
@@ -30,7 +30,7 @@ const Navbar = () => {
       else if (currentScrollY < lastY) {
         setIsVisible(true);
       }
-      
+
       lastY = currentScrollY;
     };
 
@@ -38,7 +38,7 @@ const Navbar = () => {
       // Mostrar navbar si el mouse está en los primeros 100px de la pantalla
       if (e.clientY <= 100) {
         setIsVisible(true);
-        
+
         // Auto-hide después de 3 segundos si no hay movimiento
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
@@ -62,7 +62,7 @@ const Navbar = () => {
   const handleLogoClickWithNavigation = useCallback((e) => {
     // Primero manejar el easter egg
     handleLogoClick(e);
-    
+
     // Si estamos en home, solo scroll to top
     if (location.pathname === '/') {
       e.preventDefault();
@@ -97,63 +97,68 @@ const Navbar = () => {
               "
             >
               <div className="h-14 px-4 flex items-center justify-between">
-            {/* Logo */}
-            <Link
-              to="/"
-              aria-label="Inicio KAINET"
-              className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
-              onClick={handleLogoClickWithNavigation}
-            >
-              <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
-              <span className="sr-only">KAINET</span>
-            </Link>
+                {/* Logo */}
+                <Link
+                  to="/"
+                  aria-label="Inicio KAINET"
+                  className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                  onClick={handleLogoClickWithNavigation}
+                >
+                  <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
+                  <span className="sr-only">KAINET</span>
+                </Link>
 
-            {/* Links */}
-            <ul className="flex items-center gap-6">
-              <li>
-                <Link
-                  to="/about"
-                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
-                    location.pathname === '/about' ? 'text-[#00E5FF]' : ''
-                  }`}
-                >
-                  Sobre Nosotros
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/projects"
-                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
-                    location.pathname === '/projects' ? 'text-[#00E5FF]' : ''
-                  }`}
-                >
-                  Proyectos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/blog"
-                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
-                    location.pathname.startsWith('/blog') ? 'text-[#00E5FF]' : ''
-                  }`}
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${
-                    location.pathname === '/contact' ? 'text-[#00E5FF]' : ''
-                  }`}
-                >
-                  Contacto
-                </Link>
-              </li>
-            </ul>
+                {/* Links */}
+                <ul className="flex items-center gap-6">
+                  <li>
+                    <Link
+                      to="/nosotros"
+                      className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${location.pathname === '/nosotros' ? 'text-[#00E5FF]' : ''
+                        }`}
+                    >
+                      Nosotros
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/productos"
+                      className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${location.pathname === '/productos' ? 'text-[#00E5FF]' : ''
+                        }`}
+                    >
+                      Productos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/servicios"
+                      className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${location.pathname === '/servicios' ? 'text-[#00E5FF]' : ''
+                        }`}
+                    >
+                      Servicios
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/blog"
+                      className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${location.pathname.startsWith('/blog') ? 'text-[#00E5FF]' : ''
+                        }`}
+                    >
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/contact"
+                      className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${location.pathname === '/contact' ? 'text-[#00E5FF]' : ''
+                        }`}
+                    >
+                      Contacto
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
         </motion.nav>
       )}
     </AnimatePresence>
