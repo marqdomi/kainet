@@ -79,7 +79,7 @@ const AboutPage: React.FC = () => {
         {/* Modelo Estratégico */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
-            <HolographicCard className="bg-gradient-to-br from-[var(--gray-900)] via-[var(--purple-neon)]/5 to-[var(--gray-900)]">
+            <HolographicCard className="bg-black/40 backdrop-blur-md border border-white/10">
               <h2 className="text-3xl font-bold text-white mb-6">2. Modelo Estratégico: El Faro y el Motor</h2>
 
               <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">

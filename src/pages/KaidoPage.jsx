@@ -63,12 +63,18 @@ const KaidoPage = () => {
                             <Badge variant="purple" size="lg" className="mb-6">
                                 Proyecto Insignia
                             </Badge>
-                            <GlitchText
-                                text="KAIDO"
-                                as="h1"
-                                className="text-6xl md:text-9xl font-bold tracking-tighter text-white mb-6"
-                            />
-                            <p className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8">
+                            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-white mb-6">
+                                <GlitchText>
+                                    KAIDO
+                                </GlitchText>
+                            </h1>
+                            <p 
+                                className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8 relative"
+                                style={{
+                                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
+                                    WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)'
+                                }}
+                            >
                                 "No construimos software; edificamos portales digitales."
                             </p>
                             <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed">
@@ -84,7 +90,7 @@ const KaidoPage = () => {
                                     </Button>
                                 </Link>
                                 <a href="#features">
-                                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                                    <Button variant="secondary" size="lg" className="w-full sm:w-auto">
                                         Ver Características
                                     </Button>
                                 </a>
@@ -123,7 +129,7 @@ const KaidoPage = () => {
                                 </div>
                             </div>
 
-                            <HolographicCard className="bg-[var(--gray-900)] border-[var(--cyan-neon)]/20">
+                            <HolographicCard className="bg-black/40 backdrop-blur-md border-[var(--cyan-neon)]/20">
                                 <div className="text-center space-y-6 py-8">
                                     <h3 className="text-2xl font-bold text-[var(--cyan-neon)]">La Solución KAIDO</h3>
                                     <div className="text-6xl">🤝</div>
@@ -231,7 +237,7 @@ const KaidoPage = () => {
                                 ¿Quieres ver una demo en vivo?
                             </p>
                             <Link to="/contact">
-                                <Button variant="outline" size="md">
+                                <Button variant="secondary" size="md">
                                     Solicitar Demo Personalizada →
                                 </Button>
                             </Link>
@@ -384,7 +390,7 @@ const KaidoPage = () => {
                                     </div>
 
                                     <Link to="/contact">
-                                        <Button variant="outline" size="md" className="w-full">
+                                        <Button variant="secondary" size="md" className="w-full">
                                             Contactar
                                         </Button>
                                     </Link>
@@ -471,7 +477,7 @@ const KaidoPage = () => {
                                     </div>
 
                                     <Link to="/contact">
-                                        <Button variant="outline" size="md" className="w-full">
+                                        <Button variant="secondary" size="md" className="w-full">
                                             Hablar con Ventas
                                         </Button>
                                     </Link>

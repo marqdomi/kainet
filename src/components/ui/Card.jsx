@@ -30,7 +30,7 @@ const Card = ({
   if (variant === 'holographic') {
     return (
       <Suspense fallback={
-        <div className={`rounded-xl p-[var(--card-padding)] bg-[var(--gray-900)] border border-[var(--gray-700)] ${className}`}>
+        <div className={`rounded-xl p-[var(--card-padding)] bg-black/40 backdrop-blur-md border border-white/10 ${className}`}>
           {children}
         </div>
       }>
@@ -54,20 +54,19 @@ const Card = ({
 
   const variants = {
     default: `
-      bg-[var(--gray-900)]
-      border border-[var(--gray-700)]
-      ${hover ? 'hover:border-[var(--cyan-neon)] hover:-translate-y-1 hover:shadow-2xl' : ''}
+      bg-black/40 backdrop-blur-md
+      border border-white/10
+      ${hover ? 'hover:border-white/20 hover:bg-black/50 hover:-translate-y-1 hover:shadow-2xl' : ''}
     `,
     glass: `
-      bg-[var(--overlay-glass)]
-      backdrop-blur-md
+      bg-black/50 backdrop-blur-md
       border border-white/10
     `,
     featured: `
-      bg-gradient-to-br from-[var(--gray-900)] to-[var(--gray-800)]
-      border-2 border-[var(--cyan-neon)]
+      bg-black/40 backdrop-blur-md
+      border-2 border-[var(--cyan-neon)]/50
       relative overflow-hidden
-      ${hover ? 'hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(0,229,255,0.3)]' : ''}
+      ${hover ? 'hover:bg-black/50 hover:border-[var(--cyan-neon)]/70 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(0,229,255,0.3)]' : ''}
     `
   };
 

@@ -27,7 +27,8 @@ const GlitchText = ({
   trigger = 'hover', 
   intensity = 'medium', 
   duration = 300,
-  className = '' 
+  className = '',
+  style = {}
 }) => {
   const [isGlitching, setIsGlitching] = useState(trigger === 'always');
   const prefersReducedMotion = useReducedMotion();
@@ -70,7 +71,8 @@ const GlitchText = ({
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
       style={{
-        '--glitch-duration': `${duration}ms`
+        '--glitch-duration': `${duration}ms`,
+        ...style
       }}
     >
       {children}
@@ -92,7 +94,10 @@ GlitchText.propTypes = {
   duration: PropTypes.number,
   
   /** Additional CSS classes */
-  className: PropTypes.string
+  className: PropTypes.string,
+  
+  /** Additional inline styles */
+  style: PropTypes.object
 };
 
 export default GlitchText;

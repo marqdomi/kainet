@@ -1,12 +1,14 @@
 // src/components/Hero.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import GlitchText from './effects/GlitchText';
+import VariableProximity from './effects/VariableProximity';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
+  console.log('[Hero] Component rendering');
   const [showHint, setShowHint] = useState(true);
   const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const t = setTimeout(() => setShowHint(false), 2500);
@@ -17,25 +19,24 @@ const Hero = () => {
 
   return (
     <section id="top" className="relative w-full h-screen">
-      {/* Overlay sutil para lectura con parallax */}
+      {/* Overlay sutil para lectura con parallax - Más transparente para mostrar FloatingLines */}
       <div
         ref={ref}
-        className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-black/20 via-black/10 to-transparent"
+        className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-black/10 via-black/5 to-transparent"
         style={{
           transform: `translateY(${offset}px)`,
           filter: `blur(${blur}px)`,
         }}
       />
 
-      {/* Background con Mesh Gradient (Fase 3.5) */}
+      {/* Background con Mesh Gradient - Glassmorphic para integrar con FloatingLines */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background: `
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 229, 255, 0.12), transparent),
-            radial-gradient(ellipse 60% 40% at 80% 50%, rgba(168, 85, 247, 0.08), transparent),
-            radial-gradient(ellipse 50% 30% at 20% 70%, rgba(255, 107, 53, 0.06), transparent),
-            #0A0A0A
+            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 229, 255, 0.08), transparent),
+            radial-gradient(ellipse 60% 40% at 80% 50%, rgba(168, 85, 247, 0.05), transparent),
+            radial-gradient(ellipse 50% 30% at 20% 70%, rgba(255, 107, 53, 0.04), transparent)
           `
         }}
       />
@@ -50,7 +51,7 @@ const Hero = () => {
       />
       {/* Texto */}
       <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-6">
-        <div className="max-w-5xl">
+        <div className="max-w-5xl relative" ref={containerRef} style={{ position: 'relative' }}>
           {/* Badge / Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -58,23 +59,35 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-6"
           >
-            <span className="inline-block px-4 py-2 bg-[var(--cyan-neon)]/10 border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-sm font-bold tracking-wider uppercase">
+            <span className="inline-block px-4 py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-sm font-bold tracking-wider uppercase">
               Mexican Tech Startup
             </span>
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Main Headline with VariableProximity */}
           <motion.div
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
+            className="mb-4"
           >
-            <GlitchText
+            <h1
               className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
-              as="h1"
+              style={{
+                textShadow: '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3)',
+                WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.2)'
+              }}
             >
-              Construimos SaaS de Clase Mundial
-            </GlitchText>
+              <VariableProximity
+                label="Construimos SaaS de Clase Mundial"
+                className="variable-proximity-demo"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={containerRef}
+                radius={100}
+                falloff="linear"
+              />
+            </h1>
           </motion.div>
 
           <motion.h2
@@ -82,8 +95,20 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-8"
+            style={{
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
+              WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)'
+            }}
           >
-            para el Mercado Latino
+            <VariableProximity
+              label="para el Mercado Latino"
+              className="variable-proximity-demo"
+              fromFontVariationSettings="'wght' 400, 'opsz' 9"
+              toFontVariationSettings="'wght' 1000, 'opsz' 40"
+              containerRef={containerRef}
+              radius={100}
+              falloff="linear"
+            />
           </motion.h2>
 
           {/* Subtitle / Value Prop */}

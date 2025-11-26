@@ -52,9 +52,9 @@ uniform vec3 lineGradient[8];
 uniform int lineGradientCount;
 
 const vec3 BLACK = vec3(0.0);
-// KAINET brand colors - cyan variations
-const vec3 CYAN_NEON = vec3(0.0, 229.0, 255.0) / 255.0;
-const vec3 CYAN_LIGHT = vec3(102.0, 240.0, 255.0) / 255.0;
+// KAINET brand colors - purple variations for better contrast with cyan text
+const vec3 PURPLE_NEON = vec3(168.0, 85.0, 247.0) / 255.0;  // #A855F7
+const vec3 PURPLE_LIGHT = vec3(192.0, 132.0, 252.0) / 255.0; // #C084FC
 
 mat2 rotate(float r) {
   return mat2(cos(r), sin(r), -sin(r), cos(r));
@@ -64,8 +64,8 @@ vec3 background_color(vec2 uv) {
   vec3 col = vec3(0.0);
   float y = sin(uv.x - 0.2) * 0.3 - 0.1;
   float m = uv.y - y;
-  col += mix(CYAN_NEON, BLACK, smoothstep(0.0, 1.0, abs(m)));
-  col += mix(CYAN_LIGHT, BLACK, smoothstep(0.0, 1.0, abs(m - 0.8)));
+  col += mix(PURPLE_NEON, BLACK, smoothstep(0.0, 1.0, abs(m)));
+  col += mix(PURPLE_LIGHT, BLACK, smoothstep(0.0, 1.0, abs(m - 0.8)));
   return col * 0.5;
 }
 
@@ -223,8 +223,8 @@ const FloatingLines = ({
   parallax = true,
   parallaxStrength = 0.2,
   mixBlendMode = 'screen',
-  className = '',
-  ...props
+    className = '',
+    ...props
 }) => {
   const containerRef = useRef(null);
   const targetMouseRef = useRef(new Vector2(-1000, -1000));
@@ -255,10 +255,10 @@ const FloatingLines = ({
   const middleLineDistance = enabledWaves.includes('middle') ? getLineDistance('middle') * 0.01 : 0.01;
   const bottomLineDistance = enabledWaves.includes('bottom') ? getLineDistance('bottom') * 0.01 : 0.01;
 
-  // Default KAINET color gradient if not provided
-  const defaultGradient = linesGradient || ['#00E5FF', '#66F0FF', '#00E5FF'];
+  // Default KAINET color gradient - Purple to Cyan gradient for better contrast
+  const defaultGradient = linesGradient || ['#A855F7', '#C084FC', '#66F0FF', '#00E5FF'];
 
-  useEffect(() => {
+    useEffect(() => {
     if (!containerRef.current) return;
 
     const scene = new Scene();
@@ -434,7 +434,7 @@ const FloatingLines = ({
 
     raf = requestAnimationFrame(renderLoop);
 
-    return () => {
+        return () => {
       cancelAnimationFrame(raf);
       if (ro && containerRef.current) {
         ro.disconnect();
@@ -467,16 +467,16 @@ const FloatingLines = ({
     parallaxStrength
   ]);
 
-  return (
+    return (
     <div
       ref={containerRef}
       className={`floating-lines-container ${className}`}
       style={{
         mixBlendMode: mixBlendMode
       }}
-      {...props}
-    />
-  );
+            {...props}
+        />
+    );
 };
 
 FloatingLines.propTypes = {
@@ -507,7 +507,7 @@ FloatingLines.propTypes = {
   parallax: PropTypes.bool,
   parallaxStrength: PropTypes.number,
   mixBlendMode: PropTypes.string,
-  className: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export default FloatingLines;

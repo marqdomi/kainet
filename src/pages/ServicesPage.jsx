@@ -185,7 +185,7 @@ const ServicesPage = () => {
                                     </Button>
                                 </Link>
                                 <Link to="/proyectos">
-                                    <Button variant="outline" size="lg">
+                                    <Button variant="secondary" size="lg">
                                         Ver Proyectos Realizados
                                     </Button>
                                 </Link>

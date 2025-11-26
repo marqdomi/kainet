@@ -30,6 +30,8 @@ const KainetCursor: React.FC = () => {
 };
 
 const MainLayout: React.FC = () => {
+  console.log('[MainLayout] Component rendering');
+  
   return (
     <>
       {/* Accessibility: Skip to main content */}
