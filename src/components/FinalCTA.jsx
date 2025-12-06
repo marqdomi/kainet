@@ -2,8 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from './ui';
-import HolographicCard from './effects/HolographicCard';
+import { Button, Card } from './ui';
 import { Rocket, Settings, Check } from 'lucide-react';
 
 const FinalCTA = () => {
@@ -17,7 +16,7 @@ const FinalCTA = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-heading mb-3 sm:mb-4">
                         ¿Qué necesitas?
                     </h2>
                     <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto px-2 sm:px-0">
@@ -34,11 +33,11 @@ const FinalCTA = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        <HolographicCard className="h-full p-5 sm:p-6 md:p-8 text-center card-depth bg-black/40 backdrop-blur-md">
+                        <Card variant="default" hover padding="lg" className="h-full text-center">
                             <div className="flex justify-center mb-3 sm:mb-4">
                                 <Rocket className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                             </div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">
+                            <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
                                 Plataforma SaaS
                             </h3>
                             <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4 sm:mb-6 leading-relaxed">
@@ -67,7 +66,7 @@ const FinalCTA = () => {
                                     Explorar Kaido →
                                 </Button>
                             </Link>
-                        </HolographicCard>
+                        </Card>
                     </motion.div>
 
                     {/* Servicios CTA */}
@@ -77,11 +76,11 @@ const FinalCTA = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
                     >
-                        <HolographicCard className="h-full p-5 sm:p-6 md:p-8 text-center card-depth bg-black/40 backdrop-blur-md">
+                        <Card variant="default" hover padding="lg" className="h-full text-center">
                             <div className="flex justify-center mb-3 sm:mb-4">
                                 <Settings className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--purple-neon)]" strokeWidth={1.5} />
                             </div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">
+                            <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
                                 Desarrollo Custom
                             </h3>
                             <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4 sm:mb-6 leading-relaxed">
@@ -110,7 +109,7 @@ const FinalCTA = () => {
                                     Ver Servicios →
                                 </Button>
                             </Link>
-                        </HolographicCard>
+                        </Card>
                     </motion.div>
                 </div>
 

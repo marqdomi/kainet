@@ -1,8 +1,7 @@
 // src/components/Contact.jsx
 import React, { useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
-import { Button, Input, SectionTitle } from './ui';
-import HolographicCard from './effects/HolographicCard';
+import { Button, Input, SectionTitle, Card } from './ui';
 import { Mail, MapPin, Clock, Send, Check } from 'lucide-react';
 
 const CONTACT_ENDPOINT = '/api/contact';
@@ -93,17 +92,17 @@ const Contact = () => {
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-14">
           <SectionTitle kanji="話">Hablemos</SectionTitle>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-4 mb-4 text-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-heading mt-4 mb-4">
             ¿Tienes un proyecto en mente?
           </h1>
-          <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed text-shadow-sm">
+          <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
             Cuéntanos tu idea o reto técnico. Nuestro equipo te responderá en menos de 24 horas para explorar cómo podemos ayudarte.
           </p>
         </div>
 
         {/* Centered Form Card */}
         <div className="max-w-2xl mx-auto mb-12">
-          <HolographicCard className="p-6 sm:p-8">
+          <Card variant="default" padding="lg">
             <form onSubmit={handleSubmit} noValidate>
               {/* Honeypot */}
               <input
@@ -182,7 +181,7 @@ const Contact = () => {
                 Enviar Mensaje
               </Button>
             </form>
-          </HolographicCard>
+          </Card>
         </div>
 
         {/* Contact Info Row */}
@@ -190,7 +189,7 @@ const Contact = () => {
           {contactInfo.map((info, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--cyan-neon)]/30 transition-colors"
+              className="flex items-center gap-4 p-4 rounded-xl card-subtle border hover:border-[var(--cyan-neon)]/30 transition-colors"
             >
               <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--cyan-neon)]/10 flex items-center justify-center">
                 <info.icon className="w-5 h-5 text-[var(--cyan-neon)]" />
@@ -198,11 +197,11 @@ const Contact = () => {
               <div>
                 <p className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider">{info.title}</p>
                 {info.link ? (
-                  <a href={info.link} className="text-white hover:text-[var(--cyan-neon)] transition-colors font-medium">
+                  <a href={info.link} className="text-heading hover:text-[var(--cyan-neon)] transition-colors font-medium">
                     {info.value}
                   </a>
                 ) : (
-                  <p className="text-white font-medium">{info.value}</p>
+                  <p className="text-heading font-medium">{info.value}</p>
                 )}
               </div>
             </div>
@@ -213,7 +212,7 @@ const Contact = () => {
       {/* Success Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4">
-          <HolographicCard className="max-w-sm w-full">
+          <Card variant="default" className="max-w-sm w-full">
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/20 flex items-center justify-center">
@@ -235,7 +234,7 @@ const Contact = () => {
                 Cerrar
               </Button>
             </div>
-          </HolographicCard>
+          </Card>
         </div>
       )}
     </section>

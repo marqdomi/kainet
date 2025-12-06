@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getBlogPosts } from '../lib/supabase';
-import { Badge, Button, Skeleton, SectionTitle } from './ui';
-import HolographicCard from './effects/HolographicCard';
+import { Badge, Button, Skeleton, SectionTitle, Card } from './ui';
 import { calculateReadTime } from '../utils/readTime';
 
 const LatestPosts = () => {
@@ -76,9 +75,9 @@ const LatestPosts = () => {
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <HolographicCard key={i}>
+              <Card key={i} variant="default">
                 <Skeleton variant="card" />
-              </HolographicCard>
+              </Card>
             ))}
           </div>
         )}
@@ -98,7 +97,7 @@ const LatestPosts = () => {
                 variants={cardVariants}
               >
                 <Link to={`/blog/${post.slug}`}>
-                  <HolographicCard className="h-full flex flex-col group">
+                  <Card variant="default" hover className="h-full flex flex-col group">
                     {/* Category Badge */}
                     <div className="mb-4">
                       <Badge variant="purple" size="sm">
@@ -121,7 +120,7 @@ const LatestPosts = () => {
                       <span>{formatDate(post.date || post.created_at)}</span>
                       <span>{post.readTime || calculateReadTime(post.content)}</span>
                     </div>
-                  </HolographicCard>
+                  </Card>
                 </Link>
               </motion.div>
             ))}
@@ -135,7 +134,7 @@ const LatestPosts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-12"
           >
-            <HolographicCard className="max-w-md mx-auto">
+            <Card variant="default" className="max-w-md mx-auto text-center">
               <div className="text-6xl mb-4">📝</div>
               <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
                 Próximamente
@@ -143,7 +142,7 @@ const LatestPosts = () => {
               <p className="text-[var(--text-secondary)]">
                 Estamos preparando contenido increíble sobre IA, automatización y desarrollo web.
               </p>
-            </HolographicCard>
+            </Card>
           </motion.div>
         )}
 

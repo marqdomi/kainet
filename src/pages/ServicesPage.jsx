@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Button, SectionTitle, Badge } from '../components/ui';
-import HolographicCard from '../components/effects/HolographicCard';
+import { Button, SectionTitle, Badge, Card } from '../components/ui';
 import SEO from '../components/SEO';
 import { Bot, Code, Cloud, Palette, Check } from 'lucide-react';
 
@@ -55,10 +54,10 @@ const ServicesPage = () => {
                             <Badge variant="default" size="lg" className="mb-6">
                                 El Motor - Flujo de caja y aprendizaje
                             </Badge>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-xl">
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
                                 Servicios de Consultoría
                             </h1>
-                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 text-shadow-md">
+                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8">
                                 Transformación digital de alto nivel para PyMEs y corporativos.
                                 Utilizamos nuestra experiencia en productos SaaS para impulsar tu empresa.
                             </p>
@@ -78,7 +77,7 @@ const ServicesPage = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                 >
-                                    <HolographicCard className="h-full hover:border-[var(--cyan-neon)]/50 transition-all">
+                                    <Card variant="default" hover padding="lg" className="h-full">
                                         <div className="mb-4">
                                             <service.icon className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                                         </div>
@@ -95,7 +94,7 @@ const ServicesPage = () => {
                                                 </div>
                                             ))}
                                         </div>
-                                    </HolographicCard>
+                                    </Card>
                                 </motion.div>
                             ))}
                         </div>
@@ -107,33 +106,33 @@ const ServicesPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="証">Por Qué Elegirnos</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Experiencia que Cuenta</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4">Experiencia que Cuenta</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <HolographicCard className="text-center">
+                            <Card variant="default" hover className="text-center">
                                 <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">100%</div>
                                 <div className="text-lg font-semibold text-white mb-2">Enfoque en Resultados</div>
                                 <p className="text-sm text-[var(--text-secondary)]">
                                     No solo código, sino soluciones que impactan tu negocio
                                 </p>
-                            </HolographicCard>
+                            </Card>
 
-                            <HolographicCard className="text-center">
+                            <Card variant="default" hover className="text-center">
                                 <div className="text-4xl font-bold text-[var(--purple-neon)] mb-2">8-12</div>
                                 <div className="text-lg font-semibold text-white mb-2">Semanas para MVP</div>
                                 <p className="text-sm text-[var(--text-secondary)]">
                                     Desarrollo ágil sin sacrificar calidad
                                 </p>
-                            </HolographicCard>
+                            </Card>
 
-                            <HolographicCard className="text-center">
+                            <Card variant="default" hover className="text-center">
                                 <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">24/7</div>
                                 <div className="text-lg font-semibold text-white mb-2">Soporte Post-Launch</div>
                                 <p className="text-sm text-[var(--text-secondary)]">
                                     Acompañamiento continuo después del despliegue
                                 </p>
-                            </HolographicCard>
+                            </Card>
                         </div>
                     </div>
                 </section>
@@ -143,7 +142,7 @@ const ServicesPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="流">Nuestro Proceso</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">De la Consulta al Deployment</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4">De la Consulta al Deployment</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -160,11 +159,11 @@ const ServicesPage = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                 >
-                                    <HolographicCard className="text-center h-full">
+                                    <Card variant="default" hover className="text-center h-full">
                                         <div className="text-5xl font-bold text-[var(--cyan-neon)]/20 mb-3">{step.num}</div>
                                         <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
                                         <p className="text-sm text-[var(--text-secondary)]">{step.desc}</p>
-                                    </HolographicCard>
+                                    </Card>
                                 </motion.div>
                             ))}
                         </div>
@@ -174,7 +173,7 @@ const ServicesPage = () => {
                 {/* CTA */}
                 <section className="py-20 px-6">
                     <div className="max-w-4xl mx-auto text-center">
-                        <HolographicCard className="py-16 bg-gradient-to-b from-[var(--gray-900)] to-[var(--cyan-neon)]/10">
+                        <Card variant="featured" padding="lg" className="py-16 text-center">
                             <h2 className="text-4xl font-bold text-white mb-6">
                                 ¿Listo para transformar tu empresa?
                             </h2>
@@ -193,7 +192,7 @@ const ServicesPage = () => {
                                     </Button>
                                 </Link>
                             </div>
-                        </HolographicCard>
+                        </Card>
                     </div>
                 </section>
 

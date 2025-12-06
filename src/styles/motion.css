@@ -1,0 +1,357 @@
+/* ================================================
+   KAINET v3.0 - Motion Design System
+   Centralized animation tokens and micro-interactions
+   Inspired by: Vercel, Linear, Stripe, Notion
+   ================================================ */
+
+/* ====================================
+   1. TIMING TOKENS
+   Industry-standard animation timings (2024-2025)
+   ==================================== */
+:root {
+  /* Duration Scale */
+  --duration-instant: 100ms;    /* Checkboxes, toggles, micro-feedback */
+  --duration-fast: 150ms;       /* Buttons, small interactive elements */
+  --duration-normal: 200ms;     /* Cards, dropdowns, most UI transitions */
+  --duration-slow: 300ms;       /* Modals, page sections, complex UI */
+  --duration-slower: 400ms;     /* Page transitions, large reveals */
+  --duration-slowest: 500ms;    /* Hero animations, loading sequences */
+
+  /* Easing Functions - Material Design 3 inspired */
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);           /* Entrances - elements arriving */
+  --ease-in: cubic-bezier(0.4, 0.0, 1, 1);              /* Exits - elements leaving */
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);       /* Standard - state changes */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Playful - bouncy elements */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);     /* Smooth - subtle movements */
+
+  /* Stagger Delays */
+  --stagger-fast: 50ms;
+  --stagger-normal: 100ms;
+  --stagger-slow: 150ms;
+}
+
+/* ====================================
+   2. BUTTON TRANSITIONS (Professional)
+   Replaces: hologram-flicker, heavy glow shadows
+   ==================================== */
+
+/* Primary Button - Subtle lift and shadow */
+.btn-transition-primary {
+  transition: 
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.btn-transition-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(0, 229, 255, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-transition-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 6px rgba(0, 229, 255, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Secondary Button - Border emphasis */
+.btn-transition-secondary {
+  transition: 
+    border-color var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out),
+    color var(--duration-fast) var(--ease-in-out);
+}
+
+.btn-transition-secondary:hover:not(:disabled) {
+  background-color: rgba(0, 229, 255, 0.08);
+  border-color: var(--cyan-neon);
+}
+
+/* Ghost Button - Subtle background */
+.btn-transition-ghost {
+  transition: 
+    color var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out);
+}
+
+.btn-transition-ghost:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--cyan-neon);
+}
+
+/* ====================================
+   3. CARD TRANSITIONS (Glassmorphic)
+   Replaces: 40px glow, scale transforms
+   ==================================== */
+
+/* Base Card Hover */
+.card-transition {
+  transition: 
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.card-transition:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px -5px rgba(0, 0, 0, 0.15),
+    0 4px 10px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Featured Card - Accent border glow */
+.card-transition-featured:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 
+    0 8px 25px -5px rgba(0, 0, 0, 0.15),
+    0 0 20px -5px rgba(0, 229, 255, 0.1);
+}
+
+/* Interactive Card - For clickable cards */
+.card-transition-interactive {
+  cursor: pointer;
+}
+
+.card-transition-interactive:active {
+  transform: translateY(0);
+  transition-duration: var(--duration-instant);
+}
+
+/* ====================================
+   4. REVEAL ANIMATIONS (Scroll-triggered)
+   Subtler than before: 12px movement vs 20px
+   ==================================== */
+
+/* Fade In Up - Default reveal */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--duration-slow) var(--ease-out) forwards;
+}
+
+/* Fade In - No movement */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+/* Scale In - For modals and popups */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+/* Slide In - From various directions */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft var(--duration-slow) var(--ease-out) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight var(--duration-slow) var(--ease-out) forwards;
+}
+
+/* ====================================
+   5. STAGGER ANIMATIONS
+   For lists and grids
+   ==================================== */
+
+.stagger-container > *:nth-child(1) { animation-delay: calc(var(--stagger-normal) * 0); }
+.stagger-container > *:nth-child(2) { animation-delay: calc(var(--stagger-normal) * 1); }
+.stagger-container > *:nth-child(3) { animation-delay: calc(var(--stagger-normal) * 2); }
+.stagger-container > *:nth-child(4) { animation-delay: calc(var(--stagger-normal) * 3); }
+.stagger-container > *:nth-child(5) { animation-delay: calc(var(--stagger-normal) * 4); }
+.stagger-container > *:nth-child(6) { animation-delay: calc(var(--stagger-normal) * 5); }
+.stagger-container > *:nth-child(7) { animation-delay: calc(var(--stagger-normal) * 6); }
+.stagger-container > *:nth-child(8) { animation-delay: calc(var(--stagger-normal) * 7); }
+
+/* Fast stagger for smaller items */
+.stagger-fast > *:nth-child(n) { 
+  animation-delay: calc(var(--stagger-fast) * (n - 1)); 
+}
+
+/* ====================================
+   6. FOCUS STATES
+   Accessible and visible focus rings
+   ==================================== */
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--cyan-neon);
+  outline-offset: 2px;
+  transition: outline-offset var(--duration-fast) var(--ease-out);
+}
+
+.focus-ring:focus-visible:not(:active) {
+  outline-offset: 3px;
+}
+
+/* ====================================
+   7. LOADING STATES
+   Skeleton and spinner animations
+   ==================================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ====================================
+   8. ICON TRANSITIONS
+   Subtle scale and rotation
+   ==================================== */
+
+.icon-transition {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.icon-transition:hover {
+  transform: scale(1.1);
+}
+
+/* Arrow icon - moves on hover */
+.icon-arrow {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.group:hover .icon-arrow,
+.icon-arrow-container:hover .icon-arrow {
+  transform: translateX(4px);
+}
+
+/* ====================================
+   9. LINK UNDERLINE ANIMATION
+   Modern underline effect
+   ==================================== */
+
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ====================================
+   10. REDUCED MOTION
+   Respect user preferences
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card-transition:hover,
+  .btn-transition-primary:hover {
+    transform: none;
+  }
+}
+
+/* ====================================
+   11. DEPRECATED CLASSES
+   Keep for backwards compatibility but simplified
+   ==================================== */
+
+/* hologram-flicker - Now just a border color transition */
+.hologram-flicker {
+  animation: none !important;
+  transition: border-color var(--duration-fast) var(--ease-in-out);
+}
+
+/* badge-glow - Simplified to static */
+.badge-glow {
+  animation: none !important;
+}

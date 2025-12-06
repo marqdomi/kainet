@@ -1,0 +1,206 @@
+/* Enterprise Background Styles - Inspired by Vercel/Linear/Stripe */
+/* Static gradients for professional, performant backgrounds */
+
+.enterprise-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ===================================
+   DARK THEME (Default)
+   =================================== */
+
+.enterprise-bg-base {
+  position: absolute;
+  inset: 0;
+  /* Subtle vertical gradient - nearly imperceptible */
+  background: linear-gradient(
+    180deg,
+    #0A0A0A 0%,
+    #0D0D0D 50%,
+    #0A0A0A 100%
+  );
+}
+
+.enterprise-bg-mesh {
+  position: absolute;
+  inset: 0;
+  /* Mesh gradients - very subtle color accents */
+  background: 
+    /* Cyan accent - top left */
+    radial-gradient(
+      ellipse 80% 50% at 10% 20%,
+      rgba(0, 229, 255, 0.04) 0%,
+      transparent 50%
+    ),
+    /* Purple accent - center right */
+    radial-gradient(
+      ellipse 60% 40% at 90% 40%,
+      rgba(168, 85, 247, 0.03) 0%,
+      transparent 50%
+    ),
+    /* Cyan accent - bottom center */
+    radial-gradient(
+      ellipse 70% 50% at 50% 100%,
+      rgba(0, 229, 255, 0.03) 0%,
+      transparent 50%
+    ),
+    /* Subtle warm accent - adds depth */
+    radial-gradient(
+      ellipse 40% 30% at 30% 70%,
+      rgba(255, 107, 53, 0.02) 0%,
+      transparent 50%
+    );
+}
+
+.enterprise-bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  /* SVG noise texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+}
+
+.enterprise-bg-fade-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.8) 0%,
+    transparent 100%
+  );
+}
+
+.enterprise-bg-fade-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(
+    0deg,
+    rgba(10, 10, 10, 0.6) 0%,
+    transparent 100%
+  );
+}
+
+/* ===================================
+   LIGHT THEME
+   =================================== */
+
+.light-theme .enterprise-bg-base {
+  background: linear-gradient(
+    180deg,
+    #FAFAFA 0%,
+    #F5F5F5 50%,
+    #FAFAFA 100%
+  );
+}
+
+.light-theme .enterprise-bg-mesh {
+  background: 
+    /* Cyan accent - top left - lighter */
+    radial-gradient(
+      ellipse 80% 50% at 10% 20%,
+      rgba(8, 145, 178, 0.06) 0%,
+      transparent 50%
+    ),
+    /* Purple accent - center right */
+    radial-gradient(
+      ellipse 60% 40% at 90% 40%,
+      rgba(147, 51, 234, 0.04) 0%,
+      transparent 50%
+    ),
+    /* Blue accent - bottom center */
+    radial-gradient(
+      ellipse 70% 50% at 50% 100%,
+      rgba(59, 130, 246, 0.04) 0%,
+      transparent 50%
+    );
+}
+
+.light-theme .enterprise-bg-noise {
+  opacity: 0.015;
+  mix-blend-mode: multiply;
+}
+
+.light-theme .enterprise-bg-fade-top {
+  background: linear-gradient(
+    180deg,
+    rgba(250, 250, 250, 0.9) 0%,
+    transparent 100%
+  );
+}
+
+.light-theme .enterprise-bg-fade-bottom {
+  background: linear-gradient(
+    0deg,
+    rgba(250, 250, 250, 0.7) 0%,
+    transparent 100%
+  );
+}
+
+/* ===================================
+   HIGH CONTRAST MODE
+   =================================== */
+
+@media (prefers-contrast: high) {
+  .enterprise-bg-mesh {
+    display: none;
+  }
+  
+  .enterprise-bg-noise {
+    display: none;
+  }
+  
+  .enterprise-bg-base {
+    background: #000000;
+  }
+  
+  .light-theme .enterprise-bg-base {
+    background: #FFFFFF;
+  }
+}
+
+/* ===================================
+   REDUCED MOTION
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Already static - no changes needed */
+  /* This ensures no future animations affect this */
+  .enterprise-background * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===================================
+   OPTIONAL: Subtle animated glow
+   Only activates on hover of hero section
+   Uses CSS only - no JS overhead
+   =================================== */
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.06; }
+}
+
+.enterprise-bg-mesh.animate {
+  animation: subtle-pulse 8s ease-in-out infinite;
+}
+
+/* Disable animation for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .enterprise-bg-mesh.animate {
+    animation: none;
+  }
+}

@@ -1,8 +1,7 @@
 // src/pages/AboutPage.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionTitle } from '../components/ui';
-import HolographicCard from '../components/effects/HolographicCard';
+import { SectionTitle, Card } from '../components/ui';
 import SEO from '../components/SEO';
 import { Star, Settings, X, Check } from 'lucide-react';
 
@@ -26,10 +25,10 @@ const AboutPage: React.FC = () => {
               transition={{ duration: 0.8 }}
             >
               <SectionTitle kanji="道">El Manifiesto</SectionTitle>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6 text-shadow-xl">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6">
                 KAINET
               </h1>
-              <p className="text-2xl text-[var(--cyan-neon)] font-light italic text-shadow-glow">
+              <p className="text-2xl text-[var(--cyan-neon)] font-light italic">
                 "No construimos software; edificamos portales digitales hacia el futuro."
               </p>
             </motion.div>
@@ -39,7 +38,7 @@ const AboutPage: React.FC = () => {
         {/* Identidad y Propósito */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
-            <HolographicCard>
+            <Card variant="default" padding="lg">
               <h2 className="text-3xl font-bold text-white mb-6">1. Identidad y Propósito</h2>
 
               <div className="space-y-6 text-[var(--text-secondary)]">
@@ -72,14 +71,14 @@ const AboutPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </HolographicCard>
+            </Card>
           </div>
         </section>
 
         {/* Modelo Estratégico */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
-            <HolographicCard className="bg-black/40 backdrop-blur-md border border-white/10">
+            <Card variant="default" padding="lg">
               <h2 className="text-3xl font-bold text-white mb-6">2. Modelo Estratégico: El Faro y el Motor</h2>
 
               <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
@@ -115,14 +114,14 @@ const AboutPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </HolographicCard>
+            </Card>
           </div>
         </section>
 
         {/* Producto Insignia */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
-            <HolographicCard className="border-[var(--cyan-neon)]/30">
+            <Card variant="featured" padding="lg">
               <h2 className="text-3xl font-bold text-white mb-6">3. Producto Insignia: KAIDO</h2>
 
               <div className="space-y-6 text-[var(--text-secondary)]">
@@ -160,20 +159,20 @@ const AboutPage: React.FC = () => {
                 <div className="pt-6">
                   <a
                     href="/kaido"
-                    className="inline-block px-8 py-3 bg-[var(--cyan-neon)] text-[var(--gray-900)] rounded-lg font-bold hover:scale-105 transition-transform"
+                    className="btn btn-lg btn-primary"
                   >
                     Conocer KAIDO →
                   </a>
                 </div>
               </div>
-            </HolographicCard>
+            </Card>
           </div>
         </section>
 
         {/* Team / Contact */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
-            <HolographicCard className="text-center">
+            <Card variant="default" padding="lg" className="text-center">
               <h2 className="text-3xl font-bold text-white mb-6">El Equipo</h2>
               <p className="text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
                 KAINET fue fundado por ingenieros y diseñadores mexicanos apasionados por la tecnología de punta
@@ -199,7 +198,7 @@ const AboutPage: React.FC = () => {
                   Contacto
                 </a>
               </div>
-            </HolographicCard>
+            </Card>
           </div>
         </section>
 

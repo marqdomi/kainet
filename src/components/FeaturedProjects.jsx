@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Badge, Button, Skeleton, SectionTitle } from './ui';
-import HolographicCard from './effects/HolographicCard';
+import { Badge, Button, Skeleton, SectionTitle, Card } from './ui';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const FeaturedProjects = () => {
@@ -98,9 +97,9 @@ const FeaturedProjects = () => {
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {[1, 2, 3].map((i) => (
-              <HolographicCard key={i}>
+              <Card key={i} variant="default">
                 <Skeleton variant="card" />
-              </HolographicCard>
+              </Card>
             ))}
           </div>
         )}
@@ -120,7 +119,7 @@ const FeaturedProjects = () => {
                 variants={cardVariants}
               >
                 <ParallaxCard index={index}>
-                  <HolographicCard className="h-full flex flex-col">
+                  <Card variant="default" hover className="h-full flex flex-col">
                     {/* Category Badge */}
                     <div className="mb-4">
                       <Badge
@@ -181,14 +180,14 @@ const FeaturedProjects = () => {
                         href={project.live_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        variant="secondary"
+                        variant="ghost"
                         size="sm"
-                        className="w-full"
+                        className="w-full mt-auto"
                       >
-                        Ver Demo →
+                        Ver Proyecto →
                       </Button>
                     )}
-                  </HolographicCard>
+                  </Card>
                 </ParallaxCard>
               </motion.div>
             ))}

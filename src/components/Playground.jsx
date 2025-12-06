@@ -442,14 +442,14 @@ const Playground = () => {
               <div className="mt-3 flex items-center gap-2">
                 <button
                   type="submit"
-                  className="btn-kainet px-4 py-2"
+                  className="btn btn-sm btn-primary"
                 >
                   Generar
                 </button>
                 <button
                   type="button"
                   onClick={randomize}
-                  className="btn-kainet--outline"
+                  className="btn btn-sm btn-accent"
                 >
                   Random
                 </button>

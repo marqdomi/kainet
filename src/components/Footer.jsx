@@ -50,11 +50,11 @@ const Footer = () => {
     <footer className="mt-16 md:mt-20 bg-transparent">
       <div className="mx-auto max-w-6xl px-6">
         {/* Footer Principal */}
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-black/50 backdrop-blur-md p-6 sm:p-8 md:p-10">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl card-default border backdrop-blur-md p-6 sm:p-8 md:p-10">
           {/* Glow Effect */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[#00E5FF]/8 blur-3xl"
+            className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[var(--cyan-neon)]/8 blur-3xl"
           />
 
           <div className="relative grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-8 items-start">
@@ -67,18 +67,18 @@ const Footer = () => {
                 loading="lazy"
                 decoding="async"
               />
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <p className="text-muted text-sm leading-relaxed">
                 Prototipos robustos, visuales 3D y experiencias premium impulsadas por IA.
               </p>
             </div>
 
             {/* Columna 2: Contacto */}
             <div className="md:col-span-1 text-center md:text-left">
-              <h3 className="text-white font-semibold mb-4 text-lg">Contacto</h3>
+              <h3 className="text-heading font-semibold mb-4 text-lg">Contacto</h3>
               <div className="space-y-3 inline-flex flex-col items-center md:items-start">
                 <a
                   href="mailto:contacto@kainet.mx"
-                  className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors text-sm group py-2 min-h-[44px]"
+                  className="flex items-center gap-2 text-muted hover:text-[var(--cyan-neon)] transition-colors text-sm group py-2 min-h-[44px]"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -88,7 +88,7 @@ const Footer = () => {
                 <div className="pt-2">
                   <a
                     href="/contact"
-                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-gray-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 transition-all text-sm"
+                    className="btn btn-sm btn-primary"
                   >
                     Enviar mensaje
                   </a>
@@ -98,7 +98,7 @@ const Footer = () => {
 
             {/* Columna 3: Redes Sociales */}
             <div className="md:col-span-1 text-center md:text-left">
-              <h3 className="text-white font-semibold mb-4 text-lg">Síguenos</h3>
+              <h3 className="text-heading font-semibold mb-4 text-lg">Síguenos</h3>
               <div className="flex flex-wrap justify-center md:justify-start gap-3">
                 {socialLinks.map((social) => (
                   <a
@@ -107,12 +107,12 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 hover:border-cyan-400/50 transition-all group min-h-[44px]"
+                    className="flex items-center gap-2 px-4 py-3 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg hover:bg-[var(--cyan-neon)]/10 hover:border-[var(--cyan-neon)]/50 transition-all group min-h-[44px]"
                   >
-                    <span className="text-gray-400 group-hover:text-cyan-400 transition-colors">
+                    <span className="text-muted group-hover:text-[var(--cyan-neon)] transition-colors">
                       {social.icon}
                     </span>
-                    <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                    <span className="text-sm text-muted group-hover:text-heading transition-colors">
                       {social.name}
                     </span>
                   </a>
@@ -120,7 +120,7 @@ const Footer = () => {
               </div>
 
               {/* Nota para futuras redes */}
-              <p className="text-xs text-gray-500 mt-4">
+              <p className="text-xs text-muted mt-4">
                 Próximamente en Facebook y TikTok
               </p>
             </div>
@@ -129,7 +129,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="py-6 text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted">
             © {new Date().getFullYear()} KAINET. Todos los derechos reservados.
           </p>
         </div>

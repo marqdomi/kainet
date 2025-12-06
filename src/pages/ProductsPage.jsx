@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Button, SectionTitle, Badge } from '../components/ui';
-import HolographicCard from '../components/effects/HolographicCard';
+import { Button, SectionTitle, Badge, Card } from '../components/ui';
 import GlitchText from '../components/effects/GlitchText';
 import SEO from '../components/SEO';
 import { Star, Rocket, Lightbulb } from 'lucide-react';
@@ -29,10 +28,10 @@ const ProductsPage = () => {
                             <Badge variant="purple" size="lg" className="mb-6">
                                 <Star className="w-4 h-4 inline mr-1" /> El Faro - 80% de nuestro enfoque
                             </Badge>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-xl">
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
                                 Productos SaaS
                             </h1>
-                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 text-shadow-md">
+                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8">
                                 Plataformas de clase mundial construidas con tecnología de punta.
                                 Aquí es donde innovamos y construimos nuestra autoridad técnica.
                             </p>
@@ -43,7 +42,7 @@ const ProductsPage = () => {
                 {/* Kaido - Flagship Product */}
                 <section className="py-12 px-6">
                     <div className="max-w-7xl mx-auto">
-                        <HolographicCard className="border-[var(--cyan-neon)]/30 bg-black/40 backdrop-blur-md">
+                        <Card variant="featured" padding="lg">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                                 {/* Content */}
@@ -116,7 +115,7 @@ const ProductsPage = () => {
                                 </div>
 
                             </div>
-                        </HolographicCard>
+                        </Card>
                     </div>
                 </section>
 
@@ -125,15 +124,15 @@ const ProductsPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="未">Próximamente</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Productos en el Pipeline</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
+                            <h2 className="text-4xl font-bold text-white mt-4">Productos en el Pipeline</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Estamos desarrollando más soluciones SaaS para resolver problemas complejos.
                             </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Placeholder for future product 1 */}
-                            <HolographicCard className="opacity-60">
+                            <Card variant="subtle" className="opacity-80">
                                 <div className="text-center py-12">
                                     <div className="flex justify-center mb-4">
                                         <Rocket className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
@@ -144,10 +143,10 @@ const ProductsPage = () => {
                                     </p>
                                     <Badge variant="default" size="md">Coming Soon</Badge>
                                 </div>
-                            </HolographicCard>
+                            </Card>
 
                             {/* Placeholder for future product 2 */}
-                            <HolographicCard className="opacity-60">
+                            <Card variant="subtle" className="opacity-80">
                                 <div className="text-center py-12">
                                     <div className="flex justify-center mb-4">
                                         <Lightbulb className="w-12 h-12 text-[var(--purple-neon)]" strokeWidth={1.5} />
@@ -158,7 +157,7 @@ const ProductsPage = () => {
                                     </p>
                                     <Badge variant="default" size="md">In Research</Badge>
                                 </div>
-                            </HolographicCard>
+                            </Card>
                         </div>
                     </div>
                 </section>
@@ -166,7 +165,7 @@ const ProductsPage = () => {
                 {/* CTA */}
                 <section className="py-20 px-6">
                     <div className="max-w-4xl mx-auto text-center">
-                        <HolographicCard className="py-16">
+                        <Card variant="featured" padding="lg" className="py-16 text-center">
                             <h2 className="text-4xl font-bold text-white mb-6">
                                 ¿Interesado en nuestros productos?
                             </h2>
@@ -185,7 +184,7 @@ const ProductsPage = () => {
                                     </Button>
                                 </Link>
                             </div>
-                        </HolographicCard>
+                        </Card>
                     </div>
                 </section>
 
