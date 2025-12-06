@@ -270,15 +270,26 @@
   pointer-events: none;
 }
 
-.btn-loading::after {
-  content: '';
-  position: absolute;
+/* Inline spinner for loading buttons */
+.btn-spinner {
+  display: inline-block;
   width: 1rem;
   height: 1rem;
   border: 2px solid transparent;
   border-top-color: currentColor;
+  border-left-color: currentColor;
   border-radius: 50%;
   animation: btn-spin 0.6s linear infinite;
+}
+
+.btn-sm .btn-spinner {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.btn-lg .btn-spinner {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 @keyframes btn-spin {
