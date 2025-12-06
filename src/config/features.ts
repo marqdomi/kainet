@@ -1,7 +1,7 @@
 /**
  * Feature Flags Configuration
  * 
- * This module provides centralized feature flag management for the Japanese-Cyberpunk enhancements.
+ * This module provides centralized feature flag management for visual enhancements.
  * Features can be enabled/disabled via environment variables for gradual rollout and testing.
  * 
  * @module config/features
@@ -18,11 +18,10 @@
  */
 export const features = {
   /**
-   * Enable kanji particles in the 3D background canvas
-   * Includes torii formation and cursor interaction
+   * DISABLED - Kanji particles removed for Mexico market
    * @type {boolean}
    */
-  kanjiParticles: import.meta.env.VITE_FEATURE_KANJI === 'true',
+  kanjiParticles: false,
 
   /**
    * Enable glitch effects on text and UI elements
@@ -61,28 +60,26 @@ export const features = {
 
   /**
    * Enable typography enhancements
-   * Includes kanji prefixes, Japanese quotes, and digital counters
+   * Includes digital counters (kanji prefixes removed)
    * @type {boolean}
    */
   typographyEnhancements: import.meta.env.VITE_FEATURE_TYPOGRAPHY === 'true',
 
   /**
-   * Enable custom loaders (Torii loader)
-   * Includes animated torii and rotating messages
+   * DISABLED - Japanese loaders removed, using ModernLoader instead
    * @type {boolean}
    */
-  customLoaders: import.meta.env.VITE_FEATURE_LOADERS === 'true',
+  customLoaders: false,
 
   /**
-   * Enable easter eggs
-   * Includes Konami code, triple-click, and special date effects
+   * Enable easter eggs (fireworks only - Japanese elements removed)
    * @type {boolean}
    */
   easterEggs: import.meta.env.VITE_FEATURE_EASTER_EGGS === 'true',
 
   /**
    * Enable enhanced UI components
-   * Includes button ripples, badge kanji, and card variants
+   * Includes button ripples and card variants (kanji badges removed)
    * @type {boolean}
    */
   enhancedUI: import.meta.env.VITE_FEATURE_ENHANCED_UI === 'true',
