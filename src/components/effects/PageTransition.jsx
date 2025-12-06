@@ -22,7 +22,7 @@ import { useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import useReducedMotion from '../../hooks/useReducedMotion';
-import ToriiLoader from '../loaders/ToriiLoader';
+import ModernLoader from '../loaders/ModernLoader';
 
 const PageTransition = ({ children, duration = 600 }) => {
   const location = useLocation();
@@ -189,7 +189,7 @@ const PageTransition = ({ children, duration = 600 }) => {
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm"
             style={{ pointerEvents: 'none' }}
           >
-            <ToriiLoader size="lg" showMessage />
+            <ModernLoader size="lg" showMessage />
           </motion.div>
         )}
       </AnimatePresence>

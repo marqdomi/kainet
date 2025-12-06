@@ -23,10 +23,7 @@ import ProductsPage from './pages/ProductsPage';
 import ServicesPage from './pages/ServicesPage';
 import NotFound from './pages/NotFound';
 
-// Lazy load easter egg components
-const MatrixRain = lazy(() => import('./components/effects/MatrixRain'));
-const ToriiAnimation = lazy(() => import('./components/effects/ToriiAnimation'));
-const SakuraPetals = lazy(() => import('./components/effects/SakuraPetals'));
+// Lazy load easter egg components (only non-cultural ones)
 const Fireworks = lazy(() => import('./components/effects/Fireworks'));
 const CookieConsent = lazy(() => import('./components/CookieConsent'));
 
@@ -39,11 +36,7 @@ import './components/effects/EnterpriseBackground.css';
 
 const AppContent = () => {
   const {
-    matrixRainActive,
-    toriiAnimationActive,
     specialDateEffect,
-    dismissMatrixRain,
-    dismissToriiAnimation
   } = useEasterEggContext();
 
   // Conditionally render content based on feature flags
@@ -103,16 +96,9 @@ const AppContent = () => {
         )}
       </div>
 
-      {/* Easter Egg Effects - Only render if feature is enabled */}
+      {/* Easter Egg Effects - Only fireworks for special dates */}
       {features.easterEggs && (
         <Suspense fallback={null}>
-          {matrixRainActive && (
-            <MatrixRain active={matrixRainActive} onDismiss={dismissMatrixRain} />
-          )}
-          {toriiAnimationActive && (
-            <ToriiAnimation active={toriiAnimationActive} onDismiss={dismissToriiAnimation} />
-          )}
-          {specialDateEffect === 'sakuraPetals' && <SakuraPetals active={true} />}
           {specialDateEffect === 'fireworks' && <Fireworks active={true} />}
         </Suspense>
       )}
