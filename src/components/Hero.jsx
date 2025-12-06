@@ -50,7 +50,7 @@ const Hero = () => {
         }}
       />
       {/* Texto */}
-      <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-6">
+      <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-4 sm:px-6">
         <div className="max-w-5xl relative" ref={containerRef} style={{ position: 'relative' }}>
           {/* Badge / Label */}
           <motion.div
@@ -59,7 +59,7 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-6"
           >
-            <span className="inline-block px-4 py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-sm font-bold tracking-wider uppercase">
+            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-xs sm:text-sm font-bold tracking-wider uppercase">
               Mexican Tech Startup
             </span>
           </motion.div>
@@ -72,7 +72,7 @@ const Hero = () => {
             className="mb-4"
           >
             <h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
               style={{
                 textShadow: '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3)',
                 WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.2)'
@@ -94,7 +94,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-8"
+            className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-6 sm:mb-8"
             style={{
               textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
               WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)'
@@ -116,7 +116,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
           >
             Combinamos <span className="text-white font-semibold">gamificación extrema</span> con{' '}
             <span className="text-white font-semibold">accesibilidad universal</span>.
@@ -133,14 +133,14 @@ const Hero = () => {
           >
             <a
               href="/kaido"
-              className="group px-8 py-4 bg-[var(--cyan-neon)] text-[var(--gray-900)] rounded-lg font-bold text-lg shadow-lg shadow-[var(--cyan-neon)]/30 hover:shadow-[var(--cyan-neon)]/50 hover:scale-105 transition-all duration-300"
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[var(--cyan-neon)] text-[var(--gray-900)] rounded-lg font-bold text-base sm:text-lg shadow-lg shadow-[var(--cyan-neon)]/30 hover:shadow-[var(--cyan-neon)]/50 hover:scale-105 transition-all duration-300 text-center"
             >
               Explorar KAIDO
               <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
             </a>
             <a
               href="#about"
-              className="px-8 py-4 bg-white/5 backdrop-blur-sm border-2 border-white/20 text-white rounded-lg font-bold text-lg hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white/5 backdrop-blur-sm border-2 border-white/20 text-white rounded-lg font-bold text-base sm:text-lg hover:bg-white/10 hover:border-white/30 transition-all duration-300 text-center"
             >
               El Manifiesto
             </a>

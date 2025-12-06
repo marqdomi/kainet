@@ -19,26 +19,26 @@ import { getKanjiForSection, getKanjiByName } from '../../utils/sectionKanji';
  * // Without kanji
  * <SectionTitle showKanji={false}>Contact</SectionTitle>
  */
-const SectionTitle = ({ 
-  children, 
-  showKanji = true, 
+const SectionTitle = ({
+  children,
+  showKanji = true,
   kanji = null,
   className = '',
   as: Component = 'h2',
-  ...props 
+  ...props
 }) => {
   // Get kanji based on explicit prop or auto-detect from title
-  const kanjiData = kanji 
-    ? getKanjiByName(kanji) 
+  const kanjiData = kanji
+    ? getKanjiByName(kanji)
     : getKanjiForSection(children);
-  
+
   return (
-    <Component 
-      className={`section-title ${className}`}
+    <Component
+      className={`section-title text-shadow-lg ${className}`}
       {...props}
     >
       {showKanji && kanjiData && (
-        <span 
+        <span
           className="section-title__kanji"
           aria-hidden="true"
           title={kanjiData.meaning}
@@ -56,16 +56,16 @@ const SectionTitle = ({
 SectionTitle.propTypes = {
   /** The title text content */
   children: PropTypes.node.isRequired,
-  
+
   /** Whether to show the kanji prefix */
   showKanji: PropTypes.bool,
-  
+
   /** Explicit kanji category (e.g., 'tech', 'ai', 'innovation') */
   kanji: PropTypes.string,
-  
+
   /** Additional CSS classes */
   className: PropTypes.string,
-  
+
   /** HTML element to render as (h1, h2, h3, etc.) */
   as: PropTypes.elementType
 };

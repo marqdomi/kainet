@@ -49,11 +49,11 @@ const FeaturedPost = ({ post }) => (
         <span className="inline-block w-fit px-3 py-1 rounded-full bg-[#00E5FF]/20 text-[#00E5FF] text-xs font-medium mb-4">
           Destacado
         </span>
-        
+
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">
           {post.title}
         </h3>
-        
+
         <p className="text-gray-300 mb-6 leading-relaxed">
           {post.excerpt}
         </p>
@@ -109,7 +109,7 @@ const PostCard = ({ post }) => (
       <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-[#00E5FF] transition-colors line-clamp-2">
         {post.title}
       </h3>
-      
+
       <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed">
         {post.excerpt}
       </p>
@@ -161,7 +161,7 @@ const NewsletterCTA = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes('@')) {
       setStatus('error');
       setMessage('Por favor, ingresa un email válido');
@@ -185,13 +185,13 @@ const NewsletterCTA = () => {
 
       if (res.ok && data.success) {
         setStatus('success');
-        setMessage(data.alreadySubscribed 
-          ? 'Ya estás suscrito al newsletter 📧' 
-          : '¡Suscripción exitosa! Revisa tu email de bienvenida 🎉'
+        setMessage(data.alreadySubscribed
+          ? 'Ya estás suscrito al newsletter'
+          : '¡Suscripción exitosa! Revisa tu email de bienvenida'
         );
         setEmail('');
         setName('');
-        
+
         setTimeout(() => {
           setStatus('idle');
           setMessage('');
@@ -215,7 +215,7 @@ const NewsletterCTA = () => {
       className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#00E5FF]/10 to-transparent p-10 text-center mt-16"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00E5FF]/20 rounded-full blur-3xl opacity-30" />
-      
+
       <div className="relative z-10">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
           No te pierdas las novedades
@@ -283,11 +283,11 @@ const Blog = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Cargar posts
         const allPosts = await getBlogPosts();
         setPosts(allPosts);
-        
+
         // Cargar categorías dinámicas
         try {
           const dbCategories = await getCategories();
@@ -297,7 +297,7 @@ const Blog = () => {
         } catch (catError) {
           console.warn('No se pudieron cargar categorías, usando predeterminadas', catError);
         }
-        
+
       } catch (err) {
         console.error('Error cargando posts:', err);
         setError('No se pudieron cargar los posts. Por favor intenta más tarde.');
@@ -305,7 +305,7 @@ const Blog = () => {
         setLoading(false);
       }
     }
-    
+
     loadPosts();
   }, []);
 
@@ -316,15 +316,15 @@ const Blog = () => {
 
   // 🚀 OPTIMIZADO: Filtrar y paginar posts
   const { paginatedPosts, totalPages } = useMemo(() => {
-    const filtered = posts.filter((p) => 
+    const filtered = posts.filter((p) =>
       !p.featured && (selectedCategory === 'Todos' || p.category === selectedCategory)
     );
-    
+
     const startIndex = (currentPage - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
     const paginated = filtered.slice(startIndex, endIndex);
     const total = Math.ceil(filtered.length / postsPerPage);
-    
+
     return { paginatedPosts: paginated, totalPages: total };
   }, [posts, selectedCategory, currentPage]);
 
@@ -352,8 +352,8 @@ const Blog = () => {
       <section>
         <div className="mx-auto max-w-6xl px-6 text-center py-20">
           <div className="text-red-400 mb-4">{error}</div>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="btn-kainet"
           >
             Reintentar
@@ -366,7 +366,7 @@ const Blog = () => {
   return (
     <section>
       <div className="mx-auto max-w-6xl px-6">
-        
+
         {/* ===== HERO ===== */}
         <div className="text-center mb-12">
           <motion.div
@@ -421,17 +421,16 @@ const Blog = () => {
                 >
                   ← Anterior
                 </button>
-                
+
                 <div className="flex gap-2">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-lg transition-all ${
-                        currentPage === page
+                      className={`w-10 h-10 rounded-lg transition-all ${currentPage === page
                           ? 'bg-[#00E5FF] text-black font-semibold'
                           : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>

@@ -12,12 +12,12 @@ const SocialProof = () => {
     ];
 
     return (
-        <section className="py-16 px-6">
+        <section className="py-10 sm:py-12 md:py-16 px-4 sm:px-6">
             <div className="max-w-7xl mx-auto">
                 {/* Glassmorphic Card Container */}
-                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12">
+                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-12">
                     {/* Metrics Bar */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
                         {metrics.map((metric, index) => (
                             <motion.div
                                 key={index}
@@ -27,7 +27,7 @@ const SocialProof = () => {
                                 transition={{ delay: index * 0.1 }}
                                 className="text-center"
                             >
-                                <div className="text-4xl md:text-5xl font-bold text-[var(--cyan-neon)] mb-2">
+                                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--cyan-neon)] mb-1 sm:mb-2">
                                     {metric.value}
                                 </div>
                                 <div className="text-sm text-[var(--text-secondary)]">
@@ -48,7 +48,7 @@ const SocialProof = () => {
                         <p className="text-sm text-[var(--text-secondary)] mb-6">
                             Empresas que confían en KAINET
                         </p>
-                        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+                        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12">
                             {/* Placeholder logos - reemplazar con logos reales */}
                             {['Cliente Demo', 'Partner 1', 'Partner 2', 'Partner 3'].map((name, i) => (
                                 <div

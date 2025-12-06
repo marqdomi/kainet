@@ -89,6 +89,15 @@ const AppContent = () => {
           parallax={false} // Disabled for better performance and fluidity
           animationSpeed={0.8} // Slightly slower animation
         />
+        {/* Dark overlay to reduce background intensity and improve text legibility */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)',
+            pointerEvents: 'none'
+          }}
+        />
       </div>
 
       {/* Conditionally wrap with PageTransition based on feature flag */}

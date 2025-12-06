@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import DOMPurify from 'dompurify';
 import { getPostBySlug, getBlogPosts } from '../lib/supabase';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { calculateReadTime } from '../utils/readTime';
@@ -24,15 +25,15 @@ const BlogPost = () => {
         if (slug) {
           // 🚀 Cargar post desde Supabase
           const foundPost = await getPostBySlug(slug);
-          
+
           if (!foundPost) {
             setError('Post no encontrado');
             setLoading(false);
             return;
           }
-          
+
           setPost(foundPost);
-          
+
           // Calcular tiempo de lectura real
           if (foundPost.content) {
             const calculatedTime = calculateReadTime(foundPost.content);
@@ -50,7 +51,7 @@ const BlogPost = () => {
             console.warn('No se pudieron cargar posts relacionados', err);
           }
         }
-        
+
         // Scroll to top cuando cambia el post
         window.scrollTo(0, 0);
       } catch (err) {
@@ -60,7 +61,7 @@ const BlogPost = () => {
         setLoading(false);
       }
     }
-    
+
     loadPost();
   }, [slug]);
 
@@ -223,7 +224,7 @@ const BlogPost = () => {
             prose-blockquote:border-l-4 prose-blockquote:border-cyan-400 prose-blockquote:pl-6 prose-blockquote:italic
             prose-hr:border-gray-800 prose-hr:my-12
           "
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderMarkdown(post.content)) }}
         />
       </motion.article>
 
@@ -317,33 +318,33 @@ function renderMarkdown(markdown) {
 
   // Si ya contiene HTML (divs, etc), preservarlo
   const hasHTML = /<div|<h[1-6]|<p>|<ul>|<blockquote/.test(html);
-  
+
   if (hasHTML) {
     // Ya tiene HTML, pero aún necesitamos procesar markdown de headers
     // Headers (procesar primero)
     html = html.replace(/^## (.+)$/gim, '<h2>$1</h2>');
     html = html.replace(/^### (.+)$/gim, '<h3>$1</h3>');
     html = html.replace(/^#### (.+)$/gim, '<h4>$1</h4>');
-    
+
     // Párrafos con solo cursiva (subtítulos descriptivos)
     html = html.replace(/^\*(.+?)\*$/gim, '<p><em>$1</em></p>');
-    
+
     // Bold
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    
+
     // Italic (que no sea línea completa)
     html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    
+
     // Links
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
       const isExternal = url.startsWith('http');
       const target = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
       return `<a href="${url}"${target}>${text}</a>`;
     });
-    
+
     // Code inline
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-    
+
     return html;
   }
 
@@ -378,7 +379,7 @@ function renderMarkdown(markdown) {
   // Primero marcar items
   html = html.replace(/^- (.+)$/gim, '<li>$1</li>');
   html = html.replace(/^\d+\. (.+)$/gim, '<li>$1</li>');
-  
+
   // Luego envolver en ul/ol
   html = html.replace(/(<li>.*?<\/li>\s*)+/gs, (match) => {
     return `<ul>${match}</ul>`;
@@ -407,7 +408,7 @@ function renderMarkdown(markdown) {
   html = html.replace(/(<\/ul>)<\/p>/g, '$1');
   html = html.replace(/<p>(<blockquote)/g, '$1');
   html = html.replace(/(<\/blockquote>)<\/p>/g, '$1');
-  
+
   // Limpiar br duplicados
   html = html.replace(/(<br\s*\/?>\s*){2,}/g, '<br>');
 

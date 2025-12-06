@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { Button, Input, SectionTitle } from './ui';
 import HolographicCard from './effects/HolographicCard';
+import { Mail, MapPin, Clock, Send, Check } from 'lucide-react';
 
-// 🚀 ACTUALIZADO: Usar nuestra propia API
 const CONTACT_ENDPOINT = '/api/contact';
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [showModal, setShowModal] = useState(false);
 
@@ -31,7 +31,6 @@ const Contact = () => {
       return;
     }
 
-    // Validaciones adicionales
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       setStatus('error');
       setErrorMsg('Por favor completa todos los campos obligatorios');
@@ -67,44 +66,45 @@ const Contact = () => {
     }
   };
 
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: 'Email',
+      value: 'contacto@kainet.mx',
+      link: 'mailto:contacto@kainet.mx'
+    },
+    {
+      icon: MapPin,
+      title: 'Ubicación',
+      value: 'Ciudad de México',
+      link: null
+    },
+    {
+      icon: Clock,
+      title: 'Respuesta',
+      value: '< 24 horas',
+      link: null
+    }
+  ];
+
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Cabecera */}
-        <div className="mb-8 md:mb-10 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        {/* Hero Section */}
+        <div className="text-center mb-10 md:mb-14">
           <SectionTitle kanji="話">Hablemos</SectionTitle>
-          <p className="mx-auto mt-4 max-w-2xl text-gray-300">
-            ¿Tienes una idea, un reto técnico o quieres colaborar? Cuéntanos tu proyecto y te responderemos pronto
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-4 mb-4 text-shadow-lg">
+            ¿Tienes un proyecto en mente?
+          </h1>
+          <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed text-shadow-sm">
+            Cuéntanos tu idea o reto técnico. Nuestro equipo te responderá en menos de 24 horas para explorar cómo podemos ayudarte.
           </p>
         </div>
 
-        {/* Layout */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Lado izquierdo */}
-          <div className="flex">
-            <HolographicCard className="w-full">
-              <div className="flex flex-col items-center text-center">
-                <img
-                  src="/logoletras.svg"
-                  alt="KAINET"
-                  className="h-16 w-auto mb-4"
-                  loading="lazy"
-                />
-                <h3 className="text-xl font-semibold text-[var(--text-primary)]">Pongamos manos a la obra</h3>
-                <p className="mt-3 text-[var(--text-secondary)]">
-                  En KAINET diseñamos soluciones robustas centradas en la automatización inteligente y el desarrollo de vanguardia
-                </p>
-              </div>
-            </HolographicCard>
-          </div>
-
-          {/* Formulario */}
-          <div className="flex">
-            <HolographicCard className="w-full">
-              <form
-                onSubmit={handleSubmit}
-                noValidate
-              >
+        {/* Centered Form Card */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <HolographicCard className="p-6 sm:p-8">
+            <form onSubmit={handleSubmit} noValidate>
               {/* Honeypot */}
               <input
                 type="text"
@@ -116,8 +116,8 @@ const Contact = () => {
                 autoComplete="off"
               />
 
-              {/* Nombre */}
-              <div className="mb-5">
+              {/* Name & Email Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
                 <Input
                   id="name"
                   name="name"
@@ -128,10 +128,6 @@ const Contact = () => {
                   label="Tu Nombre"
                   placeholder="Ej. Marco Domínguez"
                 />
-              </div>
-
-              {/* Email */}
-              <div className="mb-5">
                 <Input
                   id="email"
                   name="email"
@@ -144,7 +140,7 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Asunto (opcional) */}
+              {/* Subject */}
               <div className="mb-5">
                 <Input
                   id="subject"
@@ -158,7 +154,7 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Mensaje */}
+              {/* Message */}
               <div className="mb-6">
                 <Input
                   id="message"
@@ -174,36 +170,57 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Botón */}
-              <div className="flex items-center justify-end">
-                <Button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  loading={status === 'sending'}
-                  variant="primary"
-                >
-                  Enviar
-                </Button>
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                disabled={status === 'sending'}
+                loading={status === 'sending'}
+                variant="primary"
+                className="w-full sm:w-auto"
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Enviar Mensaje
+              </Button>
+            </form>
+          </HolographicCard>
+        </div>
+
+        {/* Contact Info Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto">
+          {contactInfo.map((info, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--cyan-neon)]/30 transition-colors"
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--cyan-neon)]/10 flex items-center justify-center">
+                <info.icon className="w-5 h-5 text-[var(--cyan-neon)]" />
               </div>
-              </form>
-            </HolographicCard>
-          </div>
+              <div>
+                <p className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider">{info.title}</p>
+                {info.link ? (
+                  <a href={info.link} className="text-white hover:text-[var(--cyan-neon)] transition-colors font-medium">
+                    {info.value}
+                  </a>
+                ) : (
+                  <p className="text-white font-medium">{info.value}</p>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* MODAL de confirmación */}
+      {/* Success Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
-          <HolographicCard className="max-w-sm w-full mx-4">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4">
+          <HolographicCard className="max-w-sm w-full">
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/20 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-[var(--cyan-neon)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Check className="w-8 h-8 text-[var(--cyan-neon)]" />
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">¡Mensaje enviado! ✓</h3>
+              <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">¡Mensaje enviado!</h3>
               <p className="text-[var(--text-secondary)] mb-2">
                 Gracias por escribirnos. Te responderemos pronto.
               </p>

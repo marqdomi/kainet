@@ -16,10 +16,23 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS headers - restringido a kainet.mx
+  const allowedOrigins = [
+    'https://kainet.mx',
+    'https://www.kainet.mx',
+    'http://localhost:3000',
+    'http://localhost:5173'
+  ];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -33,7 +46,7 @@ export default async function handler(req, res) {
     const token = req.method === 'GET' ? req.query.token : req.body.token;
 
     if (!token) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Token requerido',
         message: 'No se proporcionó token de confirmación'
       });
