@@ -58,14 +58,14 @@ const NotFoundPage = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             to="/"
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--cyan-neon)] text-black font-semibold rounded-lg hover:bg-[var(--cyan-neon-hover)] transition-all duration-300 hover:scale-105"
+                            className="btn btn-md btn-primary"
                         >
                             <Home className="w-5 h-5" />
                             Ir al Inicio
                         </Link>
                         <button
                             onClick={() => window.history.back()}
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--cyan-neon)]/50 text-[var(--cyan-neon)] font-semibold rounded-lg hover:bg-[var(--cyan-neon)]/10 transition-all duration-300"
+                            className="btn btn-md btn-accent"
                         >
                             <ArrowLeft className="w-5 h-5" />
                             Volver Atrás

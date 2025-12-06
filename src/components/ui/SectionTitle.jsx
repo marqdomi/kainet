@@ -34,7 +34,7 @@ const SectionTitle = ({
 
   return (
     <Component
-      className={`section-title text-shadow-lg ${className}`}
+      className={`section-title ${className}`}
       {...props}
     >
       {showKanji && kanjiData && (

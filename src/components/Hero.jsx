@@ -73,10 +73,6 @@ const Hero = () => {
           >
             <h1
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
-              style={{
-                textShadow: '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3)',
-                WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.2)'
-              }}
             >
               <VariableProximity
                 label="Construimos SaaS de Clase Mundial"
@@ -95,10 +91,6 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-6 sm:mb-8"
-            style={{
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
-              WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)'
-            }}
           >
             <VariableProximity
               label="para el Mercado Latino"
@@ -116,10 +108,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
+            className="text-base sm:text-lg md:text-xl text-body max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
           >
-            Combinamos <span className="text-white font-semibold">gamificación extrema</span> con{' '}
-            <span className="text-white font-semibold">accesibilidad universal</span>.
+            Combinamos <span className="text-heading font-semibold">gamificación extrema</span> con{' '}
+            <span className="text-heading font-semibold">accesibilidad universal</span>.
             Nuestro producto insignia, <span className="text-[var(--cyan-neon)] font-bold">KAIDO</span>,
             está transformando el aprendizaje corporativo.
           </motion.p>
@@ -133,14 +125,14 @@ const Hero = () => {
           >
             <a
               href="/kaido"
-              className="group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[var(--cyan-neon)] text-[var(--gray-900)] rounded-lg font-bold text-base sm:text-lg shadow-lg shadow-[var(--cyan-neon)]/30 hover:shadow-[var(--cyan-neon)]/50 hover:scale-105 transition-all duration-300 text-center"
+              className="btn btn-lg btn-primary w-full sm:w-auto text-center group"
             >
               Explorar KAIDO
               <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
             </a>
             <a
               href="#about"
-              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white/5 backdrop-blur-sm border-2 border-white/20 text-white rounded-lg font-bold text-base sm:text-lg hover:bg-white/10 hover:border-white/30 transition-all duration-300 text-center"
+              className="btn btn-lg btn-secondary w-full sm:w-auto text-center"
             >
               El Manifiesto
             </a>

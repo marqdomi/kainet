@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from './ui';
-import HolographicCard from './effects/HolographicCard';
+import { Button, Card } from './ui';
 import GlitchText from './effects/GlitchText';
 
 const KaidoSpotlight = () => {
@@ -12,7 +11,7 @@ const KaidoSpotlight = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--cyan-neon)]/5 to-transparent opacity-20 pointer-events-none" />
 
             <div className="max-w-7xl mx-auto">
-                <HolographicCard className="relative border-[var(--cyan-neon)]/30 bg-black/40 backdrop-blur-xl">
+                <Card variant="featured" padding="lg" className="relative">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                         {/* Content Side */}
@@ -116,7 +115,7 @@ const KaidoSpotlight = () => {
                         </div>
 
                     </div>
-                </HolographicCard>
+                </Card>
             </div>
         </section>
     );

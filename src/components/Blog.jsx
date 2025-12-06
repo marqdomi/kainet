@@ -1,5 +1,6 @@
 // src/components/Blog.jsx
 import React, { useState, useMemo, useEffect } from 'react';
+import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { getBlogPosts, getCategories } from '../lib/supabase';
@@ -212,21 +213,21 @@ const NewsletterCTA = () => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#00E5FF]/10 to-transparent p-10 text-center mt-16"
+      className="relative overflow-hidden rounded-3xl card-featured border p-10 text-center mt-16"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00E5FF]/20 rounded-full blur-3xl opacity-30" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--cyan-neon)]/20 rounded-full blur-3xl opacity-30" />
 
       <div className="relative z-10">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+        <h3 className="text-2xl md:text-3xl font-bold text-heading mb-3">
           No te pierdas las novedades
         </h3>
-        <p className="text-gray-300 mb-6 max-w-xl mx-auto">
+        <p className="text-body mb-6 max-w-xl mx-auto">
           Suscríbete a nuestra newsletter y recibe artículos sobre IA,
           automatización y desarrollo directamente en tu inbox.
         </p>
 
         {status === 'success' ? (
-          <div className="text-[#00E5FF] font-medium">
+          <div className="text-[var(--cyan-neon)] font-medium">
             {message}
           </div>
         ) : (
@@ -237,7 +238,7 @@ const NewsletterCTA = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Tu nombre (opcional)"
               disabled={status === 'sending'}
-              className="w-full px-4 py-3 rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 disabled:opacity-60"
+              className="w-full px-4 py-3 rounded-lg bg-[var(--card-bg)] text-heading placeholder:text-muted border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--cyan-neon)]/60 disabled:opacity-60"
             />
             <div className="flex gap-3">
               <input
@@ -247,12 +248,12 @@ const NewsletterCTA = () => {
                 placeholder="tu@email.com *"
                 required
                 disabled={status === 'sending'}
-                className="flex-1 px-4 py-3 rounded-lg bg-black/40 text-white placeholder:text-gray-500 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#00E5FF]/60 disabled:opacity-60"
+                className="flex-1 px-4 py-3 rounded-lg bg-[var(--card-bg)] text-heading placeholder:text-muted border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--cyan-neon)]/60 disabled:opacity-60"
               />
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="btn-kainet px-6 py-3 disabled:opacity-60 whitespace-nowrap"
+                className="btn btn-md btn-primary disabled:opacity-60 whitespace-nowrap"
               >
                 {status === 'sending' ? 'Enviando...' : 'Suscribirse'}
               </button>
@@ -275,6 +276,7 @@ const Blog = () => {
   const [categories, setCategories] = useState(defaultCategories);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const postsPerPage = 6;
 
   // 🚀 Cargar posts desde Supabase
@@ -314,11 +316,25 @@ const Blog = () => {
     [posts]
   );
 
-  // 🚀 OPTIMIZADO: Filtrar y paginar posts
+  // 🚀 OPTIMIZADO: Filtrar y paginar posts (con búsqueda)
   const { paginatedPosts, totalPages } = useMemo(() => {
-    const filtered = posts.filter((p) =>
-      !p.featured && (selectedCategory === 'Todos' || p.category === selectedCategory)
-    );
+    const searchLower = searchQuery.toLowerCase().trim();
+
+    const filtered = posts.filter((p) => {
+      // Skip featured
+      if (p.featured) return false;
+
+      // Category filter
+      const categoryMatch = selectedCategory === 'Todos' || p.category === selectedCategory;
+
+      // Search filter
+      const searchMatch = !searchLower ||
+        p.title.toLowerCase().includes(searchLower) ||
+        p.excerpt?.toLowerCase().includes(searchLower) ||
+        p.author?.toLowerCase().includes(searchLower);
+
+      return categoryMatch && searchMatch;
+    });
 
     const startIndex = (currentPage - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
@@ -326,11 +342,16 @@ const Blog = () => {
     const total = Math.ceil(filtered.length / postsPerPage);
 
     return { paginatedPosts: paginated, totalPages: total };
-  }, [posts, selectedCategory, currentPage]);
+  }, [posts, selectedCategory, currentPage, searchQuery]);
 
-  // Resetear página cuando cambie la categoría
+  // Resetear página cuando cambie la categoría o búsqueda
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
     setCurrentPage(1);
   };
 
@@ -354,7 +375,7 @@ const Blog = () => {
           <div className="text-red-400 mb-4">{error}</div>
           <button
             onClick={() => window.location.reload()}
-            className="btn-kainet"
+            className="btn btn-md btn-primary"
           >
             Reintentar
           </button>
@@ -387,6 +408,29 @@ const Blog = () => {
 
         {/* ===== FEATURED POST ===== */}
         {featuredPost && <FeaturedPost post={featuredPost} />}
+
+        {/* ===== SEARCH BAR ===== */}
+        <div className="mb-6">
+          <div className="relative max-w-md mx-auto sm:mx-0">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Buscar artículos..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-[#00E5FF]/50 focus:ring-1 focus:ring-[#00E5FF]/30 transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                aria-label="Limpiar búsqueda"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
 
         {/* ===== CATEGORY FILTER ===== */}
         <CategoryFilter
@@ -428,8 +472,8 @@ const Blog = () => {
                       key={page}
                       onClick={() => setCurrentPage(page)}
                       className={`w-10 h-10 rounded-lg transition-all ${currentPage === page
-                          ? 'bg-[#00E5FF] text-black font-semibold'
-                          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
+                        ? 'bg-[#00E5FF] text-black font-semibold'
+                        : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                         }`}
                     >
                       {page}

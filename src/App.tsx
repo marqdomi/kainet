@@ -6,6 +6,7 @@ import MainLayout from './layouts/MainLayout';
 import PageTransition from './components/effects/PageTransition';
 import ErrorBoundary from './components/ErrorBoundary';
 import { EasterEggProvider, useEasterEggContext } from './contexts/EasterEggContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { features } from './config/features';
 
 // Pages
@@ -26,9 +27,14 @@ const MatrixRain = lazy(() => import('./components/effects/MatrixRain'));
 const ToriiAnimation = lazy(() => import('./components/effects/ToriiAnimation'));
 const SakuraPetals = lazy(() => import('./components/effects/SakuraPetals'));
 const Fireworks = lazy(() => import('./components/effects/Fireworks'));
+const CookieConsent = lazy(() => import('./components/CookieConsent'));
 
-// FloatingLines background (global)
-import FloatingLines from './components/effects/FloatingLines';
+// Enterprise Background - Static gradient (replaces FloatingLines for better performance)
+import EnterpriseBackground from './components/effects/EnterpriseBackground';
+import './components/effects/EnterpriseBackground.css';
+
+// FloatingLines - kept for legacy/optional use (commented out for performance)
+// import FloatingLines from './components/effects/FloatingLines';
 
 const AppContent = () => {
   const {
@@ -79,29 +85,11 @@ const AppContent = () => {
 
   return (
     <>
-      {/* Floating Lines Background - Global - Behind everything */}
-      <div style={{ position: 'fixed', inset: 0, zIndex: -1, pointerEvents: 'none' }}>
-        <FloatingLines
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={5} // Optimized for performance (same count for all waves)
-          lineDistance={5} // Optimized for performance (same distance for all waves)
-          interactive={false} // Disabled for better performance and fluidity
-          parallax={false} // Disabled for better performance and fluidity
-          animationSpeed={0.8} // Slightly slower animation
-        />
-        {/* Dark overlay to reduce background intensity and improve text legibility */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)',
-            pointerEvents: 'none'
-          }}
-        />
-      </div>
+      {/* Enterprise Background - Static gradient for professional look */}
+      <EnterpriseBackground />
 
-      {/* Conditionally wrap with PageTransition based on feature flag */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      {/* Main content with proper z-index */}
+      <div className="app-content-wrapper">
         {features.pageTransitions ? (
           <PageTransition duration={600}>
             {RoutesContent}
@@ -124,6 +112,11 @@ const AppContent = () => {
           {specialDateEffect === 'fireworks' && <Fireworks active={true} />}
         </Suspense>
       )}
+
+      {/* Cookie Consent Banner - GDPR Compliance */}
+      <Suspense fallback={null}>
+        <CookieConsent />
+      </Suspense>
     </>
   );
 };
@@ -132,11 +125,13 @@ const App = () => {
   return (
     <ErrorBoundary>
       <HelmetProvider>
-        <BrowserRouter>
-          <EasterEggProvider>
-            <AppContent />
-          </EasterEggProvider>
-        </BrowserRouter>
+        <ThemeProvider>
+          <BrowserRouter>
+            <EasterEggProvider>
+              <AppContent />
+            </EasterEggProvider>
+          </BrowserRouter>
+        </ThemeProvider>
       </HelmetProvider>
     </ErrorBoundary>
   );

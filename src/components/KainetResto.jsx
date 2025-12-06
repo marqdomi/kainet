@@ -105,13 +105,13 @@ const KainetResto = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setShowDemo(true)}
-                className="btn-kainet px-8 py-3.5"
+                className="btn btn-lg btn-primary"
               >
                 Ver Demo en Vivo
               </button>
               <a
                 href="#contact"
-                className="btn-kainet--outline px-8 py-3.5"
+                className="btn btn-lg btn-accent"
               >
                 Solicitar Cotización
               </a>
@@ -223,12 +223,12 @@ const KainetResto = () => {
               con Kainet Resto. Agenda una demo personalizada sin compromiso.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#contact" className="btn-kainet px-8 py-3.5">
+              <a href="#contact" className="btn btn-lg btn-primary">
                 Agenda tu Demo
               </a>
               <a
                 href="mailto:contacto@kainet.mx?subject=Consulta Kainet Resto"
-                className="btn-kainet--outline px-8 py-3.5"
+                className="btn btn-lg btn-accent"
               >
                 Contactar Ventas
               </a>

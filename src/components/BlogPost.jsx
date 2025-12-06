@@ -82,7 +82,7 @@ const BlogPost = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-heading mb-4">
             {error || 'Post no encontrado'}
           </h2>
           <a
@@ -121,12 +121,12 @@ const BlogPost = () => {
         </span>
 
         {/* Título */}
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-heading mb-6 leading-tight">
           {post.title}
         </h1>
 
         {/* Meta info */}
-        <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-8">
+        <div className="flex flex-wrap items-center gap-4 text-muted text-sm mb-8">
           <div className="flex items-center gap-2">
             <svg
               className="w-5 h-5"
@@ -201,7 +201,7 @@ const BlogPost = () => {
       >
         {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed italic border-l-4 border-cyan-400 pl-6">
+          <p className="text-xl text-body mb-12 leading-relaxed italic border-l-4 border-cyan-400 pl-6">
             {post.excerpt}
           </p>
         )}
@@ -209,20 +209,20 @@ const BlogPost = () => {
         {/* Contenido principal - renderizar markdown como HTML */}
         <div
           className="prose prose-invert prose-lg max-w-none
-            prose-headings:text-white prose-headings:font-bold
+            prose-headings:text-heading prose-headings:font-bold
             prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-12
             prose-h2:text-3xl prose-h2:mb-4 prose-h2:mt-10
             prose-h3:text-2xl prose-h3:mb-3 prose-h3:mt-8
-            prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+            prose-p:text-body prose-p:leading-relaxed prose-p:mb-6
             prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:text-cyan-300
-            prose-strong:text-white prose-strong:font-bold
-            prose-ul:text-gray-300 prose-ul:my-6
-            prose-ol:text-gray-300 prose-ol:my-6
+            prose-strong:text-heading prose-strong:font-bold
+            prose-ul:text-body prose-ul:my-6
+            prose-ol:text-body prose-ol:my-6
             prose-li:mb-2
             prose-code:text-cyan-400 prose-code:bg-cyan-400/10 prose-code:px-2 prose-code:py-1 prose-code:rounded
-            prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800
+            prose-pre:bg-[var(--card-bg)] prose-pre:border prose-pre:border-[var(--border-color)]
             prose-blockquote:border-l-4 prose-blockquote:border-cyan-400 prose-blockquote:pl-6 prose-blockquote:italic
-            prose-hr:border-gray-800 prose-hr:my-12
+            prose-hr:border-[var(--border-color)] prose-hr:my-12
           "
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderMarkdown(post.content)) }}
         />
@@ -236,7 +236,7 @@ const BlogPost = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="max-w-6xl mx-auto px-6 mt-20"
         >
-          <h2 className="text-3xl font-bold text-white mb-8">
+          <h2 className="text-3xl font-bold text-heading mb-8">
             Artículos Relacionados
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -246,7 +246,7 @@ const BlogPost = () => {
                 href={`/blog/${relatedPost.slug}`}
                 className="group"
               >
-                <div className="bg-[#0a0a0a] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
+                <div className="card-default border rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
                   <img
                     src={relatedPost.image}
                     alt={relatedPost.title}
@@ -256,13 +256,13 @@ const BlogPost = () => {
                     <span className="text-xs text-cyan-400 font-medium">
                       {relatedPost.category}
                     </span>
-                    <h3 className="text-lg font-bold text-white mt-2 mb-3 group-hover:text-cyan-400 transition-colors">
+                    <h3 className="text-lg font-bold text-heading mt-2 mb-3 group-hover:text-cyan-400 transition-colors">
                       {relatedPost.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-4 line-clamp-2">
+                    <p className="text-sm text-muted mb-4 line-clamp-2">
                       {relatedPost.excerpt}
                     </p>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-muted">
                       {relatedPost.readTime}
                     </div>
                   </div>
@@ -280,17 +280,17 @@ const BlogPost = () => {
         transition={{ duration: 0.5, delay: 0.6 }}
         className="max-w-4xl mx-auto px-6 mt-20 text-center"
       >
-        <div className="bg-gradient-to-r from-cyan-400/10 to-blue-500/10 border border-cyan-400/30 rounded-2xl p-12">
-          <h3 className="text-2xl font-bold text-white mb-4">
+        <div className="card-featured border rounded-2xl p-12">
+          <h3 className="text-2xl font-bold text-heading mb-4">
             ¿Te gustó este artículo?
           </h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-body mb-8 max-w-2xl mx-auto">
             Suscríbete a nuestro newsletter para recibir más contenido sobre IA,
             automatización y desarrollo de prototipos técnicos.
           </p>
           <a
             href="/contact"
-            className="inline-block px-8 py-4 bg-cyan-400 text-black font-bold rounded-lg hover:bg-cyan-300 transition-all duration-300 hover:scale-105"
+            className="btn btn-lg btn-primary"
           >
             Contactar a KAINET
           </a>

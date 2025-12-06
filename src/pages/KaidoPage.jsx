@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Button, SectionTitle, Badge } from '../components/ui';
-import HolographicCard from '../components/effects/HolographicCard';
+import { Button, SectionTitle, Badge, Card } from '../components/ui';
 import GlitchText from '../components/effects/GlitchText';
 import SEO from '../components/SEO';
 import { Gamepad2, Accessibility, Building2, Palette, BookOpen, BarChart3, Handshake, Check, X, Star, Rocket } from 'lucide-react';
@@ -70,15 +69,11 @@ const KaidoPage = () => {
                                 </GlitchText>
                             </h1>
                             <p
-                                className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8 relative"
-                                style={{
-                                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
-                                    WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)'
-                                }}
+                                className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8"
                             >
                                 "No construimos software; edificamos portales digitales."
                             </p>
-                            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed text-shadow-md">
+                            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed">
                                 La solución definitiva a la paradoja de la inclusión.
                                 <br />
                                 <span className="text-white">Gamificación extrema</span> + <span className="text-white">Accesibilidad universal</span>.
@@ -106,7 +101,7 @@ const KaidoPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div>
                                 <SectionTitle kanji="盾">El Problema</SectionTitle>
-                                <h3 className="text-3xl font-bold text-white mb-6 text-shadow-lg">La Paradoja de la Inclusión</h3>
+                                <h3 className="text-3xl font-bold text-white mb-6">La Paradoja de la Inclusión</h3>
                                 <div className="space-y-4 text-[var(--text-secondary)]">
                                     <p>
                                         En el mercado actual de software educativo, existe una división fundamental:
@@ -130,7 +125,7 @@ const KaidoPage = () => {
                                 </div>
                             </div>
 
-                            <HolographicCard className="bg-black/40 backdrop-blur-md border-[var(--cyan-neon)]/20">
+                            <Card variant="featured" hover padding="lg">
                                 <div className="text-center space-y-6 py-8">
                                     <h3 className="text-2xl font-bold text-[var(--cyan-neon)]">La Solución KAIDO</h3>
                                     <div className="flex justify-center">
@@ -141,7 +136,7 @@ const KaidoPage = () => {
                                         <span className="font-bold text-[var(--purple-neon)]">Diversión</span> y <span className="font-bold text-[var(--purple-neon)]">Inclusión</span> conviven.
                                     </p>
                                 </div>
-                            </HolographicCard>
+                            </Card>
                         </div>
                     </div>
                 </section>
@@ -151,8 +146,8 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="画">En Acción</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Experiencia Visual</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
+                            <h2 className="text-4xl font-bold text-white mt-4">Experiencia Visual</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Interfaz intuitiva que combina gamificación extrema con accesibilidad total.
                             </p>
                         </div>
@@ -165,7 +160,7 @@ const KaidoPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <HolographicCard className="overflow-hidden group cursor-pointer hover:border-[var(--cyan-neon)]/50 transition-all">
+                                <Card variant="default" hover padding="none" className="overflow-hidden group cursor-pointer">
                                     <div className="relative aspect-video overflow-hidden">
                                         <img
                                             src="/kaido/screenshots/dashboard.png"
@@ -178,7 +173,7 @@ const KaidoPage = () => {
                                             <p className="text-sm text-[var(--text-secondary)]">Sistema de XP, niveles y logros</p>
                                         </div>
                                     </div>
-                                </HolographicCard>
+                                </Card>
                             </motion.div>
 
                             {/* Course Builder Screenshot */}
@@ -188,7 +183,7 @@ const KaidoPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.2 }}
                             >
-                                <HolographicCard className="overflow-hidden group cursor-pointer hover:border-[var(--purple-neon)]/50 transition-all">
+                                <Card variant="default" hover padding="none" className="overflow-hidden group cursor-pointer">
                                     <div className="relative aspect-video overflow-hidden">
                                         <img
                                             src="/kaido/screenshots/course-builder.png"
@@ -201,7 +196,7 @@ const KaidoPage = () => {
                                             <p className="text-sm text-[var(--text-secondary)]">Herramienta profesional de autoría</p>
                                         </div>
                                     </div>
-                                </HolographicCard>
+                                </Card>
                             </motion.div>
 
                             {/* Accessibility Features Screenshot - Full Width */}
@@ -212,7 +207,7 @@ const KaidoPage = () => {
                                 transition={{ duration: 0.6, delay: 0.4 }}
                                 className="lg:col-span-2"
                             >
-                                <HolographicCard className="overflow-hidden group cursor-pointer hover:border-[var(--cyan-neon)]/50 transition-all">
+                                <Card variant="featured" hover padding="none" className="overflow-hidden group cursor-pointer">
                                     <div className="relative aspect-[21/9] overflow-hidden">
                                         <img
                                             src="/kaido/screenshots/accessibility.png"
@@ -230,7 +225,7 @@ const KaidoPage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </HolographicCard>
+                                </Card>
                             </motion.div>
                         </div>
 
@@ -253,7 +248,7 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="力">Capacidades</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Todo lo que necesitas</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4">Todo lo que necesitas</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -265,7 +260,7 @@ const KaidoPage = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                 >
-                                    <HolographicCard className="h-full hover:border-[var(--cyan-neon)]/50 transition-colors group">
+                                    <Card variant="default" hover padding="lg" className="h-full group">
                                         <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
                                             <feature.icon className="w-10 h-10 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                                         </div>
@@ -273,7 +268,7 @@ const KaidoPage = () => {
                                         <p className="text-[var(--text-secondary)]">
                                             {feature.description}
                                         </p>
-                                    </HolographicCard>
+                                    </Card>
                                 </motion.div>
                             ))}
                         </div>
@@ -283,7 +278,7 @@ const KaidoPage = () => {
                 {/* Tech Stack */}
                 <section className="py-20 px-6 border-t border-[var(--gray-800)]">
                     <div className="max-w-7xl mx-auto text-center">
-                        <h3 className="text-2xl font-bold text-[var(--text-secondary)] mb-12 uppercase tracking-widest text-shadow-md">
+                        <h3 className="text-2xl font-bold text-[var(--text-secondary)] mb-12 uppercase tracking-widest">
                             Construido con Tecnología de Punta
                         </h3>
                         <div className="flex flex-wrap justify-center gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
@@ -301,7 +296,7 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="声">Testimonios</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Lo que dicen nuestros early adopters</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4">Lo que dicen nuestros early adopters</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -332,18 +327,18 @@ const KaidoPage = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                 >
-                                    <HolographicCard className="h-full flex flex-col">
+                                    <Card variant="default" hover padding="lg" className="h-full flex flex-col">
                                         <div className="flex gap-1 mb-4">
                                             {[...Array(testimonial.rating)].map((_, i) => (
                                                 <Star key={i} className="w-4 h-4 text-[var(--cyan-neon)] fill-[var(--cyan-neon)]" />
                                             ))}
                                         </div>
                                         <p className="text-[var(--text-secondary)] italic mb-6 flex-grow">"{testimonial.quote}"</p>
-                                        <div className="border-t border-[var(--gray-700)] pt-4">
+                                        <div className="border-t border-white/[0.08] pt-4">
                                             <p className="text-white font-semibold">{testimonial.author}</p>
                                             <p className="text-sm text-[var(--text-secondary)]">{testimonial.role}</p>
                                         </div>
-                                    </HolographicCard>
+                                    </Card>
                                 </motion.div>
                             ))}
                         </div>
@@ -355,15 +350,15 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="価">Pricing</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Acceso Anticipado</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
+                            <h2 className="text-4xl font-bold text-white mt-4">Acceso Anticipado</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Kaido está actualmente en fase de Early Access. Únete a empresas pioneras en transformación educativa.
                             </p>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                             {/* Starter Plan */}
-                            <HolographicCard className="text-center">
+                            <Card variant="default" hover padding="lg" className="text-center">
                                 <div className="py-8">
                                     <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
                                     <p className="text-sm text-[var(--text-secondary)] mb-6">Para pequeñas empresas</p>
@@ -398,10 +393,10 @@ const KaidoPage = () => {
                                         </Button>
                                     </Link>
                                 </div>
-                            </HolographicCard>
+                            </Card>
 
                             {/* Business Plan - Destacado */}
-                            <HolographicCard className="text-center border-[var(--cyan-neon)]/50 relative">
+                            <Card variant="featured" hover padding="lg" className="text-center relative">
                                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                                     <Badge variant="default" size="md">Más Popular</Badge>
                                 </div>
@@ -443,10 +438,10 @@ const KaidoPage = () => {
                                         </Button>
                                     </Link>
                                 </div>
-                            </HolographicCard>
+                            </Card>
 
                             {/* Enterprise Plan */}
-                            <HolographicCard className="text-center">
+                            <Card variant="default" hover padding="lg" className="text-center">
                                 <div className="py-8">
                                     <h3 className="text-2xl font-bold text-white mb-2">Enterprise</h3>
                                     <p className="text-sm text-[var(--text-secondary)] mb-6">Para grandes corporativos</p>
@@ -485,17 +480,17 @@ const KaidoPage = () => {
                                         </Button>
                                     </Link>
                                 </div>
-                            </HolographicCard>
+                            </Card>
                         </div>
 
                         {/* Early Access Note */}
                         <div className="mt-12 text-center">
-                            <HolographicCard className="inline-block px-8 py-4">
+                            <Card variant="glass" padding="sm" className="inline-block px-8 py-4">
                                 <p className="text-sm text-[var(--text-secondary)] flex items-center justify-center gap-2 flex-wrap">
                                     <Rocket className="w-4 h-4 text-[var(--cyan-neon)]" /> <span className="text-white font-semibold">Early Access Bonus:</span> Los primeros 10 clientes obtienen
                                     <span className="text-[var(--cyan-neon)]"> pricing preferencial de por vida</span>
                                 </p>
-                            </HolographicCard>
+                            </Card>
                         </div>
                     </div>
                 </section>
@@ -503,7 +498,7 @@ const KaidoPage = () => {
                 {/* CTA */}
                 <section className="py-20 px-6">
                     <div className="max-w-4xl mx-auto text-center">
-                        <HolographicCard className="py-16 bg-gradient-to-b from-[var(--gray-900)] to-[var(--purple-neon)]/10">
+                        <Card variant="elevated" padding="lg" className="py-16 bg-gradient-to-b from-[var(--gray-900)] to-[var(--purple-neon)]/10">
                             <h2 className="text-4xl font-bold text-white mb-6">
                                 ¿Listo para transformar el aprendizaje en tu empresa?
                             </h2>
@@ -515,7 +510,7 @@ const KaidoPage = () => {
                                     Contactar Ventas
                                 </Button>
                             </Link>
-                        </HolographicCard>
+                        </Card>
                     </div>
                 </section>
 

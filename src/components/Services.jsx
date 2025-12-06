@@ -2,9 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from './ui';
+import { Button, Card } from './ui';
 import { SectionTitle } from './ui';
-import HolographicCard from './effects/HolographicCard';
 
 const Services = () => {
   const services = [
@@ -18,7 +17,8 @@ const Services = () => {
         'Generación de contenido con IA',
         'Análisis predictivo y ML',
         'Integración de APIs de IA'
-      ]
+      ],
+      accent: 'var(--orange-accent)'
     },
     {
       kanji: '速',
@@ -30,7 +30,8 @@ const Services = () => {
         'Web scraping inteligente',
         'Integraciones API',
         'Notificaciones automatizadas'
-      ]
+      ],
+      accent: 'var(--purple-neon)'
     },
     {
       kanji: '創',
@@ -42,7 +43,8 @@ const Services = () => {
         'Efectos 3D interactivos',
         'Diseño responsive optimizado',
         'SEO y performance'
-      ]
+      ],
+      accent: 'var(--pink-accent)'
     }
   ];
 
@@ -51,19 +53,19 @@ const Services = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.15
       }
     }
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 12 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.4,
+        ease: [0.4, 0, 0.2, 1]
       }
     }
   };
@@ -73,10 +75,10 @@ const Services = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
           <SectionTitle kanji="技">Nuestros Servicios</SectionTitle>
@@ -98,15 +100,16 @@ const Services = () => {
               key={index}
               variants={cardVariants}
             >
-              <HolographicCard className="h-full flex flex-col card-depth min-h-0 sm:min-h-[400px] lg:min-h-[420px]">
-                {/* Kanji Icon with color variety */}
+              <Card 
+                variant="default" 
+                hover 
+                padding="lg"
+                className="h-full flex flex-col min-h-0 sm:min-h-[400px] lg:min-h-[420px]"
+              >
+                {/* Kanji Icon */}
                 <div
                   className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4 font-bold"
-                  style={{
-                    color: index === 0 ? 'var(--orange-accent)' :
-                      index === 1 ? 'var(--purple-neon)' :
-                        'var(--pink-accent)'
-                  }}
+                  style={{ color: service.accent }}
                 >
                   {service.kanji}
                 </div>
@@ -128,43 +131,34 @@ const Services = () => {
                       key={i}
                       className="flex items-start text-sm text-[var(--text-secondary)]"
                     >
-                      <span
-                        className="mr-2"
-                        style={{
-                          color: index === 0 ? 'var(--orange-accent)' :
-                            index === 1 ? 'var(--purple-neon)' :
-                              'var(--pink-accent)'
-                        }}
-                      >
-                        ✓
-                      </span>
+                      <span className="mr-2" style={{ color: service.accent }}>✓</span>
                       {feature}
                     </li>
                   ))}
                 </ul>
 
                 {/* Technologies */}
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-[var(--gray-700)]">
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/[0.08]">
                   {service.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-xs px-3 py-1 bg-[var(--gray-800)] text-[var(--cyan-neon)] rounded-full border border-[var(--gray-700)]"
+                      className="text-xs px-3 py-1 bg-white/[0.05] text-[var(--cyan-neon)] rounded-full border border-white/[0.08]"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </HolographicCard>
+              </Card>
             </motion.div>
           ))}
         </motion.div>
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
           className="text-center"
         >
           <Link to="/contact">

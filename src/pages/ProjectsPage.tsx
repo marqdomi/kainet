@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import { Badge, Button, Skeleton, SectionTitle } from '../components/ui';
-import HolographicCard from '../components/effects/HolographicCard';
+import { Badge, Button, Skeleton, SectionTitle, Card } from '../components/ui';
 import GlitchText from '../components/effects/GlitchText';
 import type { Project } from '@/types';
 
@@ -88,21 +87,21 @@ const ProjectsPage: React.FC = () => {
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <HolographicCard key={i}>
+              <Card key={i} variant="default">
                 <Skeleton variant="card" />
-              </HolographicCard>
+              </Card>
             ))}
           </div>
         )}
 
         {/* Error State */}
         {error && (
-          <HolographicCard className="text-center py-12">
+          <Card variant="default" className="text-center py-12">
             <p className="text-[var(--text-danger)] mb-4">Error al cargar proyectos: {error}</p>
             <Button onClick={fetchProjects} variant="primary">
               Reintentar
             </Button>
-          </HolographicCard>
+          </Card>
         )}
 
         {/* Projects Grid */}
@@ -114,11 +113,11 @@ const ProjectsPage: React.FC = () => {
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             {filteredProjects.length === 0 ? (
-              <HolographicCard className="col-span-full text-center py-12">
+              <Card variant="default" className="col-span-full text-center py-12">
                 <p className="text-[var(--text-secondary)] text-lg">
                   No hay proyectos en la categoría "{selectedCategory}"
                 </p>
-              </HolographicCard>
+              </Card>
             ) : (
               filteredProjects.map((project, index) => (
                 <motion.div
@@ -127,7 +126,7 @@ const ProjectsPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <HolographicCard className="h-full flex flex-col">
+                  <Card variant="default" hover className="h-full flex flex-col">
                     {/* Featured Badge */}
                     {project.featured && (
                       <div className="mb-4">
@@ -234,7 +233,7 @@ const ProjectsPage: React.FC = () => {
                         </Button>
                       )}
                     </div>
-                  </HolographicCard>
+                  </Card>
                 </motion.div>
               ))
             )}
@@ -249,7 +248,7 @@ const ProjectsPage: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="mt-16"
           >
-            <HolographicCard className="text-center py-12">
+            <Card variant="featured" padding="lg" className="text-center py-12">
               <GlitchText
                 text="¿Tienes un proyecto en mente?"
                 className="text-3xl font-bold text-[var(--text-primary)] mb-4"
@@ -263,7 +262,7 @@ const ProjectsPage: React.FC = () => {
                   Hablemos →
                 </Button>
               </Link>
-            </HolographicCard>
+            </Card>
           </motion.div>
         )}
       </div>

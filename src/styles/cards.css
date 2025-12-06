@@ -1,0 +1,484 @@
+/* ================================================
+   KAINET v3.1 - Card Design System
+   Theme-aware glassmorphic cards
+   ================================================ */
+
+/* ====================================
+   1. DARK THEME CARD STYLES (Default)
+   ==================================== */
+
+/* Default Card - Main content containers */
+.card-default {
+  background-color: rgba(17, 17, 17, 0.65);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Subtle Card - Secondary content, lower emphasis */
+.card-subtle {
+  background-color: rgba(17, 17, 17, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Featured Card - Highlighted content with cyan accent */
+.card-featured {
+  background-color: rgba(17, 17, 17, 0.7);
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 229, 255, 0.1);
+}
+
+/* Elevated Card - Higher prominence */
+.card-elevated {
+  background-color: rgba(17, 17, 17, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ====================================
+   2. HOVER STATES (Dark Theme)
+   ==================================== */
+
+.card-hover-enabled {
+  transition: 
+    transform 200ms cubic-bezier(0.0, 0.0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.0, 0.0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.0, 0.0, 0.2, 1),
+    background-color 200ms cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.card-default.card-hover-enabled:hover {
+  transform: translateY(-2px);
+  background-color: rgba(17, 17, 17, 0.75);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-subtle.card-hover-enabled:hover {
+  background-color: rgba(17, 17, 17, 0.55);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-featured.card-hover-enabled:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+.card-elevated.card-hover-enabled:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.3),
+    0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ====================================
+   3. LIGHT THEME CARD STYLES
+   ==================================== */
+
+.light-theme .card-default {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(148, 163, 184, 0.3);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.light-theme .card-subtle {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.light-theme .card-featured {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(8, 145, 178, 0.3);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(8, 145, 178, 0.15);
+}
+
+.light-theme .card-elevated {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(148, 163, 184, 0.25);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ====================================
+   4. HOVER STATES (Light Theme)
+   ==================================== */
+
+.light-theme .card-default.card-hover-enabled:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(148, 163, 184, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.1),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .card-subtle.card-hover-enabled:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.light-theme .card-featured.card-hover-enabled:hover {
+  transform: translateY(-2px);
+  border-color: rgba(8, 145, 178, 0.5);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.1),
+    0 0 15px rgba(8, 145, 178, 0.1);
+}
+
+.light-theme .card-elevated.card-hover-enabled:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.12),
+    0 6px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* ====================================
+   5. REDUCED MOTION
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .card-hover-enabled {
+    transition: none;
+  }
+  
+  .card-hover-enabled:hover {
+    transform: none;
+  }
+}
+
+/* ====================================
+   6. NAVBAR CARD STYLES
+   ==================================== */
+
+/* Dark Theme Navbar */
+.navbar-glass {
+  background-color: rgba(10, 10, 10, 0.75);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Light Theme Navbar */
+.light-theme .navbar-glass {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(148, 163, 184, 0.3);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Light theme navbar text - ensure proper contrast */
+.light-theme .navbar-glass .text-white,
+.light-theme .navbar-glass [class*="text-white"] {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .navbar-glass .link-underline {
+  color: var(--text-secondary);
+}
+
+.light-theme .navbar-glass .link-underline:hover {
+  color: var(--cyan-neon);
+}
+
+/* Mobile menu in light theme */
+.light-theme .mobile-menu-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.light-theme .mobile-menu-content .text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .mobile-menu-content a {
+  color: var(--text-secondary);
+}
+
+.light-theme .mobile-menu-content a:hover {
+  color: var(--cyan-neon);
+}
+
+/* ====================================
+   7. NAVIGATION LINKS
+   ==================================== */
+
+/* Dark Theme Navigation Links */
+.nav-link {
+  color: rgba(234, 234, 234, 0.9);
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+}
+
+/* Light Theme Navigation Links */
+.light-theme .nav-link {
+  color: var(--text-secondary);
+}
+
+.light-theme .nav-link:hover {
+  color: var(--cyan-neon);
+}
+
+/* Hamburger Icon Theme Aware */
+.hamburger-icon {
+  color: #FFFFFF;
+}
+
+.light-theme .hamburger-icon {
+  color: var(--text-primary);
+}
+
+/* Mobile Menu Content */
+.mobile-menu-content {
+  background-color: #0A0A0A;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ====================================
+   8. THEME-AWARE TEXT UTILITIES
+   ==================================== */
+
+/* Primary heading text - adapts to theme */
+.text-heading {
+  color: #FFFFFF;
+}
+
+.light-theme .text-heading {
+  color: var(--text-primary);
+}
+
+/* Body text - adapts to theme */
+.text-body {
+  color: rgba(234, 234, 234, 0.9);
+}
+
+.light-theme .text-body {
+  color: var(--text-secondary);
+}
+
+/* Muted text - lower emphasis */
+.text-muted {
+  color: rgba(234, 234, 234, 0.7);
+}
+
+.light-theme .text-muted {
+  color: var(--text-muted);
+}
+
+/* Force text-white to adapt in light theme contexts */
+.light-theme .card-default .text-white,
+.light-theme .card-subtle .text-white,
+.light-theme .card-featured .text-white,
+.light-theme .card-elevated .text-white {
+  color: var(--text-primary) !important;
+}
+
+/* Also for text-gray variants inside cards */
+.light-theme .card-default .text-gray-300,
+.light-theme .card-subtle .text-gray-300,
+.light-theme .card-featured .text-gray-300,
+.light-theme .card-elevated .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+.light-theme .card-default .text-gray-400,
+.light-theme .card-subtle .text-gray-400,
+.light-theme .card-featured .text-gray-400,
+.light-theme .card-elevated .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+/* ====================================
+   9. SECTION CONTAINERS (Light Theme)
+   ==================================== */
+
+/* Generic section that needs adaptation */
+.section-container {
+  color: #FFFFFF;
+}
+
+.light-theme .section-container {
+  color: var(--text-primary);
+}
+
+/* Component-specific overrides for headings */
+.light-theme h1.text-white,
+.light-theme h2.text-white,
+.light-theme h3.text-white,
+.light-theme h4.text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme p.text-white,
+.light-theme span.text-white {
+  color: var(--text-primary) !important;
+}
+
+/* Fix white text on hover states */
+.light-theme .hover\:text-white:hover {
+  color: var(--cyan-neon) !important;
+}
+
+/* ====================================
+   10. BLOG & PROSE LIGHT THEME
+   ==================================== */
+
+.light-theme .prose-headings\:text-white h1,
+.light-theme .prose-headings\:text-white h2,
+.light-theme .prose-headings\:text-white h3,
+.light-theme .prose-headings\:text-white h4,
+.light-theme .prose-headings\:text-white h5,
+.light-theme .prose-headings\:text-white h6 {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .prose-strong\:text-white strong {
+  color: var(--text-primary) !important;
+}
+
+/* ====================================
+   11. BUTTON & CTA LIGHT THEME
+   ==================================== */
+
+/* Buttons with cyan background keep white text */
+.bg-\[var\(--cyan-neon\)\].text-white,
+.light-theme .bg-\[var\(--cyan-neon\)\].text-white {
+  color: #FFFFFF !important;
+}
+
+/* Primary CTA buttons */
+.light-theme .btn-primary {
+  color: #FFFFFF;
+  background-color: var(--cyan-neon);
+}
+
+/* Secondary/Ghost buttons */
+.light-theme .bg-white\/5 {
+  background-color: rgba(8, 145, 178, 0.1);
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+.light-theme .bg-white\/5.text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .border-white\/20 {
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+.light-theme .border-white\/10 {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* Hover states for ghost buttons */
+.light-theme .hover\:bg-white\/10:hover {
+  background-color: rgba(8, 145, 178, 0.15);
+}
+
+.light-theme .hover\:border-white\/30:hover {
+  border-color: rgba(8, 145, 178, 0.5);
+}
+
+/* ====================================
+   12. ICON & SVG LIGHT THEME
+   ==================================== */
+
+.light-theme svg.text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .text-white svg {
+  color: inherit;
+}
+
+/* Icon buttons */
+.light-theme .text-gray-400:hover {
+  color: var(--cyan-neon);
+}
+
+/* ====================================
+   13. COOKIE CONSENT LIGHT THEME
+   ==================================== */
+
+.light-theme .cookie-banner,
+.light-theme [class*="bg-black"][class*="backdrop-blur"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.light-theme .cookie-banner .text-white,
+.light-theme .cookie-banner h3.text-white,
+.light-theme .cookie-banner h4.text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .cookie-banner .text-gray-300,
+.light-theme .cookie-banner .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+/* ====================================
+   14. SOCIAL PROOF LIGHT THEME
+   ==================================== */
+
+.light-theme .text-white\/90 {
+  color: var(--text-primary) !important;
+  opacity: 1;
+}
+
+.light-theme .mobile-menu-content {
+  background-color: rgba(255, 255, 255, 0.98);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* Mobile Navigation Links */
+.mobile-nav-link {
+  color: #FFFFFF;
+}
+
+.mobile-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-link-active {
+  background-color: rgba(0, 229, 255, 0.1);
+  color: #00E5FF;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.light-theme .mobile-nav-link {
+  color: var(--text-primary);
+}
+
+.light-theme .mobile-nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .mobile-nav-link-active {
+  background-color: rgba(8, 145, 178, 0.1);
+  color: var(--cyan-neon);
+  border: 1px solid rgba(8, 145, 178, 0.2);
+}
+
+/* ====================================
+   8. NAVBAR LOGO
+   ==================================== */
+
+/* Light theme logo - Add filter to make it visible */
+.light-theme .navbar-logo {
+  filter: brightness(0.2) saturate(0);
+}

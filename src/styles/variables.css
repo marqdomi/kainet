@@ -47,6 +47,14 @@
   --text-secondary: #A3A3A3;
   --text-tertiary: #737373;
   --text-disabled: #525252;
+  --text-muted: #737373;
+
+  /* Card & Surface Colors (Dark Theme) */
+  --card-bg: rgba(17, 17, 17, 0.65);
+  --card-bg-elevated: rgba(17, 17, 17, 0.8);
+  --card-bg-subtle: rgba(17, 17, 17, 0.45);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.15);
 
   /* Overlays */
   --overlay-dark: rgba(10, 10, 10, 0.8);
@@ -653,4 +661,191 @@
     border-color: var(--gray-600) !important;
     border-width: 2px !important;
   }
+}
+
+/* ================================================
+   LIGHT THEME VARIABLES
+   ================================================ */
+
+.light-theme {
+  /* Background Colors - Light */
+  --black-pure: #FFFFFF;
+  --black-base: #F8FAFC;
+  --gray-950: #F1F5F9;
+  --gray-900: #E2E8F0;
+  --gray-800: #CBD5E1;
+  --gray-700: #94A3B8;
+  --gray-600: #64748B;
+  --gray-500: #475569;
+  --gray-400: #334155;
+  --gray-300: #1E293B;
+
+  /* Text Colors - Light Theme */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
+  --text-disabled: #94A3B8;
+  --text-muted: #64748B;
+
+  /* Card & Surface Colors (Light Theme) */
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-bg-elevated: rgba(255, 255, 255, 0.95);
+  --card-bg-subtle: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(148, 163, 184, 0.3);
+  --border-color-hover: rgba(148, 163, 184, 0.5);
+
+  /* Primary Colors adjusted for light theme */
+  --cyan-neon: #0891B2;
+  --cyan-bright: #06B6D4;
+  --cyan-dark: #155E75;
+  --cyan-light: #67E8F9;
+  --cyan-glow: rgba(8, 145, 178, 0.3);
+
+  /* Purple adjusted for light theme */
+  --purple-neon: #9333EA;
+  --purple-accent: #9333EA;
+  --purple-dark: #6B21A8;
+  --purple-light: #C084FC;
+
+  /* Overlays - Light Theme */
+  --overlay-dark: rgba(255, 255, 255, 0.9);
+  --overlay-glass: rgba(248, 250, 252, 0.8);
+
+  /* Glows - Light Theme */
+  --glow-cyan: rgba(8, 145, 178, 0.3);
+  --glow-purple: rgba(147, 51, 234, 0.3);
+
+  /* Selection - Light Theme */
+  --selection-bg: rgba(8, 145, 178, 0.3);
+  --selection-color: #0F172A;
+
+  /* Gradients - Light Theme */
+  --gradient-hero: linear-gradient(
+    135deg,
+    #F8FAFC 0%,
+    #E2E8F0 50%,
+    #F8FAFC 100%
+  );
+}
+
+/* Light Theme Body Styles */
+.light-theme body {
+  background-color: var(--black-base);
+  color: var(--text-primary);
+}
+
+/* Light Theme Navbar */
+.light-theme nav,
+.light-theme .navbar {
+  background-color: rgba(248, 250, 252, 0.8) !important;
+  border-color: rgba(203, 213, 225, 0.5) !important;
+}
+
+/* Light Theme Cards */
+.light-theme .card,
+.light-theme [class*="bg-black"],
+.light-theme [class*="bg-white/5"],
+.light-theme [class*="bg-white/10"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(203, 213, 225, 0.5) !important;
+}
+
+/* Light Theme Text Colors */
+.light-theme .text-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .text-gray-300,
+.light-theme .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+.light-theme .text-gray-500 {
+  color: var(--text-tertiary) !important;
+}
+
+/* Light Theme Buttons */
+.light-theme .btn-kainet,
+.light-theme [class*="bg-[#00E5FF]"],
+.light-theme [class*="bg-\\[var\\(--cyan-neon\\)\\]"] {
+  background: linear-gradient(90deg, #0891B2, #06B6D4, #0891B2) !important;
+  color: white !important;
+}
+
+/* Light Theme Borders */
+.light-theme [class*="border-white/10"],
+.light-theme [class*="border-white/20"] {
+  border-color: rgba(203, 213, 225, 0.5) !important;
+}
+
+/* Light Theme Footer */
+.light-theme footer {
+  background-color: transparent !important;
+}
+
+/* Light Theme Mobile Menu */
+.light-theme .mobile-menu-backdrop {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Light Theme Inputs */
+.light-theme input,
+.light-theme textarea,
+.light-theme select {
+  background-color: white !important;
+  border-color: rgba(203, 213, 225, 0.8) !important;
+  color: var(--text-primary) !important;
+}
+
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* Light Theme Code Blocks */
+.light-theme code,
+.light-theme pre {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+/* Light Theme Hero Section */
+.light-theme .text-kainet-white {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .text-kainet-cyan {
+  color: #0891B2 !important;
+}
+
+/* Light Theme Glassmorphism */
+.light-theme .bg-black\/40,
+.light-theme .bg-black\/50,
+.light-theme .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Light Theme Mobile Menu Panel */
+.light-theme #mobile-menu {
+  background-color: #FAFAFA !important;
+}
+
+/* Light Theme Social Proof */
+.light-theme .bg-black\/40.backdrop-blur-md {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Light Theme Badge */
+.light-theme .badge,
+.light-theme [class*="badge"] {
+  background-color: rgba(8, 145, 178, 0.1) !important;
+  color: #0891B2 !important;
+}
+
+/* Ensure dark-theme class exists for explicit dark mode */
+.dark-theme {
+  /* Inherits :root values - dark is default */
+  color-scheme: dark;
 }

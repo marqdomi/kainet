@@ -3,6 +3,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEasterEggContext } from '../contexts/EasterEggContext';
+import ThemeToggle from './ui/ThemeToggle';
 
 // Hamburger Icon Component
 const HamburgerIcon = ({ isOpen }) => (
@@ -15,7 +16,7 @@ const HamburgerIcon = ({ isOpen }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-white"
+    className="hamburger-icon"
   >
     <motion.line
       x1="3" y1="6" x2="21" y2="6"
@@ -155,9 +156,9 @@ const Navbar = () => {
               <div
                 className="
                   mt-4 rounded-2xl
-                  bg-black/40 backdrop-blur-md
-                  border border-white/10
-                  shadow-[0_2px_20px_rgba(0,0,0,0.35)]
+                  navbar-glass
+                  backdrop-blur-md
+                  border
                 "
               >
                 <div className="h-14 px-4 flex items-center justify-between">
@@ -168,7 +169,7 @@ const Navbar = () => {
                     className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
                     onClick={handleLogoClickWithNavigation}
                   >
-                    <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto" loading="eager" decoding="sync" />
+                    <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto navbar-logo" loading="eager" decoding="sync" />
                     <span className="sr-only">KAINET</span>
                   </Link>
 
@@ -178,18 +179,22 @@ const Navbar = () => {
                       <li key={link.to}>
                         <Link
                           to={link.to}
-                          className={`link-underline hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${isLinkActive(link.to) ? 'text-[#00E5FF]' : ''
+                          className={`nav-link link-underline transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${isLinkActive(link.to) ? 'text-[var(--cyan-neon)]' : ''
                             }`}
                         >
                           {link.label}
                         </Link>
                       </li>
                     ))}
+                    {/* Theme Toggle */}
+                    <li>
+                      <ThemeToggle />
+                    </li>
                   </ul>
 
                   {/* Mobile Menu Button */}
                   <button
-                    className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg"
+                    className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg mobile-menu-button"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
                     aria-expanded={isMobileMenuOpen}
@@ -226,16 +231,16 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 bg-[#0A0A0A] border-l border-white/10 md:hidden safe-area-top safe-area-bottom"
+              className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 mobile-menu-content border-l md:hidden safe-area-top safe-area-bottom"
             >
               {/* Close Button */}
               <div className="flex justify-end p-4">
                 <button
-                  className="flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg"
+                  className="flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg mobile-menu-button"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Cerrar menú"
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="hamburger-icon">
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
@@ -255,9 +260,9 @@ const Navbar = () => {
                       <Link
                         to={link.to}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block py-4 px-4 text-lg font-medium rounded-xl transition-all ${isLinkActive(link.to)
-                            ? 'bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20'
-                            : 'text-white hover:bg-white/5'
+                        className={`block py-4 px-4 text-lg font-medium rounded-xl transition-all mobile-nav-link ${isLinkActive(link.to)
+                            ? 'mobile-nav-link-active'
+                            : ''
                           }`}
                       >
                         {link.label}
@@ -269,15 +274,19 @@ const Navbar = () => {
 
               {/* Mobile Menu Footer */}
               <div className="absolute bottom-8 left-6 right-6">
-                <div className="border-t border-white/10 pt-6">
+                <div className="border-t border-current/10 pt-6 mobile-menu-footer">
+                  {/* Theme Toggle for Mobile */}
+                  <div className="flex justify-center mb-4">
+                    <ThemeToggle />
+                  </div>
                   <Link
                     to="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full py-4 px-6 bg-[#00E5FF] text-black font-bold text-center rounded-xl hover:bg-[#66F0FF] transition-colors"
+                    className="btn btn-md btn-primary btn-full"
                   >
                     Hablemos →
                   </Link>
-                  <p className="text-center text-xs text-gray-500 mt-4">
+                  <p className="text-center text-xs text-[var(--text-tertiary)] mt-4">
                     contacto@kainet.mx
                   </p>
                 </div>
