@@ -30,28 +30,16 @@
   inset: 0;
   /* Mesh gradients - very subtle color accents */
   background: 
-    /* Cyan accent - top left */
-    radial-gradient(
-      ellipse 80% 50% at 10% 20%,
-      rgba(0, 229, 255, 0.04) 0%,
-      transparent 50%
-    ),
     /* Purple accent - center right */
     radial-gradient(
       ellipse 60% 40% at 90% 40%,
-      rgba(168, 85, 247, 0.03) 0%,
-      transparent 50%
-    ),
-    /* Cyan accent - bottom center */
-    radial-gradient(
-      ellipse 70% 50% at 50% 100%,
-      rgba(0, 229, 255, 0.03) 0%,
+      rgba(168, 85, 247, 0.02) 0%,
       transparent 50%
     ),
     /* Subtle warm accent - adds depth */
     radial-gradient(
       ellipse 40% 30% at 30% 70%,
-      rgba(255, 107, 53, 0.02) 0%,
+      rgba(255, 107, 53, 0.015) 0%,
       transparent 50%
     );
 }

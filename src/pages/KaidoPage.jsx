@@ -100,7 +100,7 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div>
-                                <SectionTitle kanji="盾">El Problema</SectionTitle>
+                                <SectionTitle>El Problema</SectionTitle>
                                 <h3 className="text-3xl font-bold text-white mb-6">La Paradoja de la Inclusión</h3>
                                 <div className="space-y-4 text-[var(--text-secondary)]">
                                     <p>
@@ -145,7 +145,7 @@ const KaidoPage = () => {
                 <section className="py-20 px-6 bg-[var(--gray-800)]/20">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="画">En Acción</SectionTitle>
+                            <SectionTitle>En Acción</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Experiencia Visual</h2>
                             <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Interfaz intuitiva que combina gamificación extrema con accesibilidad total.
@@ -247,7 +247,7 @@ const KaidoPage = () => {
                 <section id="features" className="py-20 px-6">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="力">Capacidades</SectionTitle>
+                            <SectionTitle>Capacidades</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Todo lo que necesitas</h2>
                         </div>
 
@@ -295,7 +295,7 @@ const KaidoPage = () => {
                 <section className="py-20 px-6 bg-[var(--gray-800)]/30">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="声">Testimonios</SectionTitle>
+                            <SectionTitle>Testimonios</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Lo que dicen nuestros early adopters</h2>
                         </div>
 
@@ -349,7 +349,7 @@ const KaidoPage = () => {
                 <section className="py-20 px-6 border-t border-[var(--gray-800)]">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="価">Pricing</SectionTitle>
+                            <SectionTitle>Pricing</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Acceso Anticipado</h2>
                             <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Kaido está actualmente en fase de Early Access. Únete a empresas pioneras en transformación educativa.

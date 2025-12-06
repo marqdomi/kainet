@@ -105,7 +105,7 @@ const ServicesPage = () => {
                 <section className="py-20 px-6 bg-[var(--gray-800)]/20">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="証">Por Qué Elegirnos</SectionTitle>
+                            <SectionTitle>Por Qué Elegirnos</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Experiencia que Cuenta</h2>
                         </div>
 
@@ -141,7 +141,7 @@ const ServicesPage = () => {
                 <section className="py-20 px-6">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="流">Nuestro Proceso</SectionTitle>
+                            <SectionTitle>Nuestro Proceso</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">De la Consulta al Deployment</h2>
                         </div>
 
