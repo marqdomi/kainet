@@ -1,7 +1,6 @@
 // src/components/ui/Button.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import ToriiLoaderMini from '../loaders/ToriiLoaderMini';
 
 /**
  * Button Component - Design System v3.1
@@ -80,8 +79,8 @@ const Button = ({
       {...props}
     >
       {loading ? (
-        <span className="inline-flex items-center">
-          <ToriiLoaderMini size={size === 'sm' ? 14 : size === 'lg' ? 18 : 16} className="mr-2" />
+        <span className="inline-flex items-center gap-2">
+          <span className="btn-spinner" aria-hidden="true" />
           <span>Cargando...</span>
         </span>
       ) : (

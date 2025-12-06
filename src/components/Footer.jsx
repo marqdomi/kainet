@@ -51,13 +51,7 @@ const Footer = () => {
       <div className="mx-auto max-w-6xl px-6">
         {/* Footer Principal */}
         <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl card-default border backdrop-blur-md p-6 sm:p-8 md:p-10">
-          {/* Glow Effect */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[var(--cyan-neon)]/8 blur-3xl"
-          />
-
-          <div className="relative grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-8 items-start">
+          <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-8 items-start">
             {/* Columna 1: Logo + Descripción */}
             <div className="md:col-span-1 text-center md:text-left">
               <img
