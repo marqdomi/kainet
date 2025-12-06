@@ -4,27 +4,15 @@ import { features } from '../config/features';
 import type { SpecialDateEffect } from '@/types';
 
 interface UseEasterEggsReturn {
-  matrixRainActive: boolean;
-  toriiAnimationActive: boolean;
   specialDateEffect: SpecialDateEffect;
   handleLogoClick: () => void;
-  dismissMatrixRain: () => void;
-  dismissToriiAnimation: () => void;
-  activateMatrixRain: () => void;
-  activateToriiAnimation: () => void;
 }
 
 /**
  * useEasterEggs - Custom hook to manage easter egg state and effects
- * 
- * @returns Easter egg states and handlers
- * 
- * @example
- * const { matrixRainActive, toriiAnimationActive, specialDateEffect, handleLogoClick } = useEasterEggs();
+ * Simplified version - only supports fireworks for special dates
  */
 export const useEasterEggs = (): UseEasterEggsReturn => {
-  const [matrixRainActive, setMatrixRainActive] = useState<boolean>(false);
-  const [toriiAnimationActive, setToriiAnimationActive] = useState<boolean>(false);
   const [specialDateEffect, setSpecialDateEffect] = useState<SpecialDateEffect>(null);
 
   useEffect(() => {
@@ -36,22 +24,7 @@ export const useEasterEggs = (): UseEasterEggsReturn => {
     // Initialize easter egg manager
     easterEggManager.init();
 
-    // Register callbacks for effects
-    easterEggManager.onEffect('matrixRain', () => {
-      setMatrixRainActive(true);
-      easterEggManager.markDiscovered('konami');
-    });
-
-    easterEggManager.onEffect('toriiAnimation', () => {
-      setToriiAnimationActive(true);
-      easterEggManager.markDiscovered('tripleClick');
-    });
-
-    easterEggManager.onEffect('sakuraPetals', () => {
-      setSpecialDateEffect('sakuraPetals');
-      easterEggManager.markDiscovered('newYear');
-    });
-
+    // Register callback for fireworks effect
     easterEggManager.onEffect('fireworks', () => {
       setSpecialDateEffect('fireworks');
       easterEggManager.markDiscovered('anniversary');
@@ -73,30 +46,8 @@ export const useEasterEggs = (): UseEasterEggsReturn => {
     easterEggManager.handleLogoClick();
   };
 
-  const dismissMatrixRain = (): void => {
-    setMatrixRainActive(false);
-  };
-
-  const dismissToriiAnimation = (): void => {
-    setToriiAnimationActive(false);
-  };
-
-  const activateMatrixRain = (): void => {
-    setMatrixRainActive(true);
-  };
-
-  const activateToriiAnimation = (): void => {
-    setToriiAnimationActive(true);
-  };
-
   return {
-    matrixRainActive,
-    toriiAnimationActive,
     specialDateEffect,
     handleLogoClick,
-    dismissMatrixRain,
-    dismissToriiAnimation,
-    activateMatrixRain,
-    activateToriiAnimation,
   };
 };

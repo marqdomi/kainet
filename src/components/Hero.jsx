@@ -1,17 +1,15 @@
 // src/components/Hero.jsx
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import VariableProximity from './effects/VariableProximity';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
   console.log('[Hero] Component rendering');
   const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
-  const containerRef = useRef(null);
 
   return (
     <section id="top" className="relative w-full h-screen">
-      {/* Overlay sutil para lectura con parallax - Más transparente para mostrar FloatingLines */}
+      {/* Overlay sutil para lectura con parallax */}
       <div
         ref={ref}
         className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-black/10 via-black/5 to-transparent"
@@ -21,7 +19,7 @@ const Hero = () => {
         }}
       />
 
-      {/* Background con Mesh Gradient - Glassmorphic para integrar con FloatingLines */}
+      {/* Background con Mesh Gradient */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -41,9 +39,10 @@ const Hero = () => {
           backgroundRepeat: 'repeat'
         }}
       />
+      
       {/* Texto */}
       <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-4 sm:px-6">
-        <div className="max-w-5xl relative" ref={containerRef} style={{ position: 'relative' }}>
+        <div className="max-w-5xl relative">
           {/* Badge / Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -56,27 +55,15 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Headline with VariableProximity */}
-          <motion.div
+          {/* Main Headline */}
+          <motion.h1
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
-            className="mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
           >
-            <h1
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
-            >
-              <VariableProximity
-                label="Construimos SaaS de Clase Mundial"
-                className="variable-proximity-demo"
-                fromFontVariationSettings="'wght' 400, 'opsz' 9"
-                toFontVariationSettings="'wght' 1000, 'opsz' 40"
-                containerRef={containerRef}
-                radius={100}
-                falloff="linear"
-              />
-            </h1>
-          </motion.div>
+            Construimos SaaS de Clase Mundial
+          </motion.h1>
 
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -84,15 +71,7 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-6 sm:mb-8"
           >
-            <VariableProximity
-              label="para el Mercado Latino"
-              className="variable-proximity-demo"
-              fromFontVariationSettings="'wght' 400, 'opsz' 9"
-              toFontVariationSettings="'wght' 1000, 'opsz' 40"
-              containerRef={containerRef}
-              radius={100}
-              falloff="linear"
-            />
+            para el Mercado Latino
           </motion.h2>
 
           {/* Subtitle / Value Prop */}
@@ -130,12 +109,7 @@ const Hero = () => {
             </a>
           </motion.div>
         </div>
-
       </div>
-
-      {/* Fondo de partículas fluido (LiquidEther en MainLayout) */}
-
-      {/* Solo contenido de texto, sin Canvas 3D */}
     </section>
   );
 };

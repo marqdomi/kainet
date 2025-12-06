@@ -13,8 +13,6 @@ const MainLayout: React.FC = () => {
       {/* Accessibility: Skip to main content */}
       <a href="#main" className="skip-link">Saltar al contenido</a>
 
-      {/* Note: FloatingLines is now rendered globally in App.tsx */}
-
       {/* Navigation */}
       <Navbar />
 
