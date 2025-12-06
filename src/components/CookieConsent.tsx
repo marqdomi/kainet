@@ -116,7 +116,7 @@ const CookieConsent: React.FC = () => {
                     <div className="flex items-center gap-3 mb-2">
                       <Cookie className="w-6 h-6 text-[var(--cyan-neon)]" />
                       <h3 className="text-lg font-semibold text-heading">
-                        🍪 Tu privacidad es importante
+                        Tu privacidad es importante
                       </h3>
                     </div>
                     <p className="text-sm text-body leading-relaxed">

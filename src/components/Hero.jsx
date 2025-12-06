@@ -1,21 +1,13 @@
 // src/components/Hero.jsx
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import VariableProximity from './effects/VariableProximity';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
   console.log('[Hero] Component rendering');
-  const [showHint, setShowHint] = useState(true);
   const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowHint(false), 2500);
-    const onScroll = () => setShowHint(false);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { clearTimeout(t); window.removeEventListener('scroll', onScroll); };
-  }, []);
 
   return (
     <section id="top" className="relative w-full h-screen">
@@ -139,25 +131,6 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Hint de scroll (auto-ocultable) */}
-        {showHint && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, delay: 1.4 }}
-            className="absolute bottom-6 flex flex-col items-center text-gray-300 pointer-events-auto"
-          >
-            <span className="text-xs text-gray-300 mb-2">Scroll</span>
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-7 h-11 rounded-full border border-gray-500 flex items-start justify-center p-1"
-            >
-              <div className="w-1 h-2 rounded-full bg-gray-300" />
-            </motion.div>
-          </motion.div>
-        )}
       </div>
 
       {/* Fondo de partículas fluido (LiquidEther en MainLayout) */}
