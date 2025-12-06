@@ -2,6 +2,7 @@
 import React, { lazy, Suspense, useState, useRef, useEffect, ReactNode } from 'react';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
+import SEO from '../components/SEO';
 
 // Lazy loading de componentes pesados
 const KaidoSpotlight = lazy(() => import('../components/KaidoSpotlight'));
@@ -23,7 +24,7 @@ interface LazySectionProps {
 const LazySection: React.FC<LazySectionProps> = ({ children }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([entry]) => {
@@ -37,15 +38,21 @@ const LazySection: React.FC<LazySectionProps> = ({ children }) => {
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-  
+
   return <div ref={ref}>{visible ? children : null}</div>;
 };
 
 const Home: React.FC = () => {
   console.log('[Home] Component rendering');
-  
+
   return (
     <>
+      <SEO
+        title="Inicio"
+        description="KAINET: Automatización inteligente, desarrollo web premium y soluciones SaaS. Transformamos empresas con IA, DevOps y software de alto rendimiento en México."
+        url="https://kainet.mx"
+      />
+
       <span id="top" className="sr-only">Inicio</span>
 
       {/* Hero Section */}
@@ -79,3 +86,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
