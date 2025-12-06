@@ -166,16 +166,26 @@ html { scroll-behavior: smooth; }
 .skip-link {
   position: fixed;
   left: 1rem;
-  top: -40px;
+  top: -100px;
   z-index: 100;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   background: #00E5FF;
   color: #000;
   box-shadow: 0 6px 24px rgba(0,229,255,0.25);
-  transition: top 0.2s ease;
+  transition: top 0.2s ease, visibility 0s 0.2s;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-100%);
 }
-.skip-link:focus { top: 1rem; outline: none; }
+.skip-link:focus { 
+  top: 1rem; 
+  outline: none; 
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition: top 0.2s ease, visibility 0s 0s, opacity 0.2s ease, transform 0.2s ease;
+}
 
 /* Respeta preferencias del usuario para reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
