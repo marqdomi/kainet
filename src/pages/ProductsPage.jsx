@@ -5,6 +5,7 @@ import { Button, SectionTitle, Badge } from '../components/ui';
 import HolographicCard from '../components/effects/HolographicCard';
 import GlitchText from '../components/effects/GlitchText';
 import SEO from '../components/SEO';
+import { Star, Rocket, Lightbulb } from 'lucide-react';
 
 const ProductsPage = () => {
     return (
@@ -26,12 +27,12 @@ const ProductsPage = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Badge variant="purple" size="lg" className="mb-6">
-                                🌟 El Faro - 80% de nuestro enfoque
+                                <Star className="w-4 h-4 inline mr-1" /> El Faro - 80% de nuestro enfoque
                             </Badge>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-xl">
                                 Productos SaaS
                             </h1>
-                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8">
+                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 text-shadow-md">
                                 Plataformas de clase mundial construidas con tecnología de punta.
                                 Aquí es donde innovamos y construimos nuestra autoridad técnica.
                             </p>
@@ -124,8 +125,8 @@ const ProductsPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="未">Próximamente</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Productos en el Pipeline</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Productos en el Pipeline</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
                                 Estamos desarrollando más soluciones SaaS para resolver problemas complejos.
                             </p>
                         </div>
@@ -134,7 +135,9 @@ const ProductsPage = () => {
                             {/* Placeholder for future product 1 */}
                             <HolographicCard className="opacity-60">
                                 <div className="text-center py-12">
-                                    <div className="text-6xl mb-4">🚀</div>
+                                    <div className="flex justify-center mb-4">
+                                        <Rocket className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                                    </div>
                                     <h3 className="text-2xl font-bold text-white mb-3">Producto en Desarrollo</h3>
                                     <p className="text-[var(--text-secondary)] mb-6">
                                         Pronto anunciaremos nuestra siguiente innovación en el ecosistema SaaS.
@@ -146,7 +149,9 @@ const ProductsPage = () => {
                             {/* Placeholder for future product 2 */}
                             <HolographicCard className="opacity-60">
                                 <div className="text-center py-12">
-                                    <div className="text-6xl mb-4">💡</div>
+                                    <div className="flex justify-center mb-4">
+                                        <Lightbulb className="w-12 h-12 text-[var(--purple-neon)]" strokeWidth={1.5} />
+                                    </div>
                                     <h3 className="text-2xl font-bold text-white mb-3">Innovación Continua</h3>
                                     <p className="text-[var(--text-secondary)] mb-6">
                                         Nuestro equipo está constantemente explorando nuevas oportunidades de mercado.

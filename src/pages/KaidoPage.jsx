@@ -5,36 +5,37 @@ import { Button, SectionTitle, Badge } from '../components/ui';
 import HolographicCard from '../components/effects/HolographicCard';
 import GlitchText from '../components/effects/GlitchText';
 import SEO from '../components/SEO';
+import { Gamepad2, Accessibility, Building2, Palette, BookOpen, BarChart3, Handshake, Check, X, Star, Rocket } from 'lucide-react';
 
 const KaidoPage = () => {
     const features = [
         {
-            icon: '🎮',
+            icon: Gamepad2,
             title: 'Gamificación Completa',
             description: 'Sistema de XP, logros, niveles, tablas de clasificación y desafíos que mantienen a los usuarios enganchados.'
         },
         {
-            icon: '♿',
+            icon: Accessibility,
             title: 'Accesibilidad Total',
             description: 'Cumplimiento WCAG 2.1 Level AA desde el diseño. Inclusivo para todos los usuarios sin sacrificar la diversión.'
         },
         {
-            icon: '🏢',
+            icon: Building2,
             title: 'Multi-Tenancy',
             description: 'Arquitectura SaaS con aislamiento completo de datos por tenant. Seguro y escalable para corporativos.'
         },
         {
-            icon: '🎨',
+            icon: Palette,
             title: 'Dual Persona',
             description: 'Experiencia gamificada vibrante para estudiantes y una interfaz profesional y limpia para administradores.'
         },
         {
-            icon: '📚',
+            icon: BookOpen,
             title: 'Constructor de Cursos',
             description: 'Herramienta profesional de autoría con contenido rico, cuestionarios y evaluaciones.'
         },
         {
-            icon: '📊',
+            icon: BarChart3,
             title: 'Analíticas Avanzadas',
             description: 'Dashboards completos con métricas de engagement, progreso y retención.'
         }
@@ -68,7 +69,7 @@ const KaidoPage = () => {
                                     KAIDO
                                 </GlitchText>
                             </h1>
-                            <p 
+                            <p
                                 className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8 relative"
                                 style={{
                                     textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.2)',
@@ -77,7 +78,7 @@ const KaidoPage = () => {
                             >
                                 "No construimos software; edificamos portales digitales."
                             </p>
-                            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed">
+                            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed text-shadow-md">
                                 La solución definitiva a la paradoja de la inclusión.
                                 <br />
                                 <span className="text-white">Gamificación extrema</span> + <span className="text-white">Accesibilidad universal</span>.
@@ -105,21 +106,21 @@ const KaidoPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div>
                                 <SectionTitle kanji="盾">El Problema</SectionTitle>
-                                <h3 className="text-3xl font-bold text-white mb-6">La Paradoja de la Inclusión</h3>
+                                <h3 className="text-3xl font-bold text-white mb-6 text-shadow-lg">La Paradoja de la Inclusión</h3>
                                 <div className="space-y-4 text-[var(--text-secondary)]">
                                     <p>
                                         En el mercado actual de software educativo, existe una división fundamental:
                                     </p>
                                     <ul className="space-y-3">
                                         <li className="flex items-start gap-3">
-                                            <span className="text-red-500 text-xl">✕</span>
+                                            <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
                                             <div>
                                                 <strong className="text-white">El software accesible suele ser aburrido.</strong>
                                                 <br />Se centra tanto en el cumplimiento normativo que olvida la experiencia del usuario.
                                             </div>
                                         </li>
                                         <li className="flex items-start gap-3">
-                                            <span className="text-red-500 text-xl">✕</span>
+                                            <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
                                             <div>
                                                 <strong className="text-white">El software gamificado no es accesible.</strong>
                                                 <br />Lleno de animaciones rápidas, bajo contraste y dependencias del ratón que excluyen a muchos usuarios.
@@ -132,7 +133,9 @@ const KaidoPage = () => {
                             <HolographicCard className="bg-black/40 backdrop-blur-md border-[var(--cyan-neon)]/20">
                                 <div className="text-center space-y-6 py-8">
                                     <h3 className="text-2xl font-bold text-[var(--cyan-neon)]">La Solución KAIDO</h3>
-                                    <div className="text-6xl">🤝</div>
+                                    <div className="flex justify-center">
+                                        <Handshake className="w-16 h-16 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                                    </div>
                                     <p className="text-lg text-white">
                                         Hemos creado un puente donde <br />
                                         <span className="font-bold text-[var(--purple-neon)]">Diversión</span> y <span className="font-bold text-[var(--purple-neon)]">Inclusión</span> conviven.
@@ -148,8 +151,8 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="画">En Acción</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Experiencia Visual</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Experiencia Visual</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
                                 Interfaz intuitiva que combina gamificación extrema con accesibilidad total.
                             </p>
                         </div>
@@ -222,8 +225,8 @@ const KaidoPage = () => {
                                                 <h3 className="text-lg font-bold text-white mb-1">Accesibilidad Total</h3>
                                                 <p className="text-sm text-[var(--text-secondary)]">WCAG 2.1 Level AA desde el diseño</p>
                                             </div>
-                                            <div className="px-3 py-1 bg-[var(--cyan-neon)]/20 border border-[var(--cyan-neon)]/50 rounded text-xs font-mono text-[var(--cyan-neon)]">
-                                                ♿ WCAG AA
+                                            <div className="px-3 py-1 bg-[var(--cyan-neon)]/20 border border-[var(--cyan-neon)]/50 rounded text-xs font-mono text-[var(--cyan-neon)] flex items-center gap-1">
+                                                <Accessibility className="w-3 h-3" /> WCAG AA
                                             </div>
                                         </div>
                                     </div>
@@ -250,7 +253,7 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="力">Capacidades</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Todo lo que necesitas</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Todo lo que necesitas</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -263,8 +266,8 @@ const KaidoPage = () => {
                                     transition={{ delay: index * 0.1 }}
                                 >
                                     <HolographicCard className="h-full hover:border-[var(--cyan-neon)]/50 transition-colors group">
-                                        <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                                            {feature.icon}
+                                        <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
+                                            <feature.icon className="w-10 h-10 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                                         </div>
                                         <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
                                         <p className="text-[var(--text-secondary)]">
@@ -280,7 +283,7 @@ const KaidoPage = () => {
                 {/* Tech Stack */}
                 <section className="py-20 px-6 border-t border-[var(--gray-800)]">
                     <div className="max-w-7xl mx-auto text-center">
-                        <h3 className="text-2xl font-bold text-[var(--text-secondary)] mb-12 uppercase tracking-widest">
+                        <h3 className="text-2xl font-bold text-[var(--text-secondary)] mb-12 uppercase tracking-widest text-shadow-md">
                             Construido con Tecnología de Punta
                         </h3>
                         <div className="flex flex-wrap justify-center gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
@@ -298,7 +301,7 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="声">Testimonios</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Lo que dicen nuestros early adopters</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Lo que dicen nuestros early adopters</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -332,7 +335,7 @@ const KaidoPage = () => {
                                     <HolographicCard className="h-full flex flex-col">
                                         <div className="flex gap-1 mb-4">
                                             {[...Array(testimonial.rating)].map((_, i) => (
-                                                <span key={i} className="text-[var(--cyan-neon)] text-lg">★</span>
+                                                <Star key={i} className="w-4 h-4 text-[var(--cyan-neon)] fill-[var(--cyan-neon)]" />
                                             ))}
                                         </div>
                                         <p className="text-[var(--text-secondary)] italic mb-6 flex-grow">"{testimonial.quote}"</p>
@@ -352,8 +355,8 @@ const KaidoPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="価">Pricing</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Acceso Anticipado</h2>
-                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Acceso Anticipado</h2>
+                            <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto text-shadow-sm">
                                 Kaido está actualmente en fase de Early Access. Únete a empresas pioneras en transformación educativa.
                             </p>
                         </div>
@@ -372,19 +375,19 @@ const KaidoPage = () => {
 
                                     <div className="space-y-3 mb-8 text-left px-6">
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Hasta 100 usuarios</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">10 cursos incluidos</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Soporte por email</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Analíticas básicas</span>
                                         </div>
                                     </div>
@@ -413,23 +416,23 @@ const KaidoPage = () => {
 
                                     <div className="space-y-3 mb-8 text-left px-6">
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-white font-semibold">Todo en Starter +</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Hasta 500 usuarios</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Cursos ilimitados</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Soporte prioritario</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Branding personalizado</span>
                                         </div>
                                     </div>
@@ -455,23 +458,23 @@ const KaidoPage = () => {
 
                                     <div className="space-y-3 mb-8 text-left px-6">
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-white font-semibold">Todo en Business +</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Usuarios ilimitados</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">SLA garantizado</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Onboarding dedicado</span>
                                         </div>
                                         <div className="flex items-start gap-2">
-                                            <span className="text-[var(--cyan-neon)]">✓</span>
+                                            <Check className="w-4 h-4 text-[var(--cyan-neon)] flex-shrink-0" />
                                             <span className="text-sm text-[var(--text-secondary)]">Servidor dedicado</span>
                                         </div>
                                     </div>
@@ -488,8 +491,8 @@ const KaidoPage = () => {
                         {/* Early Access Note */}
                         <div className="mt-12 text-center">
                             <HolographicCard className="inline-block px-8 py-4">
-                                <p className="text-sm text-[var(--text-secondary)]">
-                                    🚀 <span className="text-white font-semibold">Early Access Bonus:</span> Los primeros 10 clientes obtienen
+                                <p className="text-sm text-[var(--text-secondary)] flex items-center justify-center gap-2 flex-wrap">
+                                    <Rocket className="w-4 h-4 text-[var(--cyan-neon)]" /> <span className="text-white font-semibold">Early Access Bonus:</span> Los primeros 10 clientes obtienen
                                     <span className="text-[var(--cyan-neon)]"> pricing preferencial de por vida</span>
                                 </p>
                             </HolographicCard>

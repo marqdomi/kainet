@@ -69,7 +69,7 @@ const Services = () => {
   };
 
   return (
-    <section className="py-20 px-6 relative">
+    <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
@@ -80,7 +80,7 @@ const Services = () => {
           className="text-center mb-16"
         >
           <SectionTitle kanji="技">Nuestros Servicios</SectionTitle>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
+          <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4 px-2 sm:px-0">
             Transformamos ideas en soluciones tecnológicas que impulsan tu negocio hacia el futuro
           </p>
         </motion.div>
@@ -91,17 +91,17 @@ const Services = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-12"
         >
           {services.map((service, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
             >
-              <HolographicCard className="h-full flex flex-col card-depth min-h-[420px]">
+              <HolographicCard className="h-full flex flex-col card-depth min-h-0 sm:min-h-[400px] lg:min-h-[420px]">
                 {/* Kanji Icon with color variety */}
                 <div
-                  className="text-6xl mb-4 font-bold"
+                  className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4 font-bold"
                   style={{
                     color: index === 0 ? 'var(--orange-accent)' :
                       index === 1 ? 'var(--purple-neon)' :
@@ -112,17 +112,17 @@ const Services = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">
+                <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-2 sm:mb-3">
                   {service.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[var(--text-secondary)] mb-6 flex-grow">
+                <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4 sm:mb-6 flex-grow">
                   {service.description}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
                   {service.features.map((feature, i) => (
                     <li
                       key={i}

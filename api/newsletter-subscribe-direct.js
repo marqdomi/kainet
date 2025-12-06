@@ -18,13 +18,24 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  // CORS headers
+  // CORS headers - restringido a kainet.mx
+  const allowedOrigins = [
+    'https://kainet.mx',
+    'https://www.kainet.mx',
+    'http://localhost:3000',
+    'http://localhost:5173'
+  ];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'Content-Type, Accept'
   );
 
   if (req.method === 'OPTIONS') {
@@ -40,7 +51,7 @@ export default async function handler(req, res) {
 
     // Validación básica
     if (!email || !email.includes('@')) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Email inválido',
         message: 'Por favor proporciona un email válido'
       });
@@ -69,7 +80,7 @@ export default async function handler(req, res) {
       if (existingSubscriber.unsubscribed_at || !existingSubscriber.is_active) {
         const { error: updateError } = await supabase
           .from('newsletter_subscribers')
-          .update({ 
+          .update({
             is_active: true,
             unsubscribed_at: null,
             confirmed_at: new Date().toISOString(),
@@ -80,7 +91,7 @@ export default async function handler(req, res) {
 
         if (updateError) {
           console.error('Error reactivando suscriptor:', updateError);
-          return res.status(500).json({ 
+          return res.status(500).json({
             error: 'Error al procesar suscripción',
             message: 'Hubo un problema. Intenta de nuevo.'
           });
@@ -99,7 +110,7 @@ export default async function handler(req, res) {
       // Si existe pero no está confirmado, confirmar ahora
       const { error: confirmError } = await supabase
         .from('newsletter_subscribers')
-        .update({ 
+        .update({
           confirmed_at: new Date().toISOString(),
           is_active: true,
           name: name || existingSubscriber.name,
@@ -109,7 +120,7 @@ export default async function handler(req, res) {
 
       if (confirmError) {
         console.error('Error confirmando suscriptor:', confirmError);
-        return res.status(500).json({ 
+        return res.status(500).json({
           error: 'Error al procesar suscripción',
           message: 'Hubo un problema. Intenta de nuevo.'
         });
@@ -145,7 +156,7 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('Error al crear suscriptor:', error);
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Error al procesar suscripción',
         message: 'Hubo un problema al registrar tu suscripción. Intenta de nuevo.'
       });
@@ -165,7 +176,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error en newsletter subscribe:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Error interno del servidor',
       message: 'Hubo un problema al procesar tu solicitud'
     });

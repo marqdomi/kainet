@@ -12,13 +12,24 @@ const isValidEmail = (email) => {
 };
 
 module.exports = async function handler(req, res) {
-  // Configurar CORS headers
+  // Configurar CORS headers - restringido a kainet.mx
+  const allowedOrigins = [
+    'https://kainet.mx',
+    'https://www.kainet.mx',
+    'http://localhost:3000', // Para desarrollo local
+    'http://localhost:5173'
+  ];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'Content-Type, Accept'
   );
 
   // Manejar preflight request
@@ -28,9 +39,9 @@ module.exports = async function handler(req, res) {
 
   // Solo permitir POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
+    return res.status(405).json({
       error: 'Método no permitido',
-      message: 'Solo se permite POST' 
+      message: 'Solo se permite POST'
     });
   }
 
@@ -39,23 +50,23 @@ module.exports = async function handler(req, res) {
 
     // Validaciones
     if (!name || !email || !message) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Campos requeridos',
-        message: 'Por favor completa todos los campos obligatorios' 
+        message: 'Por favor completa todos los campos obligatorios'
       });
     }
 
     if (!isValidEmail(email)) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Email inválido',
-        message: 'Por favor proporciona un email válido' 
+        message: 'Por favor proporciona un email válido'
       });
     }
 
     if (message.length < 10) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Mensaje muy corto',
-        message: 'Por favor proporciona más detalles en tu mensaje (mínimo 10 caracteres)' 
+        message: 'Por favor proporciona más detalles en tu mensaje (mínimo 10 caracteres)'
       });
     }
 
@@ -106,14 +117,14 @@ module.exports = async function handler(req, res) {
                   </p>
                 ` : ''}
                 <p style="margin: 10px 0; color: #555; font-size: 14px;">
-                  <strong>Fecha:</strong> ${new Date().toLocaleString('es-MX', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}
+                  <strong>Fecha:</strong> ${new Date().toLocaleString('es-MX', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })}
                 </p>
               </div>
 
@@ -166,9 +177,9 @@ Este mensaje fue enviado desde el formulario de contacto en kainet.mx
 
     if (contactError) {
       console.error('Error enviando email de contacto:', contactError);
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Error al enviar mensaje',
-        message: 'Hubo un problema al enviar tu mensaje. Por favor intenta de nuevo.' 
+        message: 'Hubo un problema al enviar tu mensaje. Por favor intenta de nuevo.'
       });
     }
 
@@ -273,7 +284,7 @@ ${process.env.EMAIL_CONTACT}
     }
 
     // Respuesta exitosa
-    return res.status(200).json({ 
+    return res.status(200).json({
       success: true,
       message: '¡Mensaje enviado exitosamente! Te responderemos pronto.',
       emailId: contactData?.id
@@ -281,9 +292,9 @@ ${process.env.EMAIL_CONTACT}
 
   } catch (error) {
     console.error('Error en contact endpoint:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Error del servidor',
-      message: 'Hubo un problema al procesar tu solicitud. Por favor intenta de nuevo más tarde.' 
+      message: 'Hubo un problema al procesar tu solicitud. Por favor intenta de nuevo más tarde.'
     });
   }
 }

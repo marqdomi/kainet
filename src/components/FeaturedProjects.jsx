@@ -47,8 +47,8 @@ const FeaturedProjects = () => {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
@@ -59,9 +59,9 @@ const FeaturedProjects = () => {
 
   // Parallax wrapper component for project cards
   const ParallaxCard = ({ children, index }) => {
-    const { offset, blur, ref } = useParallaxScroll({ 
+    const { offset, blur, ref } = useParallaxScroll({
       speed: 0.1 + (index * 0.05), // Different speeds for depth effect
-      maxBlur: 1.5 
+      maxBlur: 1.5
     });
 
     return (
@@ -78,7 +78,7 @@ const FeaturedProjects = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-transparent via-[var(--gray-900)]/30 to-transparent">
+    <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-transparent via-[var(--gray-900)]/30 to-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -89,14 +89,14 @@ const FeaturedProjects = () => {
           className="text-center mb-16"
         >
           <SectionTitle kanji="作">Proyectos Destacados</SectionTitle>
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
+          <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4 px-2 sm:px-0">
             Casos de éxito que demuestran nuestro expertise en IA, automatización y desarrollo web
           </p>
         </motion.div>
 
         {/* Loading State */}
         {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {[1, 2, 3].map((i) => (
               <HolographicCard key={i}>
                 <Skeleton variant="card" />
@@ -112,7 +112,7 @@ const FeaturedProjects = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-12"
           >
             {projects.map((project, index) => (
               <motion.div
@@ -123,12 +123,12 @@ const FeaturedProjects = () => {
                   <HolographicCard className="h-full flex flex-col">
                     {/* Category Badge */}
                     <div className="mb-4">
-                      <Badge 
+                      <Badge
                         variant={
-                          project.category === 'AI' ? 'purple' : 
-                          project.category === 'Web' ? 'default' : 
-                          project.category === 'Automation' ? 'success' : 
-                          'warning'
+                          project.category === 'AI' ? 'purple' :
+                            project.category === 'Web' ? 'default' :
+                              project.category === 'Automation' ? 'success' :
+                                'warning'
                         }
                         size="md"
                       >
@@ -149,7 +149,7 @@ const FeaturedProjects = () => {
                     {/* Tech Stack (first 3) */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.tech_stack?.slice(0, 3).map((tech, i) => (
-                        <span 
+                        <span
                           key={i}
                           className="text-xs px-3 py-1 bg-[var(--gray-800)] text-[var(--cyan-neon)] rounded-full border border-[var(--gray-700)]"
                         >

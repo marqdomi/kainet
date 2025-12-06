@@ -2,9 +2,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SectionTitle } from '../components/ui';
-import GlitchText from '../components/effects/GlitchText';
 import HolographicCard from '../components/effects/HolographicCard';
 import SEO from '../components/SEO';
+import { Star, Settings, X, Check } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   return (
@@ -26,10 +26,10 @@ const AboutPage: React.FC = () => {
               transition={{ duration: 0.8 }}
             >
               <SectionTitle kanji="道">El Manifiesto</SectionTitle>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6 text-shadow-xl">
                 KAINET
               </h1>
-              <p className="text-2xl text-[var(--cyan-neon)] font-light italic">
+              <p className="text-2xl text-[var(--cyan-neon)] font-light italic text-shadow-glow">
                 "No construimos software; edificamos portales digitales hacia el futuro."
               </p>
             </motion.div>
@@ -89,7 +89,7 @@ const AboutPage: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-4xl">🌟</span>
+                    <Star className="w-10 h-10 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                     <div>
                       <h3 className="text-xl font-bold text-[var(--cyan-neon)]">El Faro</h3>
                       <p className="text-sm text-[var(--text-secondary)]">80% Foco - Nuestro Prestigio</p>
@@ -103,7 +103,7 @@ const AboutPage: React.FC = () => {
 
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-4xl">⚙️</span>
+                    <Settings className="w-10 h-10 text-[var(--purple-neon)]" strokeWidth={1.5} />
                     <div>
                       <h3 className="text-xl font-bold text-[var(--purple-neon)]">El Motor</h3>
                       <p className="text-sm text-[var(--text-secondary)]">20% Foco - Nuestro Flujo</p>
@@ -140,15 +140,15 @@ const AboutPage: React.FC = () => {
 
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <span className="text-red-500 mt-1">✕</span>
+                      <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
                       <span>La mayoría del software accesible es aburrido.</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-red-500 mt-1">✕</span>
+                      <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
                       <span>La mayoría del software gamificado no es accesible.</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[var(--cyan-neon)] text-2xl mt-1">✓</span>
+                      <Check className="w-6 h-6 text-[var(--cyan-neon)] mt-1 flex-shrink-0" strokeWidth={2} />
                       <span className="text-white font-semibold">
                         KAIDO es ambas cosas: Una experiencia de aprendizaje altamente gamificada (XP, niveles, progreso)
                         diseñada desde cero para cumplir con los estándares más estrictos de accesibilidad (WCAG 2.1 Level AA).

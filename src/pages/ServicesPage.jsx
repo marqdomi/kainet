@@ -4,29 +4,30 @@ import { Link } from 'react-router-dom';
 import { Button, SectionTitle, Badge } from '../components/ui';
 import HolographicCard from '../components/effects/HolographicCard';
 import SEO from '../components/SEO';
+import { Bot, Code, Cloud, Palette, Check } from 'lucide-react';
 
 const ServicesPage = () => {
     const services = [
         {
-            icon: '🤖',
+            icon: Bot,
             title: 'Automatización Inteligente',
             description: 'Optimizamos procesos empresariales con IA y automatización custom. Reducimos tiempos operativos hasta en un 70%.',
             features: ['Workflows automatizados', 'Integraciones API', 'RPA & AI', 'Dashboards en tiempo real']
         },
         {
-            icon: '💻',
+            icon: Code,
             title: 'Desarrollo Web Premium',
             description: 'Aplicaciones web de alto rendimiento con React, Next.js y tecnologías modernas. Diseño responsivo y accesible.',
             features: ['React/Next.js', 'UI/UX Premium', 'Performance optimizada', 'WCAG compliant']
         },
         {
-            icon: '☁️',
+            icon: Cloud,
             title: 'Consultoría Cloud & DevOps',
             description: 'Arquitectura cloud-native, CI/CD y estrategias de deployment escalables en Azure, AWS y GCP.',
             features: ['Azure/AWS/GCP', 'CI/CD Pipelines', 'Kubernetes', 'Monitoreo y alertas']
         },
         {
-            icon: '🎨',
+            icon: Palette,
             title: 'SaaS MVPs',
             description: 'Construimos MVPs de productos SaaS en 8-12 semanas. De la idea al mercado rápidamente.',
             features: ['Arquitectura multi-tenant', 'Auth & Billing', 'Admin panels', 'Analytics integradas']
@@ -52,12 +53,12 @@ const ServicesPage = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Badge variant="default" size="lg" className="mb-6">
-                                ⚙️ El Motor - Flujo de caja y aprendizaje
+                                El Motor - Flujo de caja y aprendizaje
                             </Badge>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-xl">
                                 Servicios de Consultoría
                             </h1>
-                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8">
+                            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 text-shadow-md">
                                 Transformación digital de alto nivel para PyMEs y corporativos.
                                 Utilizamos nuestra experiencia en productos SaaS para impulsar tu empresa.
                             </p>
@@ -78,7 +79,9 @@ const ServicesPage = () => {
                                     transition={{ delay: index * 0.1 }}
                                 >
                                     <HolographicCard className="h-full hover:border-[var(--cyan-neon)]/50 transition-all">
-                                        <div className="text-6xl mb-4">{service.icon}</div>
+                                        <div className="mb-4">
+                                            <service.icon className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                                        </div>
                                         <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
                                         <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
                                             {service.description}
@@ -87,7 +90,7 @@ const ServicesPage = () => {
                                         <div className="space-y-2">
                                             {service.features.map((feature, i) => (
                                                 <div key={i} className="flex items-center gap-2 text-sm">
-                                                    <span className="text-[var(--cyan-neon)]">✓</span>
+                                                    <Check className="w-4 h-4 text-[var(--cyan-neon)]" />
                                                     <span className="text-[var(--text-secondary)]">{feature}</span>
                                                 </div>
                                             ))}
@@ -104,7 +107,7 @@ const ServicesPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="証">Por Qué Elegirnos</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Experiencia que Cuenta</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">Experiencia que Cuenta</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -140,7 +143,7 @@ const ServicesPage = () => {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
                             <SectionTitle kanji="流">Nuestro Proceso</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">De la Consulta al Deployment</h2>
+                            <h2 className="text-4xl font-bold text-white mt-4 text-shadow-lg">De la Consulta al Deployment</h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

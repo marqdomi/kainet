@@ -155,3 +155,181 @@ html { scroll-behavior: smooth; }
   .btn-kainet { animation: none; }
   .k-cursor { transition: none; }
 }
+
+/* ====================================
+   TEXT SHADOW UTILITIES
+   For improved legibility over animated backgrounds
+   ==================================== */
+
+/* Small shadow - for secondary text and labels */
+.text-shadow-sm {
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Medium shadow - for body text and descriptions */
+.text-shadow-md {
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Large shadow - for headings and hero text */
+.text-shadow-lg {
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.7),
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Extra large shadow - for main titles */
+.text-shadow-xl {
+  text-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.8),
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Cyan glow - for accent text and CTAs */
+.text-shadow-glow {
+  text-shadow: 
+    0 0 10px rgba(0, 229, 255, 0.4),
+    0 0 20px rgba(0, 229, 255, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Purple glow - for secondary accents */
+.text-shadow-glow-purple {
+  text-shadow: 
+    0 0 10px rgba(168, 85, 247, 0.4),
+    0 0 20px rgba(168, 85, 247, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Section title shadow - specifically for SectionTitle component */
+.section-title-shadow {
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Apply text shadows to common text elements outside cards */
+.text-readable {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* ====================================
+   MOBILE UTILITIES & ENTERPRISE DESIGN
+   ==================================== */
+
+/* Visibility Utilities */
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+  
+  .desktop-only {
+    display: none;
+  }
+  
+  /* Improved tap highlight for touch devices */
+  * {
+    -webkit-tap-highlight-color: rgba(0, 229, 255, 0.1);
+  }
+  
+  /* Prevent text selection on interactive elements */
+  button, a, [role="button"] {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  
+  /* Smoother scrolling on iOS */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Touch-friendly link and button sizing */
+@media (max-width: 640px) {
+  /* Ensure minimum touch target for interactive elements */
+  a, button, [role="button"], input, select, textarea {
+    min-height: var(--touch-target-min, 44px);
+  }
+  
+  /* Stack flex items on mobile by default if needed */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  
+  /* Full width buttons on mobile */
+  .mobile-full-width {
+    width: 100% !important;
+  }
+  
+  /* Reduce horizontal padding on mobile */
+  .mobile-px-reduced {
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
+  }
+}
+
+/* Enterprise-style smooth interactions */
+@media (hover: hover) and (pointer: fine) {
+  /* Only apply hover effects on devices that support hover */
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(var(--space-4), env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-x {
+    padding-left: max(var(--space-4), env(safe-area-inset-left));
+    padding-right: max(var(--space-4), env(safe-area-inset-right));
+  }
+}
+
+/* Mobile menu backdrop */
+.mobile-menu-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Mobile menu slide animation */
+.mobile-menu-enter {
+  transform: translateX(100%);
+}
+
+.mobile-menu-enter-active {
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.mobile-menu-exit {
+  transform: translateX(0);
+}
+
+.mobile-menu-exit-active {
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}

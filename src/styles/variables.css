@@ -267,16 +267,57 @@
 }
 
 /* ====================================
-   RESPONSIVE TYPOGRAPHY
+   RESPONSIVE TYPOGRAPHY (Mobile-First)
    ==================================== */
 
+/* Mobile First - Base values */
 @media (max-width: 640px) {
   :root {
-    --text-6xl: 2.5rem;   /* 40px on mobile */
-    --text-5xl: 2rem;     /* 32px on mobile */
-    --text-4xl: 1.75rem;  /* 28px on mobile */
+    /* Fluid Typography using clamp() */
+    --text-6xl: clamp(2rem, 8vw, 2.5rem);     /* 32-40px on mobile */
+    --text-5xl: clamp(1.75rem, 6vw, 2rem);    /* 28-32px on mobile */
+    --text-4xl: clamp(1.5rem, 5vw, 1.75rem);  /* 24-28px on mobile */
+    --text-3xl: clamp(1.25rem, 4vw, 1.5rem);  /* 20-24px on mobile */
+    --text-2xl: 1.25rem;                       /* 20px on mobile */
+    --text-xl: 1.125rem;                       /* 18px on mobile */
+    
+    /* Mobile Section Spacing */
     --section-padding-y: var(--space-12);
     --section-padding-x: var(--space-4);
+    
+    /* Touch-friendly targets (WCAG 2.1 AA: 44px minimum) */
+    --touch-target-min: 44px;
+    --button-min-height: 48px;
+    --input-min-height: 48px;
+    
+    /* Mobile Card Padding */
+    --card-padding: var(--space-4);
+    
+    /* Reduced effects for mobile performance */
+    --particle-count-mobile: 40;
+  }
+}
+
+/* Tablet Breakpoint (768px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root {
+    --text-6xl: clamp(2.5rem, 6vw, 3.5rem);   /* 40-56px on tablet */
+    --text-5xl: clamp(2rem, 5vw, 2.75rem);    /* 32-44px on tablet */
+    --text-4xl: clamp(1.75rem, 4vw, 2.25rem); /* 28-36px on tablet */
+    
+    --section-padding-y: var(--space-16);
+    --section-padding-x: var(--space-6);
+    --card-padding: var(--space-5);
+  }
+}
+
+/* Safe Area Insets for notched devices */
+@supports (padding: max(0px)) {
+  :root {
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
   }
 }
 

@@ -8,23 +8,24 @@ import PropTypes from 'prop-types';
  * Types: text, email, textarea
  */
 
-const Input = React.forwardRef(({ 
+const Input = React.forwardRef(({
   type = 'text',
   label,
   error,
   helperText,
   className = '',
-  ...props 
+  ...props
 }, ref) => {
   const baseStyles = `
     w-full
     bg-[var(--gray-900)]
     border border-[var(--gray-700)]
     rounded-lg
-    px-[var(--input-padding-x)] py-[var(--input-padding-y)]
+    px-3 sm:px-[var(--input-padding-x)] py-3 sm:py-[var(--input-padding-y)]
     text-[var(--text-primary)]
     font-[var(--font-primary)]
     text-base
+    min-h-[48px]
     transition-all duration-200
     focus:outline-none focus:border-[var(--cyan-neon)] focus:ring-2 focus:ring-[rgba(0,229,255,0.1)]
     placeholder:text-[var(--text-tertiary)]
