@@ -123,7 +123,7 @@ const ProductsPage = () => {
                 <section className="py-20 px-6 bg-[var(--gray-800)]/20">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle kanji="未">Próximamente</SectionTitle>
+                            <SectionTitle>Próximamente</SectionTitle>
                             <h2 className="text-4xl font-bold text-white mt-4">Productos en el Pipeline</h2>
                             <p className="text-lg text-[var(--text-secondary)] mt-4 max-w-2xl mx-auto">
                                 Estamos desarrollando más soluciones SaaS para resolver problemas complejos.

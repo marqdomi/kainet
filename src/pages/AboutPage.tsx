@@ -24,7 +24,7 @@ const AboutPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <SectionTitle kanji="道">El Manifiesto</SectionTitle>
+              <SectionTitle>El Manifiesto</SectionTitle>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6">
                 KAINET
               </h1>

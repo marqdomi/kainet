@@ -91,7 +91,7 @@ const Contact = () => {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-14">
-          <SectionTitle kanji="話">Hablemos</SectionTitle>
+          <SectionTitle>Hablemos</SectionTitle>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-heading mt-4 mb-4">
             ¿Tienes un proyecto en mente?
           </h1>

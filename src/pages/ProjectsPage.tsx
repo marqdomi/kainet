@@ -55,7 +55,7 @@ const ProjectsPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <SectionTitle kanji="作">Proyectos</SectionTitle>
+          <SectionTitle>Proyectos</SectionTitle>
           <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Soluciones innovadoras en IA, automatización y desarrollo web que transforman ideas en realidad
           </p>

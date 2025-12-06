@@ -25,7 +25,7 @@ const PrivacyPage: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <SectionTitle kanji="盾">Privacidad</SectionTitle>
+            <SectionTitle>Privacidad</SectionTitle>
             <h1 className="text-4xl md:text-5xl font-bold text-heading mt-4 mb-4">
               Política de Privacidad
             </h1>

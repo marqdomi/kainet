@@ -38,7 +38,7 @@ const About = () => {
           variants={fadeUp(0)}
           className="text-center"
         >
-          <SectionTitle kanji="道">Nuestro Proceso</SectionTitle>
+          <SectionTitle>Nuestro Proceso</SectionTitle>
           <div className="mt-6">
             <GlitchText className="text-3xl md:text-4xl font-bold text-white" as="h3">
               De la Idea a la Realidad

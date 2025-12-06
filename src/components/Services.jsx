@@ -2,13 +2,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Brain, Zap, Code2 } from 'lucide-react';
 import { Button, Card } from './ui';
 import { SectionTitle } from './ui';
 
 const Services = () => {
   const services = [
     {
-      kanji: '知',
+      icon: Brain,
       title: 'Inteligencia Artificial',
       description: 'Soluciones de IA que transforman datos en decisiones inteligentes. Chatbots con RAG, análisis predictivo, automatización con LLMs y pipelines ML optimizados.',
       technologies: ['OpenAI', 'Claude', 'LangChain', 'TensorFlow'],
@@ -21,7 +22,7 @@ const Services = () => {
       accent: 'var(--orange-accent)'
     },
     {
-      kanji: '速',
+      icon: Zap,
       title: 'Automatización',
       description: 'Automatización inteligente que libera tu tiempo para lo que importa. Workflows personalizados, scraping avanzado, integraciones API y notificaciones en tiempo real.',
       technologies: ['Node.js', 'Python', 'Redis', 'GitHub Actions'],
@@ -34,7 +35,7 @@ const Services = () => {
       accent: 'var(--purple-neon)'
     },
     {
-      kanji: '創',
+      icon: Code2,
       title: 'Desarrollo Web',
       description: 'Experiencias web que combinan diseño impactante con tecnología de vanguardia. React, Next.js, Three.js y efectos 3D que cautivan a tus usuarios.',
       technologies: ['React', 'Next.js', 'Three.js', 'Tailwind CSS'],
@@ -81,7 +82,7 @@ const Services = () => {
           transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <SectionTitle kanji="技">Nuestros Servicios</SectionTitle>
+          <SectionTitle>Nuestros Servicios</SectionTitle>
           <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4 px-2 sm:px-0">
             Transformamos ideas en soluciones tecnológicas que impulsan tu negocio hacia el futuro
           </p>
@@ -106,12 +107,13 @@ const Services = () => {
                 padding="lg"
                 className="h-full flex flex-col min-h-0 sm:min-h-[400px] lg:min-h-[420px]"
               >
-                {/* Kanji Icon */}
-                <div
-                  className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4 font-bold"
-                  style={{ color: service.accent }}
-                >
-                  {service.kanji}
+                {/* Service Icon */}
+                <div className="mb-3 sm:mb-4">
+                  <service.icon 
+                    size={48} 
+                    style={{ color: service.accent }}
+                    strokeWidth={1.5}
+                  />
                 </div>
 
                 {/* Title */}

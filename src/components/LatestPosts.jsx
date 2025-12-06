@@ -65,7 +65,7 @@ const LatestPosts = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <SectionTitle kanji="記">Últimas Publicaciones</SectionTitle>
+          <SectionTitle>Últimas Publicaciones</SectionTitle>
           <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
             Artículos sobre IA, automatización, desarrollo web y las últimas tendencias tech
           </p>
