@@ -55,17 +55,11 @@ export interface EasterEgg {
   action: () => void;
 }
 
-export type SpecialDateEffect = 'sakuraPetals' | 'fireworks' | null;
+export type SpecialDateEffect = 'fireworks' | null;
 
 export interface EasterEggContextType {
-  matrixRainActive: boolean;
-  toriiAnimationActive: boolean;
   specialDateEffect: SpecialDateEffect;
   handleLogoClick: () => void;
-  dismissMatrixRain: () => void;
-  dismissToriiAnimation: () => void;
-  activateMatrixRain: () => void;
-  activateToriiAnimation: () => void;
 }
 
 // ===== Animation Types =====
