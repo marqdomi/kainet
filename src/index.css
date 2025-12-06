@@ -180,7 +180,6 @@ html { scroll-behavior: smooth; }
 /* Respeta preferencias del usuario para reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
   .btn-kainet { animation: none; }
-  .k-cursor { transition: none; }
 }
 
 /* ====================================
