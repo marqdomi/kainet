@@ -1,5 +1,6 @@
 // src/pages/BlogPage.tsx
 import React, { Suspense, lazy } from 'react';
+import SEO from '../components/SEO';
 
 const Blog = lazy(() => import('../components/Blog'));
 
@@ -11,10 +12,18 @@ const LoadingFallback: React.FC = () => (
 
 const BlogPage: React.FC = () => {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Blog />
-    </Suspense>
+    <>
+      <SEO
+        title="Blog"
+        description="Artículos sobre IA, automatización empresarial, desarrollo web y DevOps. Mantente al día con las últimas tendencias en tecnología y transformación digital."
+        url="https://kainet.mx/blog"
+      />
+      <Suspense fallback={<LoadingFallback />}>
+        <Blog />
+      </Suspense>
+    </>
   );
 };
 
 export default BlogPage;
+

@@ -1,5 +1,6 @@
 // src/pages/ContactPage.tsx
 import React, { Suspense, lazy } from 'react';
+import SEO from '../components/SEO';
 
 const Contact = lazy(() => import('../components/Contact'));
 
@@ -11,10 +12,18 @@ const LoadingFallback: React.FC = () => (
 
 const ContactPage: React.FC = () => {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Contact />
-    </Suspense>
+    <>
+      <SEO
+        title="Contacto"
+        description="Contáctanos para consultas sobre automatización, desarrollo web o proyectos SaaS. Respuesta en menos de 24 horas. Ciudad de México."
+        url="https://kainet.mx/contact"
+      />
+      <Suspense fallback={<LoadingFallback />}>
+        <Contact />
+      </Suspense>
+    </>
   );
 };
 
 export default ContactPage;
+
