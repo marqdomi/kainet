@@ -17,6 +17,7 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 import NewsletterConfirmPage from './pages/NewsletterConfirmPage';
+import PrivacyPage from './pages/PrivacyPage';
 import KaidoPage from './pages/KaidoPage';
 import ProductsPage from './pages/ProductsPage';
 import ServicesPage from './pages/ServicesPage';
@@ -76,6 +77,9 @@ const AppContent = () => {
 
         {/* Newsletter */}
         <Route path="newsletter/confirm" element={<NewsletterConfirmPage />} />
+
+        {/* Legal */}
+        <Route path="privacidad" element={<PrivacyPage />} />
 
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
