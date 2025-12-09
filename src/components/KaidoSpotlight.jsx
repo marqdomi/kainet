@@ -16,37 +16,51 @@ const KaidoSpotlight = () => {
 
                         {/* Content Side */}
                         <div className="space-y-6 z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--cyan-neon)]/10 border border-[var(--cyan-neon)]/30 text-[var(--cyan-neon)] text-xs font-bold tracking-wider uppercase">
-                                <span className="w-2 h-2 rounded-full bg-[var(--cyan-neon)] animate-pulse" />
-                                Producto Insignia
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--purple-neon)]/10 border border-[var(--purple-neon)]/30 text-[var(--purple-neon)] text-xs font-bold tracking-wider uppercase">
+                                <span className="w-2 h-2 rounded-full bg-[var(--purple-neon)] animate-pulse" />
+                                PROTOTIPO I+D / EN DESARROLLO
                             </div>
 
                             <div className="space-y-2">
+                                <p className="text-lg text-[var(--cyan-neon)] font-medium tracking-wide">
+                                    Enfoque Actual:
+                                </p>
                                 <GlitchText
                                     text="KAIDO"
                                     as="h2"
                                     className="text-5xl md:text-7xl font-bold tracking-tighter text-white"
                                 />
                                 <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-light">
-                                    El Camino del Cambio
+                                    Plataforma de Aprendizaje
                                 </p>
                             </div>
 
                             <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                                La primera plataforma SaaS que resuelve la <span className="text-white font-medium">Paradoja de la Inclusión</span>.
-                                Combinamos una experiencia de aprendizaje altamente gamificada con los estándares más estrictos de accesibilidad (WCAG 2.1 Level AA).
+                                Un ecosistema de gestión de aprendizaje (LMS) <span className="text-white font-medium">gamificado e inclusivo</span>,
+                                diseñado para democratizar el acceso a habilidades de ingeniería mediante personalización con IA.
                             </p>
+
+                            {/* Stack Visual */}
+                            <div className="flex flex-wrap gap-3 pt-2">
+                                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🐍 Python
+                                </span>
+                                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    ⚛️ React
+                                </span>
+                                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🐳 Docker
+                                </span>
+                                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🤖 OpenAI API
+                                </span>
+                            </div>
 
                             <div className="flex flex-wrap gap-4 pt-4">
                                 <Link to="/kaido">
                                     <Button variant="primary" size="lg" className="group">
-                                        Explorar Kaido
+                                        Ver Detalles del Proyecto
                                         <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                                    </Button>
-                                </Link>
-                                <Link to="/contact">
-                                    <Button variant="secondary" size="lg">
-                                        Solicitar Demo
                                     </Button>
                                 </Link>
                             </div>

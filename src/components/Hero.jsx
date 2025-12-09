@@ -51,7 +51,7 @@ const Hero = () => {
             className="mb-6"
           >
             <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-xs sm:text-sm font-bold tracking-wider uppercase">
-              Mexican Tech Startup
+              Laboratorio de I+D Personal
             </span>
           </motion.div>
 
@@ -62,7 +62,7 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
           >
-            Construimos SaaS de Clase Mundial
+            Explorando la Frontera de la IA
           </motion.h1>
 
           <motion.h2
@@ -71,7 +71,7 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
             className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-6 sm:mb-8"
           >
-            para el Mercado Latino
+            y la Automatización de Redes
           </motion.h2>
 
           {/* Subtitle / Value Prop */}
@@ -81,10 +81,11 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.9 }}
             className="text-base sm:text-lg md:text-xl text-body max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
           >
-            Combinamos <span className="text-heading font-semibold">gamificación extrema</span> con{' '}
-            <span className="text-heading font-semibold">accesibilidad universal</span>.
-            Nuestro producto insignia, <span className="text-[var(--cyan-neon)] font-bold">KAIDO</span>,
-            está transformando el aprendizaje corporativo.
+            Una iniciativa personal de I+D enfocada en{' '}
+            <span className="text-heading font-semibold">arquitecturas inteligentes</span> y el desarrollo de{' '}
+            <span className="text-heading font-semibold">plataformas educativas inclusivas</span>.
+            Mi proyecto actual, <span className="text-[var(--cyan-neon)] font-bold">KAIDO</span>,
+            está redefiniendo el aprendizaje corporativo.
           </motion.p>
 
           {/* CTAs */}
@@ -95,17 +96,17 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
             <a
-              href="/kaido"
+              href="/proyectos"
               className="btn btn-lg btn-primary w-full sm:w-auto text-center group"
             >
-              Explorar KAIDO
+              Ver Proyectos Técnicos
               <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
             </a>
             <a
-              href="#about"
+              href="/servicios"
               className="btn btn-lg btn-secondary w-full sm:w-auto text-center"
             >
-              El Manifiesto
+              Mi Stack Tecnológico
             </a>
           </motion.div>
         </div>

@@ -49,7 +49,7 @@ const Home: React.FC = () => {
     <>
       <SEO
         title="Inicio"
-        description="KAINET: Automatización inteligente, desarrollo web premium y soluciones SaaS. Transformamos empresas con IA, DevOps y software de alto rendimiento en México."
+        description="Portafolio técnico y laboratorio de innovación de Marco Domínguez. Enfocado en IA, Automatización de Redes y Plataformas Educativas."
         url="https://kainet.mx"
       />
 

@@ -91,12 +91,13 @@ const Contact = () => {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-14">
-          <SectionTitle>Hablemos</SectionTitle>
+          <SectionTitle>Conectar</SectionTitle>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-heading mt-4 mb-4">
-            ¿Tienes un proyecto en mente?
+            ¿Interesado en mi perfil?
           </h1>
           <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
-            Cuéntanos tu idea o reto técnico. Nuestro equipo te responderá en menos de 24 horas para explorar cómo podemos ayudarte.
+            Si tienes preguntas sobre mis proyectos de I+D o quieres conectar profesionalmente, 
+            puedes escribirme directamente o conectar en LinkedIn.
           </p>
         </div>
 

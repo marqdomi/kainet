@@ -61,8 +61,11 @@ const KaidoPage = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Badge variant="purple" size="lg" className="mb-6">
-                                Proyecto Insignia
+                                PROTOTIPO I+D / EN DESARROLLO
                             </Badge>
+                            <p className="text-lg text-[var(--cyan-neon)] font-medium tracking-wide mb-2">
+                                Enfoque Actual:
+                            </p>
                             <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-white mb-6">
                                 <GlitchText>
                                     KAIDO
@@ -71,23 +74,40 @@ const KaidoPage = () => {
                             <p
                                 className="text-2xl md:text-3xl text-[var(--cyan-neon)] font-light mb-8"
                             >
-                                "No construimos software; edificamos portales digitales."
+                                Plataforma de Aprendizaje Gamificada
                             </p>
                             <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed">
-                                La solución definitiva a la paradoja de la inclusión.
-                                <br />
+                                Un ecosistema de gestión de aprendizaje (LMS) gamificado e inclusivo,
+                                diseñado para democratizar el acceso a habilidades de ingeniería mediante personalización con IA.
+                                <br /><br />
                                 <span className="text-white">Gamificación extrema</span> + <span className="text-white">Accesibilidad universal</span>.
                             </p>
 
+                            {/* Stack Visual */}
+                            <div className="flex flex-wrap gap-3 justify-center mb-8">
+                                <span className="px-4 py-2 bg-black/30 border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🐍 Python
+                                </span>
+                                <span className="px-4 py-2 bg-black/30 border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    ⚛️ React
+                                </span>
+                                <span className="px-4 py-2 bg-black/30 border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🐳 Docker
+                                </span>
+                                <span className="px-4 py-2 bg-black/30 border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                                    🤖 OpenAI API
+                                </span>
+                            </div>
+
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <Link to="/contact">
-                                    <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                                        Solicitar Demo Corporativa
-                                    </Button>
-                                </Link>
                                 <a href="#features">
-                                    <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                                    <Button variant="primary" size="lg" className="w-full sm:w-auto">
                                         Ver Características
+                                    </Button>
+                                </a>
+                                <a href="https://www.linkedin.com/in/marcdomibe/" target="_blank" rel="noopener noreferrer">
+                                    <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                                        Conectar en LinkedIn
                                     </Button>
                                 </a>
                             </div>

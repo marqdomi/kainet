@@ -40,11 +40,11 @@ const HamburgerIcon = ({ isOpen }) => (
 
 // Navigation Links Data
 const navLinks = [
-  { to: '/nosotros', label: 'Nosotros' },
-  { to: '/productos', label: 'Productos' },
-  { to: '/servicios', label: 'Servicios' },
+  { to: '/nosotros', label: 'Sobre Mí' },
+  { to: '/servicios', label: 'Competencias' },
+  { to: '/proyectos', label: 'Proyectos' },
   { to: '/blog', label: 'Blog' },
-  { to: '/contact', label: 'Contacto' },
+  { to: '/contact', label: 'Conectar' },
 ];
 
 const Navbar = () => {
@@ -279,13 +279,15 @@ const Navbar = () => {
                   <div className="flex justify-center mb-4">
                     <ThemeToggle />
                   </div>
-                  <Link
-                    to="/contact"
+                  <a
+                    href="https://www.linkedin.com/in/marcdomibe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="btn btn-md btn-primary btn-full"
                   >
-                    Hablemos →
-                  </Link>
+                    Conectar en LinkedIn →
+                  </a>
                   <p className="text-center text-xs text-[var(--text-tertiary)] mt-4">
                     contacto@kainet.mx
                   </p>

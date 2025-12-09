@@ -3,41 +3,50 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button, SectionTitle, Badge, Card } from '../components/ui';
 import SEO from '../components/SEO';
-import { Bot, Code, Cloud, Palette, Check } from 'lucide-react';
+import { Brain, Code, Cloud, Network, Check, Server, Database } from 'lucide-react';
 
 const ServicesPage = () => {
-    const services = [
+    const competencies = [
         {
-            icon: Bot,
-            title: 'Automatización Inteligente',
-            description: 'Optimizamos procesos empresariales con IA y automatización custom. Reducimos tiempos operativos hasta en un 70%.',
-            features: ['Workflows automatizados', 'Integraciones API', 'RPA & AI', 'Dashboards en tiempo real']
+            icon: Brain,
+            title: 'IA Aplicada y LLMs',
+            description: 'Experimentación con pipelines RAG, Azure AI Foundry y Agentes Autónomos para fines educativos y de optimización.',
+            skills: ['OpenAI GPT-4', 'Azure AI Foundry', 'LangChain', 'RAG Pipelines', 'Prompt Engineering', 'Fine-tuning']
         },
         {
             icon: Code,
-            title: 'Desarrollo Web Premium',
-            description: 'Aplicaciones web de alto rendimiento con React, Next.js y tecnologías modernas. Diseño responsivo y accesible.',
-            features: ['React/Next.js', 'UI/UX Premium', 'Performance optimizada', 'WCAG compliant']
+            title: 'Ingeniería Full-Stack',
+            description: 'Construcción de aplicaciones escalables usando Python (FastAPI), React y Next.js con enfoque en UX/UI intuitivo.',
+            skills: ['Python/FastAPI', 'React/Next.js', 'TypeScript', 'PostgreSQL', 'GraphQL', 'REST APIs']
+        },
+        {
+            icon: Network,
+            title: 'Automatización de Redes',
+            description: 'Uniendo NetDevOps con Infraestructura como Código (IaC) para resolver retos complejos en Centros de Datos.',
+            skills: ['Ansible', 'Terraform', 'Python Netmiko', 'NAPALM', 'CI/CD Pipelines', 'Network Testing']
         },
         {
             icon: Cloud,
-            title: 'Consultoría Cloud & DevOps',
-            description: 'Arquitectura cloud-native, CI/CD y estrategias de deployment escalables en Azure, AWS y GCP.',
-            features: ['Azure/AWS/GCP', 'CI/CD Pipelines', 'Kubernetes', 'Monitoreo y alertas']
-        },
-        {
-            icon: Palette,
-            title: 'SaaS MVPs',
-            description: 'Construimos MVPs de productos SaaS en 8-12 semanas. De la idea al mercado rápidamente.',
-            features: ['Arquitectura multi-tenant', 'Auth & Billing', 'Admin panels', 'Analytics integradas']
+            title: 'Cloud & DevOps',
+            description: 'Arquitectura cloud-native en Azure con enfoque en observabilidad, seguridad y escalabilidad.',
+            skills: ['Azure', 'Docker', 'Kubernetes', 'GitHub Actions', 'Prometheus/Grafana', 'Datadog']
         }
+    ];
+
+    const tools = [
+        { category: 'Lenguajes', items: ['Python', 'TypeScript', 'Go', 'SQL'] },
+        { category: 'Frontend', items: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'] },
+        { category: 'Backend', items: ['FastAPI', 'Node.js', 'PostgreSQL', 'Redis'] },
+        { category: 'AI/ML', items: ['OpenAI', 'LangChain', 'Azure AI', 'Hugging Face'] },
+        { category: 'Networking', items: ['Ansible', 'Terraform', 'Netmiko', 'NAPALM'] },
+        { category: 'DevOps', items: ['Docker', 'Kubernetes', 'GitHub Actions', 'Azure DevOps'] }
     ];
 
     return (
         <>
             <SEO
-                title="Servicios - Automatización y Desarrollo Premium"
-                description="Servicios de automatización inteligente, desarrollo web y consultoría cloud de KAINET. Transformamos empresas mexicanas con tecnología de punta."
+                title="Competencias Técnicas - Marco Domínguez"
+                description="Stack tecnológico y áreas de especialización: IA/LLMs, Ingeniería Full-Stack, Automatización de Redes y DevOps."
                 url="https://kainet.mx/servicios"
             />
 
@@ -52,24 +61,24 @@ const ServicesPage = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Badge variant="default" size="lg" className="mb-6">
-                                El Motor - Flujo de caja y aprendizaje
+                                Stack Tecnológico
                             </Badge>
                             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                                Servicios de Consultoría
+                                Competencias Técnicas
                             </h1>
                             <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8">
-                                Transformación digital de alto nivel para PyMEs y corporativos.
-                                Utilizamos nuestra experiencia en productos SaaS para impulsar tu empresa.
+                                Áreas de investigación y dominio técnico que aplico en mis proyectos de I+D.
+                                Enfocado en construir soluciones escalables y de alto impacto.
                             </p>
                         </motion.div>
                     </div>
                 </section>
 
-                {/* Services Grid */}
+                {/* Competencies Grid */}
                 <section className="py-12 px-6">
                     <div className="max-w-7xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {services.map((service, index) => (
+                            {competencies.map((comp, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, y: 20 }}
@@ -79,19 +88,21 @@ const ServicesPage = () => {
                                 >
                                     <Card variant="default" hover padding="lg" className="h-full">
                                         <div className="mb-4">
-                                            <service.icon className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                                            <comp.icon className="w-12 h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
                                         </div>
-                                        <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+                                        <h3 className="text-2xl font-bold text-white mb-3">{comp.title}</h3>
                                         <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                                            {service.description}
+                                            {comp.description}
                                         </p>
 
-                                        <div className="space-y-2">
-                                            {service.features.map((feature, i) => (
-                                                <div key={i} className="flex items-center gap-2 text-sm">
-                                                    <Check className="w-4 h-4 text-[var(--cyan-neon)]" />
-                                                    <span className="text-[var(--text-secondary)]">{feature}</span>
-                                                </div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {comp.skills.map((skill, i) => (
+                                                <span 
+                                                    key={i} 
+                                                    className="px-3 py-1 text-xs bg-[var(--card-bg)] border border-[var(--border-color)] rounded-full text-[var(--text-secondary)]"
+                                                >
+                                                    {skill}
+                                                </span>
                                             ))}
                                         </div>
                                     </Card>
@@ -100,72 +111,76 @@ const ServicesPage = () => {
                         </div>
                     </div>
                 </section>
-
-                {/* Why Choose Us */}
-                <section className="py-20 px-6 bg-[var(--gray-800)]/20">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-16">
-                            <SectionTitle>Por Qué Elegirnos</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">Experiencia que Cuenta</h2>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <Card variant="default" hover className="text-center">
-                                <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">100%</div>
-                                <div className="text-lg font-semibold text-white mb-2">Enfoque en Resultados</div>
-                                <p className="text-sm text-[var(--text-secondary)]">
-                                    No solo código, sino soluciones que impactan tu negocio
-                                </p>
-                            </Card>
-
-                            <Card variant="default" hover className="text-center">
-                                <div className="text-4xl font-bold text-[var(--purple-neon)] mb-2">8-12</div>
-                                <div className="text-lg font-semibold text-white mb-2">Semanas para MVP</div>
-                                <p className="text-sm text-[var(--text-secondary)]">
-                                    Desarrollo ágil sin sacrificar calidad
-                                </p>
-                            </Card>
-
-                            <Card variant="default" hover className="text-center">
-                                <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">24/7</div>
-                                <div className="text-lg font-semibold text-white mb-2">Soporte Post-Launch</div>
-                                <p className="text-sm text-[var(--text-secondary)]">
-                                    Acompañamiento continuo después del despliegue
-                                </p>
-                            </Card>
-                        </div>
                     </div>
                 </section>
 
-                {/* Process */}
-                <section className="py-20 px-6">
+                {/* Tools & Technologies */}
+                <section className="py-20 px-6 bg-[var(--gray-800)]/20">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
-                            <SectionTitle>Nuestro Proceso</SectionTitle>
-                            <h2 className="text-4xl font-bold text-white mt-4">De la Consulta al Deployment</h2>
+                            <SectionTitle>Herramientas</SectionTitle>
+                            <h2 className="text-4xl font-bold text-white mt-4">Stack Tecnológico</h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            {[
-                                { num: '01', title: 'Consulta', desc: 'Entendemos tus necesidades y objetivos' },
-                                { num: '02', title: 'Propuesta', desc: 'Plan técnico detallado y cotización' },
-                                { num: '03', title: 'Desarrollo', desc: 'Sprints ágiles con demos semanales' },
-                                { num: '04', title: 'Launch', desc: 'Deployment y entrenamiento de equipo' }
-                            ].map((step, index) => (
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                            {tools.map((toolGroup, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
+                                    transition={{ delay: index * 0.05 }}
                                 >
-                                    <Card variant="default" hover className="text-center h-full">
-                                        <div className="text-5xl font-bold text-[var(--cyan-neon)]/20 mb-3">{step.num}</div>
-                                        <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                                        <p className="text-sm text-[var(--text-secondary)]">{step.desc}</p>
+                                    <Card variant="default" hover className="h-full">
+                                        <h3 className="text-sm font-bold text-[var(--cyan-neon)] mb-3 uppercase tracking-wider">
+                                            {toolGroup.category}
+                                        </h3>
+                                        <ul className="space-y-1.5">
+                                            {toolGroup.items.map((item, i) => (
+                                                <li key={i} className="text-sm text-[var(--text-secondary)]">
+                                                    {item}
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </Card>
                                 </motion.div>
                             ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Experience Highlights */}
+                <section className="py-20 px-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <SectionTitle>Experiencia</SectionTitle>
+                            <h2 className="text-4xl font-bold text-white mt-4">Trayectoria Técnica</h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <Card variant="default" hover className="text-center">
+                                <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">8+</div>
+                                <div className="text-lg font-semibold text-white mb-2">Años en Tecnología</div>
+                                <p className="text-sm text-[var(--text-secondary)]">
+                                    Desarrollo de software, automatización y arquitectura de sistemas
+                                </p>
+                            </Card>
+
+                            <Card variant="default" hover className="text-center">
+                                <div className="text-4xl font-bold text-[var(--purple-neon)] mb-2">Data Centers</div>
+                                <div className="text-lg font-semibold text-white mb-2">Networking Enterprise</div>
+                                <p className="text-sm text-[var(--text-secondary)]">
+                                    Experiencia en automatización de redes para centros de datos
+                                </p>
+                            </Card>
+
+                            <Card variant="default" hover className="text-center">
+                                <div className="text-4xl font-bold text-[var(--cyan-neon)] mb-2">AI/ML</div>
+                                <div className="text-lg font-semibold text-white mb-2">Enfoque Actual</div>
+                                <p className="text-sm text-[var(--text-secondary)]">
+                                    Investigación activa en LLMs, RAG y agentes autónomos
+                                </p>
+                            </Card>
                         </div>
                     </div>
                 </section>
@@ -175,20 +190,20 @@ const ServicesPage = () => {
                     <div className="max-w-4xl mx-auto text-center">
                         <Card variant="featured" padding="lg" className="py-16 text-center">
                             <h2 className="text-4xl font-bold text-white mb-6">
-                                ¿Listo para transformar tu empresa?
+                                ¿Interesado en colaborar?
                             </h2>
                             <p className="text-xl text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
-                                Agenda una consulta gratuita de 30 minutos. Sin compromiso.
+                                Siempre abierto a discutir proyectos técnicos interesantes y oportunidades de colaboración.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <Link to="/contact">
+                                <a href="https://www.linkedin.com/in/marcdomibe/" target="_blank" rel="noopener noreferrer">
                                     <Button variant="primary" size="lg">
-                                        Agendar Consulta Gratuita
+                                        Conectar en LinkedIn
                                     </Button>
-                                </Link>
+                                </a>
                                 <Link to="/proyectos">
                                     <Button variant="secondary" size="lg">
-                                        Ver Proyectos Realizados
+                                        Ver Proyectos
                                     </Button>
                                 </Link>
                             </div>
