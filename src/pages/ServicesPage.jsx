@@ -111,8 +111,6 @@ const ServicesPage = () => {
                         </div>
                     </div>
                 </section>
-                    </div>
-                </section>
 
                 {/* Tools & Technologies */}
                 <section className="py-20 px-6 bg-[var(--gray-800)]/20">
