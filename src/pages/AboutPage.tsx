@@ -1,16 +1,17 @@
 // src/pages/AboutPage.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionTitle, Card } from '../components/ui';
+import { Link } from 'react-router-dom';
+import { SectionTitle, Card, Button } from '../components/ui';
 import SEO from '../components/SEO';
-import { Star, Settings, X, Check } from 'lucide-react';
+import { Brain, Network, Rocket, Linkedin, FileText } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Nosotros - El Manifiesto KAINET"
-        description="Conoce la visión, misión y filosofía de KAINET. Somos una startup mexicana que construye SaaS de clase mundial."
+        title="Sobre Mí - Marco Domínguez"
+        description="Ingeniero de Software Senior especializado en IA, Automatización de Redes y Desarrollo Full-Stack. Construyendo el futuro de la tecnología educativa."
         url="https://kainet.mx/nosotros"
       />
 
@@ -24,93 +25,75 @@ const AboutPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <SectionTitle>El Manifiesto</SectionTitle>
+              <SectionTitle>Sobre Mí</SectionTitle>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 mt-6">
-                KAINET
+                Marco Domínguez
               </h1>
-              <p className="text-2xl text-[var(--cyan-neon)] font-light italic">
-                "No construimos software; edificamos portales digitales hacia el futuro."
+              <p className="text-2xl text-[var(--cyan-neon)] font-light">
+                Senior Software Engineer · Builder · Investigador
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Identidad y Propósito */}
+        {/* Bio Section */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
             <Card variant="default" padding="lg">
-              <h2 className="text-3xl font-bold text-white mb-6">1. Identidad y Propósito</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">Mi Enfoque</h2>
 
               <div className="space-y-6 text-[var(--text-secondary)]">
-                <div>
-                  <h3 className="text-xl font-bold text-[var(--cyan-neon)] mb-3">¿Quiénes somos?</h3>
-                  <p className="leading-relaxed">
-                    KAINET es una <span className="text-white font-semibold">Startup de Tecnología Mexicana</span> enfocada
-                    en la innovación de productos propios y la transformación digital de alto nivel. Somos el punto donde la
-                    estructura y la disciplina (el <em>Torii</em>) se encuentran con la velocidad y la conectividad del mundo
-                    digital (el <em>Circuito</em>).
-                  </p>
-                </div>
+                <p className="leading-relaxed text-lg">
+                  Soy un ingeniero de software con más de 8 años de experiencia en el desarrollo de soluciones tecnológicas
+                  de alto impacto. Mi trayectoria abarca desde la <span className="text-white font-semibold">automatización
+                  de redes en centros de datos</span> hasta la <span className="text-white font-semibold">investigación
+                  activa en IA y LLMs</span>.
+                </p>
 
-                <div>
-                  <h3 className="text-xl font-bold text-[var(--cyan-neon)] mb-3">Nuestra Visión (El Futuro)</h3>
-                  <p className="leading-relaxed">
-                    Ser la referencia de ingeniería de software en México, demostrando que la tecnología más avanzada — desde
-                    la arquitectura Cloud Native hasta la Inteligencia Artificial — puede ser, al mismo tiempo, robusta,
-                    accesible y profundamente humana. Queremos ser el <strong className="text-white">"puente de confianza"</strong>
-                    para empresas y usuarios que entran a la nueva era digital.
-                  </p>
-                </div>
+                <p className="leading-relaxed">
+                  Actualmente, mi investigación se centra en la intersección de la inteligencia artificial con la educación
+                  inclusiva, trabajando en <span className="text-[var(--cyan-neon)] font-semibold">KAIDO</span>, un prototipo
+                  de LMS gamificado que busca democratizar el acceso a habilidades de ingeniería.
+                </p>
 
-                <div>
-                  <h3 className="text-xl font-bold text-[var(--cyan-neon)] mb-3">Nuestra Misión (El Día a Día)</h3>
-                  <p className="leading-relaxed">
-                    Desarrollar plataformas SaaS de clase mundial que resuelvan paradojas complejas (como la inclusión vs.
-                    gamificación) y utilizar esa experiencia de vanguardia para ofrecer servicios de automatización y desarrollo
-                    que impulsen a las empresas mexicanas.
-                  </p>
-                </div>
+                <p className="leading-relaxed">
+                  Este sitio es mi <span className="text-white font-semibold">laboratorio personal de I+D</span>: un espacio
+                  para experimentar con nuevas tecnologías, documentar mis aprendizajes y compartir mis proyectos con la
+                  comunidad técnica.
+                </p>
               </div>
             </Card>
           </div>
         </section>
 
-        {/* Modelo Estratégico */}
+        {/* Areas of Focus */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
             <Card variant="default" padding="lg">
-              <h2 className="text-3xl font-bold text-white mb-6">2. Modelo Estratégico: El Faro y el Motor</h2>
+              <h2 className="text-3xl font-bold text-white mb-8">Áreas de Investigación</h2>
 
-              <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
-                Operamos bajo un modelo híbrido diseñado para la innovación sostenible:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Star className="w-10 h-10 text-[var(--cyan-neon)]" strokeWidth={1.5} />
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--cyan-neon)]">El Faro</h3>
-                      <p className="text-sm text-[var(--text-secondary)]">80% Foco - Nuestro Prestigio</p>
-                    </div>
-                  </div>
-                  <p className="text-[var(--text-secondary)] leading-relaxed">
-                    El desarrollo de nuestros propios productos SaaS. Aquí es donde innovamos, tomamos riesgos y construimos
-                    nuestra autoridad técnica y de marca a largo plazo.
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <Brain className="w-12 h-12 text-[var(--cyan-neon)] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="text-xl font-bold text-white mb-2">IA Aplicada</h3>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    LLMs, RAG pipelines, agentes autónomos y Azure AI Foundry
                   </p>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Settings className="w-10 h-10 text-[var(--purple-neon)]" strokeWidth={1.5} />
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--purple-neon)]">El Motor</h3>
-                      <p className="text-sm text-[var(--text-secondary)]">20% Foco - Nuestro Flujo</p>
-                    </div>
-                  </div>
-                  <p className="text-[var(--text-secondary)] leading-relaxed">
-                    Servicios de consultoría, desarrollo web y automatización para clientes selectos (PyMEs y corporativos).
-                    Esto nos genera flujo de caja inmediato y nos mantiene conectados con el mercado.
+                <div className="text-center">
+                  <Network className="w-12 h-12 text-[var(--purple-neon)] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="text-xl font-bold text-white mb-2">NetDevOps</h3>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    Automatización de redes, IaC y CI/CD para infraestructura
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <Rocket className="w-12 h-12 text-[var(--orange-accent)] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="text-xl font-bold text-white mb-2">EdTech</h3>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    Plataformas educativas, gamificación y accesibilidad WCAG
                   </p>
                 </div>
               </div>
@@ -118,36 +101,81 @@ const AboutPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Producto Insignia */}
+        {/* Current Project */}
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
             <Card variant="featured" padding="lg">
-              <h2 className="text-3xl font-bold text-white mb-6">3. Producto Insignia: KAIDO</h2>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="px-3 py-1 bg-[var(--purple-neon)]/20 border border-[var(--purple-neon)]/30 rounded-full text-[var(--purple-neon)] text-xs font-bold tracking-wider uppercase">
+                  PROTOTIPO I+D
+                </span>
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">Enfoque Actual: KAIDO</h2>
 
-              <div className="space-y-6 text-[var(--text-secondary)]">
-                <div className="bg-[var(--cyan-neon)]/10 border border-[var(--cyan-neon)]/20 rounded-lg p-6">
-                  <p className="text-sm text-[var(--text-secondary)] mb-2">Anteriormente conocido como:</p>
-                  <p className="text-lg font-mono text-[var(--cyan-neon)]">Proyecto AccessLearn</p>
-                </div>
+              <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                <strong className="text-[var(--cyan-neon)]">KAIDO</strong> es un ecosistema de gestión de aprendizaje (LMS)
+                gamificado e inclusivo, diseñado para democratizar el acceso a habilidades de ingeniería mediante
+                personalización con IA.
+              </p>
 
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-3">Concepto</h3>
-                  <p className="leading-relaxed mb-4">
-                    <strong className="text-[var(--cyan-neon)]">KAIDO</strong> ("El Camino del Cambio") es la primera
-                    plataforma SaaS de educación corporativa que resuelve la "paradoja de la inclusión".
-                  </p>
+              <div className="flex flex-wrap gap-3 mb-6">
+                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                  🐍 Python
+                </span>
+                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                  ⚛️ React
+                </span>
+                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                  🐳 Docker
+                </span>
+                <span className="px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-secondary)]">
+                  🤖 OpenAI API
+                </span>
+              </div>
 
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
-                      <span>La mayoría del software accesible es aburrido.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <X className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" strokeWidth={2} />
-                      <span>La mayoría del software gamificado no es accesible.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <Check className="w-6 h-6 text-[var(--cyan-neon)] mt-1 flex-shrink-0" strokeWidth={2} />
+              <Link to="/kaido">
+                <Button variant="primary" size="lg">
+                  Ver Detalles del Proyecto →
+                </Button>
+              </Link>
+            </Card>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-12">
+          <div className="max-w-4xl mx-auto text-center">
+            <Card variant="default" padding="lg" className="py-12">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                ¿Interesado en mi perfil?
+              </h2>
+              <p className="text-[var(--text-secondary)] mb-8 max-w-lg mx-auto">
+                Siempre abierto a discutir oportunidades técnicas, colaboraciones de investigación o simplemente conectar profesionalmente.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://www.linkedin.com/in/marcdomibe/" target="_blank" rel="noopener noreferrer">
+                  <Button variant="primary" size="lg">
+                    <Linkedin className="w-5 h-5 mr-2" />
+                    Conectar en LinkedIn
+                  </Button>
+                </a>
+                <a href="/cv-marco-dominguez.pdf" download>
+                  <Button variant="secondary" size="lg">
+                    <FileText className="w-5 h-5 mr-2" />
+                    Descargar CV
+                  </Button>
+                </a>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+      </div>
+    </>
+  );
+};
+
+export default AboutPage;
                       <span className="text-white font-semibold">
                         KAIDO es ambas cosas: Una experiencia de aprendizaje altamente gamificada (XP, niveles, progreso)
                         diseñada desde cero para cumplir con los estándares más estrictos de accesibilidad (WCAG 2.1 Level AA).

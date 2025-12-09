@@ -55,9 +55,9 @@ const ProjectsPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <SectionTitle>Proyectos</SectionTitle>
+          <SectionTitle>Proyectos de I+D</SectionTitle>
           <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4">
-            Soluciones innovadoras en IA, automatización y desarrollo web que transforman ideas en realidad
+            Portafolio de proyectos técnicos y experimentos en IA, automatización de redes y desarrollo full-stack
           </p>
         </motion.div>
 

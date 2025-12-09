@@ -10,42 +10,42 @@ const Services = () => {
   const services = [
     {
       icon: Brain,
-      title: 'Inteligencia Artificial',
-      description: 'Soluciones de IA que transforman datos en decisiones inteligentes. Chatbots con RAG, análisis predictivo, automatización con LLMs y pipelines ML optimizados.',
-      technologies: ['OpenAI', 'Claude', 'LangChain', 'TensorFlow'],
+      title: 'IA Aplicada y LLMs',
+      description: 'Experimentación con pipelines RAG, Azure AI Foundry y Agentes Autónomos para fines educativos y de optimización.',
+      technologies: ['OpenAI', 'Azure AI', 'LangChain', 'RAG'],
       features: [
-        'Chatbots inteligentes con RAG',
-        'Generación de contenido con IA',
-        'Análisis predictivo y ML',
-        'Integración de APIs de IA'
+        'Pipelines RAG avanzados',
+        'Agentes autónomos con LLMs',
+        'Integración Azure AI Foundry',
+        'Fine-tuning y prompting'
       ],
       accent: 'var(--orange-accent)'
     },
     {
-      icon: Zap,
-      title: 'Automatización',
-      description: 'Automatización inteligente que libera tu tiempo para lo que importa. Workflows personalizados, scraping avanzado, integraciones API y notificaciones en tiempo real.',
-      technologies: ['Node.js', 'Python', 'Redis', 'GitHub Actions'],
-      features: [
-        'Workflows personalizados',
-        'Web scraping inteligente',
-        'Integraciones API',
-        'Notificaciones automatizadas'
-      ],
-      accent: 'var(--purple-neon)'
-    },
-    {
       icon: Code2,
-      title: 'Desarrollo Web',
-      description: 'Experiencias web que combinan diseño impactante con tecnología de vanguardia. React, Next.js, Three.js y efectos 3D que cautivan a tus usuarios.',
-      technologies: ['React', 'Next.js', 'Three.js', 'Tailwind CSS'],
+      title: 'Ingeniería Full-Stack',
+      description: 'Construcción de aplicaciones escalables usando Python (FastAPI), React y Next.js con enfoque en UX/UI intuitivo.',
+      technologies: ['Python', 'FastAPI', 'React', 'Next.js'],
       features: [
-        'Apps web modernas y rápidas',
-        'Efectos 3D interactivos',
-        'Diseño responsive optimizado',
-        'SEO y performance'
+        'APIs REST y GraphQL',
+        'Aplicaciones React modernas',
+        'Arquitectura de microservicios',
+        'Diseño UX/UI centrado en usuario'
       ],
       accent: 'var(--pink-accent)'
+    },
+    {
+      icon: Zap,
+      title: 'Automatización de Redes',
+      description: 'Uniendo NetDevOps con Infraestructura como Código (IaC) para resolver retos complejos en Centros de Datos.',
+      technologies: ['Ansible', 'Terraform', 'Python', 'Docker'],
+      features: [
+        'NetDevOps y CI/CD',
+        'Infraestructura como Código',
+        'Automatización de Data Centers',
+        'Monitoreo y observabilidad'
+      ],
+      accent: 'var(--purple-neon)'
     }
   ];
 
@@ -82,9 +82,9 @@ const Services = () => {
           transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <SectionTitle>Nuestros Servicios</SectionTitle>
+          <SectionTitle>Competencias Técnicas</SectionTitle>
           <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mt-4 px-2 sm:px-0">
-            Transformamos ideas en soluciones tecnológicas que impulsan tu negocio hacia el futuro
+            Áreas de investigación y dominio técnico que aplico en mis proyectos de I+D
           </p>
         </motion.div>
 
@@ -163,9 +163,9 @@ const Services = () => {
           transition={{ duration: 0.4, delay: 0.3 }}
           className="text-center"
         >
-          <Link to="/contact">
+          <Link to="/proyectos">
             <Button variant="primary" size="lg">
-              Hablemos de tu proyecto →
+              Ver Proyectos en Acción →
             </Button>
           </Link>
         </motion.div>

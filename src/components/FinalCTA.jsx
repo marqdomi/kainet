@@ -1,14 +1,13 @@
 // src/components/FinalCTA.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button, Card } from './ui';
-import { Rocket, Settings, Check } from 'lucide-react';
+import { Linkedin, FileText, Mail } from 'lucide-react';
 
 const FinalCTA = () => {
     return (
         <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-4xl mx-auto">
                 {/* Section Title */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -17,113 +16,70 @@ const FinalCTA = () => {
                     className="text-center mb-12"
                 >
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-heading mb-3 sm:mb-4">
-                        ¿Qué necesitas?
+                        ¿Interesado en mi perfil de ingeniería?
                     </h2>
                     <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto px-2 sm:px-0">
-                        Elige tu camino: SaaS listo para usar o desarrollo personalizado
+                        Conectemos para discutir oportunidades o colaboraciones técnicas
                     </p>
                 </motion.div>
 
-                {/* Dual CTAs */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-                    {/* Productos CTA */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        <Card variant="default" hover padding="lg" className="h-full text-center">
-                            <div className="flex justify-center mb-3 sm:mb-4">
-                                <Rocket className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--cyan-neon)]" strokeWidth={1.5} />
-                            </div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
-                                Plataforma SaaS
-                            </h3>
-                            <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4 sm:mb-6 leading-relaxed">
-                                Kaido está listo para transformar tu educación corporativa.
-                                Gamificación + Accesibilidad en una sola plataforma.
-                            </p>
-
-                            {/* Benefits list */}
-                            <ul className="text-left space-y-2 mb-6 text-sm">
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--cyan-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Setup en días, no meses</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--cyan-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Pricing por usuario</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--cyan-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Early Access pricing</span>
-                                </li>
-                            </ul>
-
-                            <Link to="/kaido">
-                                <Button variant="primary" size="lg" className="w-full">
-                                    Explorar Kaido →
-                                </Button>
-                            </Link>
-                        </Card>
-                    </motion.div>
-
-                    {/* Servicios CTA */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <Card variant="default" hover padding="lg" className="h-full text-center">
-                            <div className="flex justify-center mb-3 sm:mb-4">
-                                <Settings className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--purple-neon)]" strokeWidth={1.5} />
-                            </div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
-                                Desarrollo Custom
-                            </h3>
-                            <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4 sm:mb-6 leading-relaxed">
-                                ¿Necesitas algo específico? Construimos soluciones de IA,
-                                automatización y web a tu medida.
-                            </p>
-
-                            {/* Benefits list */}
-                            <ul className="text-left space-y-2 mb-6 text-sm">
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--purple-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Consultoría incluida</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--purple-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Desarrollo ágil (sprints)</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-[var(--purple-neon)] mt-0.5 flex-shrink-0" />
-                                    <span className="text-[var(--text-secondary)]">Soporte post-launch</span>
-                                </li>
-                            </ul>
-
-                            <Link to="/servicios">
-                                <Button variant="secondary" size="lg" className="w-full">
-                                    Ver Servicios →
-                                </Button>
-                            </Link>
-                        </Card>
-                    </motion.div>
-                </div>
-
-                {/* Bottom note */}
+                {/* Single CTA Card */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="text-center mt-8"
+                    transition={{ delay: 0.2 }}
                 >
-                    <p className="text-sm text-[var(--text-tertiary)]">
-                        ¿No estás seguro? <Link to="/contact" className="text-[var(--cyan-neon)] hover:underline">Contáctanos</Link> y te ayudamos a elegir
-                    </p>
+                    <Card variant="featured" hover padding="lg" className="text-center">
+                        <div className="flex justify-center mb-4">
+                            <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/10 flex items-center justify-center">
+                                <Mail className="w-8 h-8 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                            </div>
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
+                            Conectemos
+                        </h3>
+                        <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed max-w-lg mx-auto">
+                            Si estás interesado en mi experiencia técnica, colaboraciones de investigación,
+                            o simplemente quieres conectar profesionalmente, estos son los mejores canales.
+                        </p>
+
+                        {/* CTA Buttons */}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <a
+                                href="https://www.linkedin.com/in/marcdomibe/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button variant="primary" size="lg" className="w-full sm:w-auto">
+                                    <Linkedin className="w-5 h-5 mr-2" />
+                                    Conectar en LinkedIn
+                                </Button>
+                            </a>
+                            <a
+                                href="/cv-marco-dominguez.pdf"
+                                download
+                            >
+                                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                                    <FileText className="w-5 h-5 mr-2" />
+                                    Descargar CV
+                                </Button>
+                            </a>
+                        </div>
+
+                        {/* Email fallback */}
+                        <div className="mt-6 pt-6 border-t border-[var(--border-color)]">
+                            <p className="text-sm text-[var(--text-tertiary)]">
+                                También puedes escribirme a{' '}
+                                <a
+                                    href="mailto:contacto@kainet.mx"
+                                    className="text-[var(--cyan-neon)] hover:underline"
+                                >
+                                    contacto@kainet.mx
+                                </a>
+                            </p>
+                        </div>
+                    </Card>
                 </motion.div>
             </div>
         </section>

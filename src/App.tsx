@@ -54,12 +54,12 @@ const AppContent = () => {
         {/* Kaido Landing Page */}
         <Route path="kaido" element={<KaidoPage />} />
 
-        {/* Products & Services */}
-        <Route path="productos" element={<ProductsPage />} />
+        {/* Products & Services - Ahora Competencias */}
         <Route path="servicios" element={<ServicesPage />} />
 
-        {/* Projects (legacy, redirects to projects for now) */}
+        {/* Projects / Proyectos */}
         <Route path="projects" element={<ProjectsPage />} />
+        <Route path="proyectos" element={<ProjectsPage />} />
 
         {/* Blog */}
         <Route path="blog" element={<BlogPage />} />

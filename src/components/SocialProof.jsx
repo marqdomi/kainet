@@ -1,62 +1,26 @@
 // src/components/SocialProof.jsx
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Brain, Code, Network, Cloud } from 'lucide-react';
 
 const SocialProof = () => {
-    const [activeTestimonial, setActiveTestimonial] = useState(0);
-
-    // Métricas realistas para early access
+    // Métricas de experiencia técnica
     const metrics = [
-        { value: '250+', label: 'Usuarios Beta', icon: '👥' },
-        { value: '1.2K+', label: 'Cursos Completados', icon: '📚' },
-        { value: '82%', label: 'Completion Rate', icon: '📈' },
-        { value: 'WCAG AA', label: 'Accesibilidad', icon: '♿' }
+        { value: '8+', label: 'Años de Experiencia', icon: '🎯' },
+        { value: 'IA/ML', label: 'Enfoque Actual', icon: '🤖' },
+        { value: 'NetDevOps', label: 'Automatización', icon: '🔧' },
+        { value: 'Full-Stack', label: 'Desarrollo', icon: '💻' }
     ];
 
-    // Testimonios de clientes/usuarios
-    const testimonials = [
-        {
-            quote: "Kaido transformó completamente nuestra capacitación. La gamificación aumentó el engagement de nuestro equipo en un 300%.",
-            author: "María García",
-            role: "Directora de RRHH",
-            company: "TechCorp MX",
-            rating: 5,
-            avatar: null // Placeholder
-        },
-        {
-            quote: "La accesibilidad WCAG AA de la plataforma nos permitió incluir a todo nuestro equipo, sin excepciones. Impresionante.",
-            author: "Carlos Mendoza",
-            role: "CEO",
-            company: "Innovate Solutions",
-            rating: 5,
-            avatar: null
-        },
-        {
-            quote: "El setup fue increíblemente rápido. En 3 días ya teníamos toda nuestra capacitación funcionando con analytics en tiempo real.",
-            author: "Ana Torres",
-            role: "Learning Manager",
-            company: "Digital Academy",
-            rating: 5,
-            avatar: null
-        }
+    // Tecnologías principales
+    const techStack = [
+        { name: 'Python', category: 'Backend' },
+        { name: 'React', category: 'Frontend' },
+        { name: 'Azure AI', category: 'AI/ML' },
+        { name: 'Ansible', category: 'Network' },
+        { name: 'Docker', category: 'DevOps' },
+        { name: 'FastAPI', category: 'Backend' },
     ];
-
-    // Logos de empresas/partners (placeholders para logos reales)
-    const clientLogos = [
-        { name: 'TechCorp MX', logo: null },
-        { name: 'Innovate Solutions', logo: null },
-        { name: 'Digital Academy', logo: null },
-        { name: 'StartupLab', logo: null },
-    ];
-
-    const nextTestimonial = () => {
-        setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    };
-
-    const prevTestimonial = () => {
-        setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-    };
 
     return (
         <section className="py-10 sm:py-12 md:py-16 px-4 sm:px-6">
@@ -71,10 +35,10 @@ const SocialProof = () => {
                         className="text-center mb-8"
                     >
                         <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2">
-                            Resultados que <span className="text-[var(--cyan-neon)]">hablan</span>
+                            Experiencia <span className="text-[var(--cyan-neon)]">Técnica</span>
                         </h3>
                         <p className="text-sm text-[var(--text-secondary)]">
-                            Métricas reales de nuestra comunidad Early Access
+                            Stack tecnológico y áreas de especialización
                         </p>
                     </motion.div>
 
@@ -92,12 +56,43 @@ const SocialProof = () => {
                                 <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">
                                     {metric.icon}
                                 </div>
-                                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--cyan-neon)] mb-1 sm:mb-2">
+                                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--cyan-neon)] mb-1 sm:mb-2">
                                     {metric.value}
                                 </div>
                                 <div className="text-sm text-[var(--text-secondary)]">
                                     {metric.label}
                                 </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Tech Stack */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex flex-wrap justify-center gap-3"
+                    >
+                        {techStack.map((tech, index) => (
+                            <motion.span
+                                key={index}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.05 }}
+                                className="px-4 py-2 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-full text-sm text-[var(--text-secondary)] hover:border-[var(--cyan-neon)]/50 hover:text-[var(--cyan-neon)] transition-all cursor-default"
+                            >
+                                {tech.name}
+                            </motion.span>
+                        ))}
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default SocialProof;
                             </motion.div>
                         ))}
                     </div>

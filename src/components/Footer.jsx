@@ -49,7 +49,7 @@ const Footer = () => {
   return (
     <footer className="mt-16 md:mt-20 bg-transparent">
       <div className="mx-auto max-w-6xl px-6">
-        {/* Footer Principal */}
+            {/* Footer Principal */}
         <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl card-default border backdrop-blur-md p-6 sm:p-8 md:p-10">
           <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-8 items-start">
             {/* Columna 1: Logo + Descripción */}
@@ -62,13 +62,13 @@ const Footer = () => {
                 decoding="async"
               />
               <p className="text-muted text-sm leading-relaxed">
-                Prototipos robustos, visuales 3D y experiencias premium impulsadas por IA.
+                Laboratorio personal de I+D enfocado en IA, Automatización de Redes y Plataformas Educativas.
               </p>
             </div>
 
-            {/* Columna 2: Contacto */}
+            {/* Columna 2: Conectar */}
             <div className="md:col-span-1 text-center md:text-left">
-              <h3 className="text-heading font-semibold mb-4 text-lg">Contacto</h3>
+              <h3 className="text-heading font-semibold mb-4 text-lg">Conectar</h3>
               <div className="space-y-3 inline-flex flex-col items-center md:items-start">
                 <a
                   href="mailto:contacto@kainet.mx"
@@ -81,16 +81,16 @@ const Footer = () => {
                 </a>
                 <div className="pt-2">
                   <a
-                    href="/contact"
+                    href="https://www.linkedin.com/in/marcdomibe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn btn-sm btn-primary"
                   >
-                    Enviar mensaje
+                    Conectar en LinkedIn
                   </a>
                 </div>
               </div>
-            </div>
-
-            {/* Columna 3: Redes Sociales */}
+            </div>            {/* Columna 3: Redes Sociales */}
             <div className="md:col-span-1 text-center md:text-left">
               <h3 className="text-heading font-semibold mb-4 text-lg">Síguenos</h3>
               <div className="flex flex-wrap justify-center md:justify-start gap-3">
@@ -115,16 +115,24 @@ const Footer = () => {
 
               {/* Nota para futuras redes */}
               <p className="text-xs text-muted mt-4">
-                Próximamente en Facebook y TikTok
+                Próximamente en más plataformas
               </p>
             </div>
           </div>
         </div>
 
+        {/* Legal Disclaimer */}
+        <div className="py-4 text-center border-b border-[var(--border-color)]/30">
+          <p className="text-xs text-muted max-w-2xl mx-auto leading-relaxed">
+            Kainet es un portafolio personal y laboratorio de investigación de Marco Domínguez. 
+            Este sitio no tiene fines comerciales ni acepta solicitudes de servicios actualmente.
+          </p>
+        </div>
+
         {/* Copyright */}
         <div className="py-6 text-center">
           <p className="text-xs text-muted">
-            © {new Date().getFullYear()} KAINET. Todos los derechos reservados.
+            © {new Date().getFullYear()} Marco Domínguez. Todos los derechos reservados.
           </p>
         </div>
       </div>
