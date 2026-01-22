@@ -360,12 +360,21 @@ const AboutPage: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="flex flex-col lg:flex-row items-center gap-10"
             >
-              {/* Foto placeholder / Avatar */}
+              {/* Foto de perfil */}
               <div className="relative">
                 <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-[var(--cyan-neon)]/20 to-[var(--purple-neon)]/20 
                               border border-gray-700 flex items-center justify-center overflow-hidden">
-                  {/* Puedes reemplazar esto con tu foto real */}
-                  <span className="text-6xl">👨‍💻</span>
+                  {/* Foto de perfil - reemplazar /images/profile/marco-dominguez.jpg */}
+                  <img 
+                    src="/images/profile/marco-dominguez.jpg" 
+                    alt="Marco Domínguez"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback al emoji si no existe la imagen
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = '<span class="text-6xl">👨‍💻</span>';
+                    }}
+                  />
                 </div>
                 <div className="absolute -bottom-2 -right-2 px-3 py-1 bg-green-500/20 border border-green-500/30 
                               rounded-full text-green-400 text-xs font-bold">

@@ -79,6 +79,21 @@ jobs:
             node generate-strategic-post.js
           fi
       
+      - name: Commit generated SVG images
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Agregar nuevos SVGs si existen
+          if [ -n "$(git status --porcelain public/images/blog/)" ]; then
+            git add public/images/blog/*.svg
+            git commit -m "feat: auto-generate SVG image for new blog post [skip ci]"
+            git push
+            echo "✅ Imagen SVG commiteada al repositorio"
+          else
+            echo "ℹ️ No hay nuevas imágenes para commitear"
+          fi
+      
       - name: Log completion
         run: |
           echo "✅ Post estratégico generado y guardado en Supabase"
