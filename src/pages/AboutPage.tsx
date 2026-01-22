@@ -33,23 +33,7 @@ const certifications = [
     year: '2025',
     icon: '🤖',
     color: 'var(--cyan-neon)',
-    credentialUrl: 'https://www.credly.com/badges/github-copilot' // Actualizar con URL real
-  },
-  {
-    name: 'Automate AI Solutions on Cisco Infrastructure',
-    issuer: 'Cisco',
-    year: '2025',
-    icon: '🔧',
-    color: 'var(--orange-accent)',
-    credentialUrl: 'https://www.credly.com/badges/cisco-ai' // Actualizar con URL real
-  },
-  {
-    name: 'Fundamentals of Agile Project Management',
-    issuer: 'PMI',
-    year: '2025',
-    icon: '📊',
-    color: 'var(--purple-neon)',
-    credentialUrl: 'https://www.credly.com/badges/pmi-agile' // Actualizar con URL real
+    credentialUrl: 'https://learn.microsoft.com/en-us/users/marcodominguez/credentials/BFF1525711796263'
   },
   {
     name: 'Cisco Certified DevNet Associate',
@@ -57,7 +41,7 @@ const certifications = [
     year: '2024',
     icon: '💻',
     color: 'var(--cyan-neon)',
-    credentialUrl: 'https://www.credly.com/badges/devnet' // Actualizar con URL real
+    credentialUrl: 'https://www.credly.com/badges/10604558-a966-4215-90a6-1516d6e4e06d'
   },
   {
     name: 'Cisco Certified Specialist: Enterprise Core',
@@ -66,7 +50,7 @@ const certifications = [
     year: '2023',
     icon: '🏢',
     color: 'var(--orange-accent)',
-    credentialUrl: null
+    credentialUrl: 'https://www.credly.com/badges/7f1f2b9a-25ee-4068-bc73-6a1faf46087f'
   },
   {
     name: 'Cisco Certified Specialist: Data Center Core',
@@ -75,7 +59,7 @@ const certifications = [
     year: '2023',
     icon: '🖥️',
     color: 'var(--purple-neon)',
-    credentialUrl: null
+    credentialUrl: 'https://www.credly.com/badges/6aebaa9c-3689-4883-b49d-17b513eb4a07'
   },
   {
     name: 'Lean Six Sigma White Belt',
@@ -83,7 +67,7 @@ const certifications = [
     year: '2025',
     icon: '⚡',
     color: 'var(--cyan-neon)',
-    credentialUrl: null
+    credentialUrl: 'https://www.sixsigmacouncil.org/verify-certificate/?cert=a89c803b-0c3e-4cc1-8112-9006ba9660a5'
   }
 ];
 
