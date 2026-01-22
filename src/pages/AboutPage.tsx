@@ -318,7 +318,7 @@ const CVViewerModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isO
         {/* PDF Viewer - usando iframe con configuración para prevenir descarga */}
         <div className="w-full h-[calc(100%-60px)] bg-gray-950">
           <iframe
-            src="/cv-marco-dominguez.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+            src="/Marco_Dominguez_Becerra_Resume.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
             className="w-full h-full"
             title="CV Marco Domínguez"
             style={{ 
