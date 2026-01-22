@@ -35,10 +35,26 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Inicializar Gemini (usando 2.5-flash para mejor disponibilidad)
-// Cambia a 'gemini-2.5-pro' si necesitas más poder
+// Inicializar Gemini con múltiples modelos de fallback
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+// Configuración de reintentos y modelos
+const RETRY_CONFIG = {
+  maxRetries: 3,
+  baseDelay: 2000, // 2 segundos
+  maxDelay: 30000, // 30 segundos
+  backoffMultiplier: 2
+};
+
+// Modelos en orden de preferencia (fallback automático)
+const MODELS = [
+  'gemini-2.5-flash',      // Primera opción: más rápido y económico
+  'gemini-2.5-flash-lite', // Segunda opción: más simple pero disponible
+  'gemini-1.5-flash',      // Tercera opción: versión anterior estable
+];
+
+let currentModelIndex = 0;
+const model = genAI.getGenerativeModel({ model: MODELS[currentModelIndex] });
 
 // Inicializar Supabase
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://tqdencmzezjevnntifos.supabase.co';
@@ -215,7 +231,59 @@ async function aggregateNews(category, keywords) {
 // ===== GENERACIÓN CON IA =====
 
 /**
- * Genera contenido de blog usando Gemini 2.5-Flash
+ * Implementa exponential backoff para reintentos
+ */
+async function retryWithBackoff(fn, retryCount = 0) {
+  try {
+    return await fn();
+  } catch (error) {
+    // Si es error 503 (Service Unavailable) o 429 (Rate Limit)
+    const isRetryableError = error.status === 503 || error.status === 429;
+    const canRetry = retryCount < RETRY_CONFIG.maxRetries;
+    
+    if (isRetryableError && canRetry) {
+      const delay = Math.min(
+        RETRY_CONFIG.baseDelay * Math.pow(RETRY_CONFIG.backoffMultiplier, retryCount),
+        RETRY_CONFIG.maxDelay
+      );
+      
+      console.log(`⏳ Reintento ${retryCount + 1}/${RETRY_CONFIG.maxRetries} en ${delay/1000}s...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      
+      return retryWithBackoff(fn, retryCount + 1);
+    }
+    
+    // Si no es retryable o ya no hay reintentos, lanzar error
+    throw error;
+  }
+}
+
+/**
+ * Intenta con múltiples modelos de Gemini en caso de fallo
+ */
+async function tryMultipleModels(fn) {
+  for (let i = 0; i < MODELS.length; i++) {
+    try {
+      const modelInstance = genAI.getGenerativeModel({ model: MODELS[i] });
+      console.log(`🔄 Usando modelo: ${MODELS[i]}`);
+      return await fn(modelInstance);
+    } catch (error) {
+      console.log(`❌ ${MODELS[i]} falló:`, error.message);
+      
+      // Si es el último modelo, lanzar error
+      if (i === MODELS.length - 1) {
+        throw error;
+      }
+      
+      console.log(`🔁 Intentando con siguiente modelo...`);
+      // Esperar 1 segundo antes de intentar con el siguiente modelo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+/**
+ * Genera contenido de blog usando Gemini con reintentos automáticos
  */
 async function generateContentWithAI(news, categoryConfig, weekNumber) {
   console.log(`\n🤖 Generando contenido con Gemini 2.5-Flash para: ${categoryConfig.title}...`);
@@ -245,7 +313,13 @@ IMPORTANT:
 - Valid JSON that can be parsed with JSON.parse()`;
 
   try {
-    const result = await model.generateContent(prompt);
+    // Usar sistema de reintentos con múltiples modelos
+    const result = await retryWithBackoff(async () => {
+      return await tryMultipleModels(async (modelInstance) => {
+        return await modelInstance.generateContent(prompt);
+      });
+    });
+    
     const response = await result.response;
     let text = response.text();
     

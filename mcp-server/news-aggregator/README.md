@@ -346,11 +346,11 @@ Cada post tiene:
 En `generate-weekly-post.js` línea 38:
 
 ```javascript
-// De PRO a FLASH (más rápido, menos caro)
+// Usar 2.5-flash (recomendado - mejor disponibilidad y rendimiento)
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-// O usar el última disponible
-const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+// O usar 2.5-flash-lite para contenido más simple y económico
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 ```
 
 ### Agregar Más Fuentes
@@ -385,7 +385,7 @@ Para problemas:
 1. Revisa los logs en consola
 2. Verifica `.env` está correcto
 3. Valida que Supabase table existe
-4. Prueba con `gemini-2.5-flash` si tiene problemas con PRO
+4. El modelo `gemini-2.5-flash` es el recomendado (2.0 será descontinuado en marzo 2026)
 
 ---
 
