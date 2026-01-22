@@ -1,0 +1,99 @@
+name: Generate Strategic Blog Posts
+
+on:
+  schedule:
+    # Martes 10:00 AM México (16:00 UTC) - Tutorial/How-to
+    - cron: '0 16 * * 2'
+    # Viernes 10:00 AM México (16:00 UTC) - Architecture/Case study
+    - cron: '0 16 * * 5'
+  
+  # Permitir ejecución manual
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: 'Tema del post'
+        required: true
+        type: choice
+        options:
+          - ia-practica
+          - automatizacion-iac
+          - full-stack
+          - random
+        default: 'random'
+
+permissions:
+  contents: write
+
+jobs:
+  generate-strategic-post:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: mcp-server/news-aggregator/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: mcp-server/news-aggregator
+        run: npm ci
+      
+      - name: Determine theme
+        id: theme
+        run: |
+          if [ "${{ github.event.inputs.theme }}" != "" ] && [ "${{ github.event.inputs.theme }}" != "random" ]; then
+            echo "selected=${{ github.event.inputs.theme }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" == "0 16 * * 2" ]; then
+            # Martes: Alternar entre IA y Automatización
+            WEEK=$(date +%V)
+            if [ $((WEEK % 2)) -eq 0 ]; then
+              echo "selected=ia-practica" >> $GITHUB_OUTPUT
+            else
+              echo "selected=automatizacion-iac" >> $GITHUB_OUTPUT
+            fi
+          elif [ "${{ github.event.schedule }}" == "0 16 * * 5" ]; then
+            # Viernes: Full-stack o case studies
+            echo "selected=full-stack" >> $GITHUB_OUTPUT
+          else
+            # Random por defecto
+            echo "selected=" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Generate strategic post
+        working-directory: mcp-server/news-aggregator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -n "${{ steps.theme.outputs.selected }}" ]; then
+            node generate-strategic-post.js ${{ steps.theme.outputs.selected }}
+          else
+            node generate-strategic-post.js
+          fi
+      
+      - name: Log completion
+        run: |
+          echo "✅ Post estratégico generado y guardado en Supabase"
+          echo "🎯 Tema: ${{ steps.theme.outputs.selected || 'random' }}"
+          echo "📊 Disponible en https://kainet.mx/blog"
+
+  # Mantener el job de newsletter (opcional)
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    needs: generate-strategic-post
+    if: failure()
+    
+    steps:
+      - name: Notify failure
+        run: |
+          echo "❌ La generación del post falló"
+          echo "🔍 Revisa los logs en GitHub Actions"
+          echo "💡 El sistema reintentará automáticamente en el próximo schedule"

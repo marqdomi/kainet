@@ -18,9 +18,51 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Inicializar Google AI (Gemini)
+// Inicializar Google AI (Gemini) con múltiples modelos de fallback
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+// Configuración de reintentos
+const RETRY_CONFIG = {
+  maxRetries: 3,
+  baseDelay: 2000,
+  maxDelay: 30000,
+  backoffMultiplier: 2
+};
+
+const MODELS = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-1.5-flash'];
+
+async function retryWithBackoff(fn, retryCount = 0) {
+  try {
+    return await fn();
+  } catch (error) {
+    const isRetryableError = error.status === 503 || error.status === 429;
+    const canRetry = retryCount < RETRY_CONFIG.maxRetries;
+    
+    if (isRetryableError && canRetry) {
+      const delay = Math.min(
+        RETRY_CONFIG.baseDelay * Math.pow(RETRY_CONFIG.backoffMultiplier, retryCount),
+        RETRY_CONFIG.maxDelay
+      );
+      console.log(`⏳ Reintento ${retryCount + 1}/${RETRY_CONFIG.maxRetries} en ${delay/1000}s...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return retryWithBackoff(fn, retryCount + 1);
+    }
+    throw error;
+  }
+}
+
+async function tryMultipleModels(fn) {
+  for (let i = 0; i < MODELS.length; i++) {
+    try {
+      const modelInstance = genAI.getGenerativeModel({ model: MODELS[i] });
+      return await fn(modelInstance);
+    } catch (error) {
+      if (i === MODELS.length - 1) throw error;
+      console.log(`🔄 Intentando con ${MODELS[i + 1]}...`);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+}
 
 // Configuración de estilos por categoría
 const IMAGE_STYLES = {
