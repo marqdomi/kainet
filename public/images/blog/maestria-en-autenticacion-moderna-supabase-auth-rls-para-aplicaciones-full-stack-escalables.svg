@@ -1,0 +1,104 @@
+<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradmaestria" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#111827"/>
+    </linearGradient>
+    <filter id="glowmaestria">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="100%" height="100%" fill="url(#bgGradmaestria)"/>
+  
+  <!-- Stack layers -->
+  <g filter="url(#glowmaestria)">
+    <!-- Frontend Layer -->
+    <g transform="translate(350, 130)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#00E5FF" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#00E5FF" font-family="system-ui" font-size="32" font-weight="bold">FRONTEND</text>
+      <g transform="translate(60, 100)" fill="#00E5FF" opacity="0.5">
+        <rect x="0" y="0" width="60" height="40" rx="6" fill="none" stroke="#00E5FF" stroke-width="2"/>
+        <rect x="80" y="0" width="60" height="40" rx="6" fill="none" stroke="#00E5FF" stroke-width="2"/>
+        <rect x="160" y="0" width="60" height="40" rx="6" fill="none" stroke="#00E5FF" stroke-width="2"/>
+        <rect x="240" y="0" width="60" height="40" rx="6" fill="none" stroke="#00E5FF" stroke-width="2"/>
+      </g>
+      <text x="90" y="125" fill="#00E5FF" font-family="monospace" font-size="11" opacity="0.7">React</text>
+      <text x="170" y="125" fill="#00E5FF" font-family="monospace" font-size="11" opacity="0.7">Vue</text>
+      <text x="243" y="125" fill="#00E5FF" font-family="monospace" font-size="11" opacity="0.7">Next</text>
+      <text x="323" y="125" fill="#00E5FF" font-family="monospace" font-size="11" opacity="0.7">Vite</text>
+    </g>
+    
+    <!-- API Layer -->
+    <g transform="translate(686, 400)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#5227FF" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#5227FF" font-family="system-ui" font-size="32" font-weight="bold">API</text>
+      <g transform="translate(100, 90)" opacity="0.6">
+        <path d="M0 30 L40 0 L80 30 L40 60 Z" fill="none" stroke="#5227FF" stroke-width="2"/>
+        <path d="M120 30 L160 0 L200 30 L160 60 Z" fill="none" stroke="#5227FF" stroke-width="2"/>
+      </g>
+      <text x="145" y="145" fill="#5227FF" font-family="monospace" font-size="11" opacity="0.7">REST</text>
+      <text x="260" y="145" fill="#5227FF" font-family="monospace" font-size="11" opacity="0.7">GraphQL</text>
+    </g>
+    
+    <!-- Backend/Database Layer -->
+    <g transform="translate(1022, 680)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#FF6B35" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#FF6B35" font-family="system-ui" font-size="32" font-weight="bold">DATABASE</text>
+      <g transform="translate(130, 85)" fill="none" stroke="#FF6B35" stroke-width="2" opacity="0.6">
+        <ellipse cx="80" cy="15" rx="70" ry="20"/>
+        <path d="M10 15 L10 55"/>
+        <path d="M150 15 L150 55"/>
+        <ellipse cx="80" cy="55" rx="70" ry="20"/>
+      </g>
+    </g>
+    
+    <!-- Conexiones entre capas -->
+    <g stroke-width="3" fill="none" opacity="0.4">
+      <path d="M560 310 C620 350 660 380 686 490" stroke="url(#connGrad1maestria)"/>
+      <path d="M1106 580 C1120 620 1130 650 1142 680" stroke="url(#connGrad2maestria)"/>
+    </g>
+    
+    <defs>
+      <linearGradient id="connGrad1maestria" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#00E5FF"/>
+        <stop offset="100%" style="stop-color:#5227FF"/>
+      </linearGradient>
+      <linearGradient id="connGrad2maestria" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#5227FF"/>
+        <stop offset="100%" style="stop-color:#FF6B35"/>
+      </linearGradient>
+    </defs>
+    
+    <!-- Flechas -->
+    <g opacity="0.6">
+      <polygon points="686,490 676,480 696,480" fill="#5227FF"/>
+      <polygon points="1142,680 1132,670 1152,670" fill="#FF6B35"/>
+    </g>
+  </g>
+  
+  <!-- Código decorativo -->
+  <g opacity="0.12" font-family="monospace" font-size="12" fill="#00E5FF">
+    <text x="80" y="100">{"{ react: ^18 }"}</text>
+    <text x="80" y="120">{"{ typescript: ^5 }"}</text>
+    <text x="1550" y="380">async/await</text>
+    <text x="1550" y="400">fetch()</text>
+    <text x="80" y="920">SELECT * FROM</text>
+    <text x="80" y="940">users WHERE</text>
+  </g>
+  
+  <!-- Partículas flotantes -->
+  <g filter="url(#glowmaestria)">
+    <circle cx="200" cy="500" r="3" fill="#00E5FF" opacity="0.4"/>
+    <circle cx="1600" cy="300" r="4" fill="#5227FF" opacity="0.3"/>
+    <circle cx="300" cy="700" r="3" fill="#FF6B35" opacity="0.4"/>
+    <circle cx="1500" cy="800" r="4" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="150" cy="300" r="3" fill="#5227FF" opacity="0.4"/>
+    <circle cx="1650" cy="600" r="4" fill="#FF6B35" opacity="0.3"/>
+  </g>
+</svg>
