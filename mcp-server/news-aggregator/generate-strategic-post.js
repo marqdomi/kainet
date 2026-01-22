@@ -13,9 +13,15 @@
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ===== CONFIGURACIÓN =====
 
@@ -271,6 +277,133 @@ IMPORTANTE:
 
 // ===== GUARDAR EN SUPABASE =====
 
+// Generadores de SVG por categoría
+const SVG_GENERATORS = {
+  'IA': generateIASVG,
+  'Automatización': generateAutomatizacionSVG,
+  'Desarrollo': generateFullStackSVG
+};
+
+function generateIASVG(seed) {
+  return `<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg${seed}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/><stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <filter id="glow${seed}"><feGaussianBlur stdDeviation="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg${seed})"/>
+  <g opacity="0.08"><pattern id="grid${seed}" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00E5FF" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid${seed})"/></g>
+  <g filter="url(#glow${seed})" transform="translate(896, 512)">
+    <circle r="280" fill="none" stroke="#5227FF" stroke-width="1" opacity="0.2"/>
+    <circle r="220" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.3"/>
+    <circle r="160" fill="none" stroke="#5227FF" stroke-width="2" opacity="0.4"/>
+    <circle r="100" fill="none" stroke="#00E5FF" stroke-width="3" opacity="0.6"/>
+    <circle r="40" fill="#5227FF" opacity="0.3"/><circle r="20" fill="#00E5FF" opacity="0.8"/>
+  </g>
+  <g filter="url(#glow${seed})" opacity="0.6">
+    <line x1="896" y1="392" x2="1250" y2="250" stroke="#00E5FF" stroke-width="2"/><circle cx="1250" cy="250" r="8" fill="#00E5FF"/>
+    <line x1="1016" y1="512" x2="1400" y2="450" stroke="#00E5FF" stroke-width="2"/><circle cx="1400" cy="450" r="8" fill="#00E5FF"/>
+    <line x1="776" y1="512" x2="400" y2="350" stroke="#5227FF" stroke-width="2"/><circle cx="400" cy="350" r="8" fill="#5227FF"/>
+    <line x1="896" y1="632" x2="500" y2="750" stroke="#5227FF" stroke-width="2"/><circle cx="500" cy="750" r="8" fill="#5227FF"/>
+  </g>
+  <g opacity="0.4">
+    <path d="M50 50 L150 50 L150 60 L60 60 L60 150 L50 150 Z" fill="#00E5FF"/>
+    <path d="M1742 50 L1642 50 L1642 60 L1732 60 L1732 150 L1742 150 Z" fill="#5227FF"/>
+    <path d="M50 974 L150 974 L150 964 L60 964 L60 874 L50 874 Z" fill="#5227FF"/>
+    <path d="M1742 974 L1642 974 L1642 964 L1732 964 L1732 874 L1742 874 Z" fill="#00E5FF"/>
+  </g>
+</svg>`;
+}
+
+function generateAutomatizacionSVG(seed) {
+  return `<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg${seed}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/><stop offset="100%" style="stop-color:#0d1520"/>
+    </linearGradient>
+    <filter id="glow${seed}"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg${seed})"/>
+  <g filter="url(#glow${seed})">
+    <path d="M100 512 Q400 512 500 350 T900 400 T1300 550 T1692 512" stroke="#00E5FF" stroke-width="4" fill="none" opacity="0.6" stroke-dasharray="10,5"/>
+    <rect x="180" y="470" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00E5FF" stroke-width="2"/>
+    <rect x="420" y="310" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00FF88" stroke-width="2"/>
+    <rect x="700" y="360" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00E5FF" stroke-width="2"/>
+    <rect x="1000" y="510" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#5227FF" stroke-width="2"/>
+    <rect x="1300" y="510" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00FF88" stroke-width="2"/>
+    <circle cx="220" cy="510" r="20" fill="none" stroke="#00E5FF" stroke-width="2"/><circle cx="220" cy="510" r="8" fill="#00E5FF"/>
+    <polygon points="460,330 475,350 445,350" fill="#00FF88"/>
+    <circle cx="740" cy="400" r="22" fill="none" stroke="#00E5FF" stroke-width="2"/><path d="M728 400 L736 410 L758 388" stroke="#00E5FF" stroke-width="3" fill="none"/>
+    <path d="M1040,530 L1040,570 L1060,550 Z" fill="#5227FF"/>
+    <path d="M1325,545 Q1325,530 1340,530 Q1355,520 1370,530 Q1385,530 1385,545 Q1385,560 1355,560 Q1325,560 1325,545 Z" fill="none" stroke="#00FF88" stroke-width="2"/>
+  </g>
+  <g opacity="0.15" font-family="monospace" font-size="14" fill="#00E5FF">
+    <text x="100" y="180">$ terraform apply</text><text x="1450" y="150">$ docker build .</text>
+    <text x="150" y="850">$ git push origin main</text><text x="1350" y="880">$ kubectl apply -f</text>
+  </g>
+  <rect x="30" y="30" width="1732" height="964" fill="none" stroke="#00E5FF" stroke-width="1" opacity="0.15" rx="20"/>
+</svg>`;
+}
+
+function generateFullStackSVG(seed) {
+  return `<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg${seed}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/><stop offset="100%" style="stop-color:#111827"/>
+    </linearGradient>
+    <filter id="glow${seed}"><feGaussianBlur stdDeviation="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg${seed})"/>
+  <g filter="url(#glow${seed})">
+    <g transform="translate(350, 130)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#00E5FF" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#00E5FF" font-family="system-ui" font-size="32" font-weight="bold">FRONTEND</text>
+      <g transform="translate(60, 100)" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.5">
+        <rect x="0" y="0" width="60" height="40" rx="6"/><rect x="80" y="0" width="60" height="40" rx="6"/>
+        <rect x="160" y="0" width="60" height="40" rx="6"/><rect x="240" y="0" width="60" height="40" rx="6"/>
+      </g>
+    </g>
+    <g transform="translate(686, 400)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#5227FF" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#5227FF" font-family="system-ui" font-size="32" font-weight="bold">API</text>
+      <g transform="translate(100, 90)" opacity="0.6">
+        <path d="M0 30 L40 0 L80 30 L40 60 Z" fill="none" stroke="#5227FF" stroke-width="2"/>
+        <path d="M120 30 L160 0 L200 30 L160 60 Z" fill="none" stroke="#5227FF" stroke-width="2"/>
+      </g>
+    </g>
+    <g transform="translate(1022, 680)">
+      <rect width="420" height="180" rx="15" fill="#0a0a0a" stroke="#FF6B35" stroke-width="3"/>
+      <text x="210" y="70" text-anchor="middle" fill="#FF6B35" font-family="system-ui" font-size="32" font-weight="bold">DATABASE</text>
+      <g transform="translate(130, 85)" fill="none" stroke="#FF6B35" stroke-width="2" opacity="0.6">
+        <ellipse cx="80" cy="15" rx="70" ry="20"/><path d="M10 15 L10 55"/><path d="M150 15 L150 55"/><ellipse cx="80" cy="55" rx="70" ry="20"/>
+      </g>
+    </g>
+    <path d="M560 310 C620 350 660 380 686 490" stroke="#00E5FF" stroke-width="3" fill="none" opacity="0.4"/>
+    <path d="M1106 580 C1120 620 1130 650 1142 680" stroke="#5227FF" stroke-width="3" fill="none" opacity="0.4"/>
+  </g>
+</svg>`;
+}
+
+function generateAndSaveSVG(slug, category) {
+  const IMAGES_DIR = path.join(__dirname, '../../public/images/blog');
+  
+  // Crear directorio si no existe
+  if (!fs.existsSync(IMAGES_DIR)) {
+    fs.mkdirSync(IMAGES_DIR, { recursive: true });
+  }
+  
+  const seed = slug.replace(/-/g, '').substring(0, 8);
+  const generator = SVG_GENERATORS[category] || generateIASVG;
+  const svgContent = generator(seed);
+  
+  const filePath = path.join(IMAGES_DIR, `${slug}.svg`);
+  fs.writeFileSync(filePath, svgContent, 'utf8');
+  
+  console.log(`🎨 Imagen SVG generada: ${filePath}`);
+  return `/images/blog/${slug}.svg`;
+}
+
 async function saveToSupabase(postData) {
   console.log('\n💾 Guardando en Supabase...');
   
@@ -282,6 +415,9 @@ async function saveToSupabase(postData) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   
+  // Generar imagen SVG
+  const imageUrl = generateAndSaveSVG(slug, postData.category);
+  
   const post = {
     title: postData.title,
     slug: slug,
@@ -291,7 +427,7 @@ async function saveToSupabase(postData) {
     author: 'Marco Domínguez',
     read_time: `${postData.readTime} min`,
     date: now.split('T')[0], // Solo la fecha YYYY-MM-DD
-    image: `/images/blog/${slug}.jpg`,
+    image: imageUrl,
     featured: false
   };
   
@@ -308,7 +444,8 @@ async function saveToSupabase(postData) {
   console.log('✅ Post guardado exitosamente');
   console.log(`📝 Título: ${post.title}`);
   console.log(`🔗 Slug: ${post.slug}`);
-  console.log(`📂 Categoría: ${post.category}\n`);
+  console.log(`📂 Categoría: ${post.category}`);
+  console.log(`🖼️  Imagen: ${post.image}\n`);
   
   return data[0];
 }
