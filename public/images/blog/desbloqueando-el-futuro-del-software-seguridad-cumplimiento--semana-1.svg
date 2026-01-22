@@ -1,0 +1,92 @@
+<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGraddesbloqu" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="50%" style="stop-color:#0d1520"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <filter id="glowdesbloqu">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="100%" height="100%" fill="url(#bgGraddesbloqu)"/>
+  
+  <!-- Pipeline de CI/CD -->
+  <g filter="url(#glowdesbloqu)">
+    <!-- Línea principal del pipeline -->
+    <path d="M100 512 Q400 512 500 350 T900 400 T1300 550 T1692 512" 
+          stroke="#00E5FF" stroke-width="4" fill="none" opacity="0.6"
+          stroke-dasharray="10,5"/>
+    
+    <!-- Nodos del pipeline -->
+    <g>
+      <rect x="180" y="470" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00E5FF" stroke-width="2"/>
+      <rect x="420" y="310" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00FF88" stroke-width="2"/>
+      <rect x="700" y="360" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00E5FF" stroke-width="2"/>
+      <rect x="1000" y="510" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#5227FF" stroke-width="2"/>
+      <rect x="1300" y="510" width="80" height="80" rx="10" fill="#0a0a0a" stroke="#00FF88" stroke-width="2"/>
+    </g>
+    
+    <!-- Iconos dentro de los nodos -->
+    <g opacity="0.8">
+      <!-- Git icon -->
+      <circle cx="220" cy="510" r="20" fill="none" stroke="#00E5FF" stroke-width="2"/>
+      <circle cx="220" cy="510" r="8" fill="#00E5FF"/>
+      
+      <!-- Build icon (hammer) -->
+      <polygon points="460,330 475,350 445,350" fill="#00FF88"/>
+      <rect x="455" y="350" width="10" height="25" fill="#00FF88"/>
+      
+      <!-- Test icon (checkmark) -->
+      <circle cx="740" cy="400" r="22" fill="none" stroke="#00E5FF" stroke-width="2"/>
+      <path d="M728 400 L736 410 L758 388" stroke="#00E5FF" stroke-width="3" fill="none"/>
+      
+      <!-- Deploy icon (rocket) -->
+      <path d="M1040,530 L1040,570 L1060,550 Z" fill="#5227FF"/>
+      <circle cx="1040" cy="565" r="3" fill="#FF6B35"/>
+      
+      <!-- Cloud icon -->
+      <path d="M1325,545 Q1325,530 1340,530 Q1355,520 1370,530 Q1385,530 1385,545 Q1385,560 1355,560 Q1325,560 1325,545 Z" 
+            fill="none" stroke="#00FF88" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- Flechas de conexión -->
+  <g fill="#00E5FF" opacity="0.6">
+    <polygon points="265,510 275,505 275,515"/>
+    <polygon points="505,350 515,345 515,355"/>
+    <polygon points="785,400 795,395 795,405"/>
+    <polygon points="1085,550 1095,545 1095,555"/>
+  </g>
+  
+  <!-- Código flotante decorativo -->
+  <g opacity="0.15" font-family="monospace" font-size="14" fill="#00E5FF">
+    <text x="100" y="180">$ terraform apply</text>
+    <text x="1450" y="150">$ docker build .</text>
+    <text x="150" y="850">$ git push origin main</text>
+    <text x="1350" y="880">$ kubectl apply -f</text>
+  </g>
+  
+  <!-- Partículas -->
+  <g filter="url(#glowdesbloqu)">
+    <circle cx="300" cy="200" r="2" fill="#00FF88" opacity="0.4"/>
+    <circle cx="600" cy="150" r="3" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="900" cy="180" r="2" fill="#5227FF" opacity="0.4"/>
+    <circle cx="1200" cy="200" r="3" fill="#00FF88" opacity="0.3"/>
+    <circle cx="1500" cy="250" r="2" fill="#00E5FF" opacity="0.4"/>
+    <circle cx="200" cy="700" r="3" fill="#5227FF" opacity="0.3"/>
+    <circle cx="500" cy="750" r="2" fill="#00E5FF" opacity="0.4"/>
+    <circle cx="800" cy="700" r="3" fill="#00FF88" opacity="0.3"/>
+    <circle cx="1100" cy="750" r="2" fill="#5227FF" opacity="0.4"/>
+    <circle cx="1600" cy="700" r="3" fill="#00E5FF" opacity="0.3"/>
+  </g>
+  
+  <!-- Borde decorativo -->
+  <rect x="30" y="30" width="1732" height="964" fill="none" stroke="#00E5FF" stroke-width="1" opacity="0.15" rx="20"/>
+</svg>

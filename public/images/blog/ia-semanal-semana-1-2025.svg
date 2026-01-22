@@ -1,0 +1,87 @@
+<svg width="1792" height="1024" viewBox="0 0 1792 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradiasemana" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="50%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <filter id="glowiasemana">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlowiasemana">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="100%" height="100%" fill="url(#bgGradiasemana)"/>
+  
+  <!-- Grid de fondo sutil -->
+  <g opacity="0.08">
+    <pattern id="gridiasemana" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00E5FF" stroke-width="0.5"/>
+    </pattern>
+    <rect width="100%" height="100%" fill="url(#gridiasemana)"/>
+  </g>
+  
+  <!-- Cerebro IA central (círculos concéntricos) -->
+  <g filter="url(#glowiasemana)" transform="translate(896, 512)">
+    <circle r="280" fill="none" stroke="#5227FF" stroke-width="1" opacity="0.2"/>
+    <circle r="220" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.3"/>
+    <circle r="160" fill="none" stroke="#5227FF" stroke-width="2" opacity="0.4"/>
+    <circle r="100" fill="none" stroke="#00E5FF" stroke-width="3" opacity="0.6"/>
+    <circle r="40" fill="#5227FF" opacity="0.3"/>
+    <circle r="20" fill="#00E5FF" opacity="0.8"/>
+  </g>
+  
+  <!-- Conexiones neuronales -->
+  <g filter="url(#softGlowiasemana)" opacity="0.6">
+    <line x1="896" y1="392" x2="1250" y2="250" stroke="#00E5FF" stroke-width="2"/>
+    <circle cx="1250" cy="250" r="8" fill="#00E5FF"/>
+    
+    <line x1="1016" y1="512" x2="1400" y2="450" stroke="#00E5FF" stroke-width="2"/>
+    <circle cx="1400" cy="450" r="8" fill="#00E5FF"/>
+    
+    <line x1="896" y1="632" x2="1300" y2="800" stroke="#00E5FF" stroke-width="2"/>
+    <circle cx="1300" cy="800" r="8" fill="#00E5FF"/>
+    
+    <line x1="776" y1="512" x2="400" y2="350" stroke="#5227FF" stroke-width="2"/>
+    <circle cx="400" cy="350" r="8" fill="#5227FF"/>
+    
+    <line x1="896" y1="392" x2="550" y2="200" stroke="#5227FF" stroke-width="2"/>
+    <circle cx="550" cy="200" r="8" fill="#5227FF"/>
+    
+    <line x1="896" y1="632" x2="500" y2="750" stroke="#5227FF" stroke-width="2"/>
+    <circle cx="500" cy="750" r="8" fill="#5227FF"/>
+  </g>
+  
+  <!-- Partículas flotantes -->
+  <g filter="url(#glowiasemana)">
+    <circle cx="150" cy="200" r="3" fill="#00E5FF" opacity="0.5"/>
+    <circle cx="300" cy="150" r="2" fill="#5227FF" opacity="0.4"/>
+    <circle cx="200" cy="400" r="4" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="100" cy="600" r="3" fill="#5227FF" opacity="0.5"/>
+    <circle cx="250" cy="800" r="2" fill="#00E5FF" opacity="0.4"/>
+    <circle cx="1600" cy="180" r="3" fill="#5227FF" opacity="0.5"/>
+    <circle cx="1500" cy="300" r="4" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="1650" cy="500" r="2" fill="#5227FF" opacity="0.4"/>
+    <circle cx="1550" cy="700" r="3" fill="#00E5FF" opacity="0.5"/>
+    <circle cx="1680" cy="850" r="4" fill="#5227FF" opacity="0.3"/>
+  </g>
+  
+  <!-- Decoración esquinas -->
+  <g opacity="0.4">
+    <path d="M50 50 L150 50 L150 60 L60 60 L60 150 L50 150 Z" fill="#00E5FF"/>
+    <path d="M1742 50 L1642 50 L1642 60 L1732 60 L1732 150 L1742 150 Z" fill="#5227FF"/>
+    <path d="M50 974 L150 974 L150 964 L60 964 L60 874 L50 874 Z" fill="#5227FF"/>
+    <path d="M1742 974 L1642 974 L1642 964 L1732 964 L1732 874 L1742 874 Z" fill="#00E5FF"/>
+  </g>
+</svg>
