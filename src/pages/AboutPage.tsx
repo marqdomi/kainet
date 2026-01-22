@@ -31,15 +31,15 @@ const certifications = [
     code: 'GH-300',
     issuer: 'Microsoft',
     year: '2025',
-    icon: '🤖',
+    badgeImage: '/images/certifications/github-copilot.png',
     color: 'var(--cyan-neon)',
-    credentialUrl: 'https://learn.microsoft.com/en-us/users/marcodominguez/credentials/BFF1525711796263'
+    credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/MarcoDomnguezBecerra-8292/BFF1525711796263?sharingId'
   },
   {
     name: 'Cisco Certified DevNet Associate',
     issuer: 'Cisco',
     year: '2024',
-    icon: '💻',
+    badgeImage: '/images/certifications/devnet-associate.png',
     color: 'var(--cyan-neon)',
     credentialUrl: 'https://www.credly.com/badges/10604558-a966-4215-90a6-1516d6e4e06d'
   },
@@ -48,7 +48,7 @@ const certifications = [
     code: 'CCS-ECore',
     issuer: 'Cisco',
     year: '2023',
-    icon: '🏢',
+    badgeImage: '/images/certifications/enterprise-core.png',
     color: 'var(--orange-accent)',
     credentialUrl: 'https://www.credly.com/badges/7f1f2b9a-25ee-4068-bc73-6a1faf46087f'
   },
@@ -57,7 +57,7 @@ const certifications = [
     code: 'CCS-DCCore',
     issuer: 'Cisco',
     year: '2023',
-    icon: '🖥️',
+    badgeImage: '/images/certifications/datacenter-core.png',
     color: 'var(--purple-neon)',
     credentialUrl: 'https://www.credly.com/badges/6aebaa9c-3689-4883-b49d-17b513eb4a07'
   },
@@ -65,9 +65,9 @@ const certifications = [
     name: 'Lean Six Sigma White Belt',
     issuer: 'International Six Sigma Institute',
     year: '2025',
-    icon: '⚡',
+    badgeImage: '/images/certifications/six-sigma-white-belt.png',
     color: 'var(--cyan-neon)',
-    credentialUrl: 'https://www.sixsigmacouncil.org/verify-certificate/?cert=a89c803b-0c3e-4cc1-8112-9006ba9660a5'
+    credentialUrl: 'https://lean-certificates.s3.us-east-2.amazonaws.com/certificados_estudiantes/cursos_virtual/White_Belt/certificados/Marco_Antonio_Dominguez_Becerra.pdf'
   }
 ];
 
@@ -163,8 +163,24 @@ const CertificationBadge: React.FC<{ cert: typeof certifications[0], index: numb
     className="group relative p-4 rounded-xl border border-gray-800 bg-gray-900/60 
                hover:border-gray-600 hover:bg-gray-900/80 transition-all duration-300"
   >
-    <div className="flex items-start gap-3">
-      <span className="text-2xl">{cert.icon}</span>
+    <div className="flex items-start gap-4">
+      {/* Badge Image */}
+      <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
+        <img 
+          src={cert.badgeImage} 
+          alt={`${cert.name} badge`}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            // Fallback si no existe la imagen
+            e.currentTarget.style.display = 'none';
+            const parent = e.currentTarget.parentElement;
+            if (parent) {
+              parent.innerHTML = `<div class="text-2xl">🏆</div>`;
+            }
+          }}
+        />
+      </div>
+      
       <div className="flex-1 min-w-0">
         <h4 className="text-white font-semibold text-sm leading-tight">
           {cert.name}
