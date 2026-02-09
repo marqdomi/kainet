@@ -27,6 +27,14 @@ const staggerContainer = {
 // Datos de certificaciones
 const certifications = [
   {
+    name: 'NVIDIA-Certified Associate: AI Infrastructure and Operations',
+    issuer: 'NVIDIA',
+    year: '2026',
+    badgeImage: '/images/certifications/nvidia-ai-infrastructure.png',
+    color: 'var(--purple-neon)',
+    credentialUrl: 'https://www.credly.com/badges/793ff0ad-d59d-4a03-a24b-ad1d2a06da84/linked_in'
+  },
+  {
     name: 'GitHub Copilot Certified',
     code: 'GH-300',
     issuer: 'Microsoft',
