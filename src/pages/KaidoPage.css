@@ -1,0 +1,176 @@
+/* KaidoPage.css — Styles for the KAIDO project showcase page */
+
+/* ── Architecture diagram ── */
+.kaido-arch-layer {
+    position: relative;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+.kaido-arch-layer:hover {
+    border-color: rgba(0, 229, 255, 0.25);
+    background-color: rgba(0, 229, 255, 0.03);
+}
+.kaido-arch-connector {
+    width: 2px;
+    height: 24px;
+    margin: 0 auto;
+    background: linear-gradient(
+        to bottom,
+        var(--cyan-neon),
+        var(--purple-neon)
+    );
+    opacity: 0.35;
+}
+
+/* ── Gamification tier cards ── */
+.kaido-rank-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+/* ── XP Progress bar animation ── */
+@keyframes xpFill {
+    from { width: 0; }
+}
+.kaido-xp-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
+    animation: xpFill 1.5s ease-out;
+}
+
+/* ── Accessibility profile cards ── */
+.kaido-a11y-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.3s;
+}
+.kaido-a11y-profile:hover {
+    border-color: var(--cyan-neon);
+    background: rgba(0, 229, 255, 0.05);
+    transform: translateY(-2px);
+}
+.kaido-a11y-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--cyan-neon);
+    font-size: 1.125rem;
+}
+
+/* ── Tech stack grid ── */
+.kaido-tech-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+.kaido-tech-item:hover {
+    border-color: rgba(0, 229, 255, 0.3);
+    background: rgba(0, 229, 255, 0.04);
+    transform: translateY(-1px);
+}
+
+/* ── Timeline / Roadmap ── */
+.kaido-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+.kaido-timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--cyan-neon), var(--purple-neon), transparent);
+    opacity: 0.3;
+}
+.kaido-timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 0.375rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kaido-timeline-dot.completed {
+    background: var(--cyan-neon);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+.kaido-timeline-dot.current {
+    background: var(--purple-neon);
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+    animation: pulse 2s infinite;
+}
+.kaido-timeline-dot.upcoming {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ── Dual persona comparison ── */
+.kaido-persona-card {
+    position: relative;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition: border-color 0.3s;
+}
+.kaido-persona-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+.kaido-persona-learner::before {
+    background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
+}
+.kaido-persona-learner:hover {
+    border-color: rgba(0, 229, 255, 0.25);
+}
+.kaido-persona-admin::before {
+    background: linear-gradient(90deg, var(--purple-neon), var(--orange-accent));
+}
+.kaido-persona-admin:hover {
+    border-color: rgba(168, 85, 247, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kaido-xp-bar {
+        animation: none;
+    }
+    .kaido-timeline-dot.current {
+        animation: none;
+    }
+}
