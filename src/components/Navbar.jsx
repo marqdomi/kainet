@@ -166,7 +166,7 @@ const Navbar = () => {
                   <Link
                     to="/"
                     aria-label="Inicio KAINET"
-                    className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded"
+                    className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan-neon)]/70 rounded"
                     onClick={handleLogoClickWithNavigation}
                   >
                     <img src="/logoletras.svg" alt="KAINET" className="h-16 md:h-17 w-auto navbar-logo" loading="eager" decoding="sync" />
@@ -179,7 +179,7 @@ const Navbar = () => {
                       <li key={link.to}>
                         <Link
                           to={link.to}
-                          className={`nav-link link-underline transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded ${isLinkActive(link.to) ? 'text-[var(--cyan-neon)]' : ''
+                          className={`nav-link link-underline transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan-neon)]/70 rounded ${isLinkActive(link.to) ? 'text-[var(--cyan-neon)]' : ''
                             }`}
                         >
                           {link.label}
@@ -194,7 +194,7 @@ const Navbar = () => {
 
                   {/* Mobile Menu Button */}
                   <button
-                    className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg mobile-menu-button"
+                    className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan-neon)]/70 rounded-lg mobile-menu-button"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
                     aria-expanded={isMobileMenuOpen}
@@ -236,7 +236,7 @@ const Navbar = () => {
               {/* Close Button */}
               <div className="flex justify-end p-4">
                 <button
-                  className="flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70 rounded-lg mobile-menu-button"
+                  className="flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan-neon)]/70 rounded-lg mobile-menu-button"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Cerrar menú"
                 >

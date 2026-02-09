@@ -12,11 +12,11 @@ const fadeUp = (delay = 0) => ({
 const ProcessStep = ({ title, description, index }) => (
   <motion.div
     variants={fadeUp(0.1 + index * 0.15)}
-    className="w-full p-6 rounded-2xl border border-gray-800 bg-gray-900/60
-               hover:bg-gray-900/80 hover:border-gray-700 transition-colors"
+    className="w-full p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)]
+               hover:bg-[var(--gray-800)] hover:border-[var(--gray-600)] transition-colors"
   >
-    <h3 className="text-white text-xl font-semibold">{title}</h3>
-    <p className="mt-2 text-gray-400">{description}</p>
+    <h3 className="text-heading text-xl font-semibold">{title}</h3>
+    <p className="mt-2 text-[var(--text-secondary)]">{description}</p>
   </motion.div>
 );
 
@@ -44,7 +44,7 @@ const About = () => {
               De la Idea a la Realidad
             </GlitchText>
           </div>
-          <p className="mt-4 text-gray-400 max-w-3xl mx-auto text-balance">
+          <p className="mt-4 text-[var(--text-secondary)] max-w-3xl mx-auto text-balance">
             Creemos en la investigación profunda y el desarrollo iterativo. Nuestro trabajo se centra en explorar los límites de la IA para resolver problemas complejos, sentando las bases para aplicaciones robustas y escalables
           </p>
         </motion.div>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import { Badge, Button, Skeleton, SectionTitle, Card } from '../components/ui';
 import GlitchText from '../components/effects/GlitchText';
+import SEO from '../components/SEO';
 import type { Project } from '@/types';
 
 type CategoryType = 'all' | 'AI' | 'Web' | 'Automation' | 'MLOps';
@@ -46,7 +47,13 @@ const ProjectsPage: React.FC = () => {
     : projects.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen py-20 px-6">
+    <>
+      <SEO
+        title="Proyectos de I+D"
+        description="Portafolio de proyectos técnicos y experimentos en IA, automatización de redes y desarrollo full-stack de Marco Domínguez."
+        url="https://kainet.mx/proyectos"
+      />
+      <div className="min-h-screen py-20 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
@@ -267,6 +274,7 @@ const ProjectsPage: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

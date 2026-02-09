@@ -6,8 +6,6 @@ import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 
 const MainLayout: React.FC = () => {
-  console.log('[MainLayout] Component rendering');
-  
   return (
     <>
       {/* Accessibility: Skip to main content */}

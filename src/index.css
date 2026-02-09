@@ -120,30 +120,6 @@ html { scroll-behavior: smooth; }
 
 /* === KAINET micro-interacciones & cursor (components layer) === */
 @layer components {
-  /* Botón primario (por si aún no existe) */
-  .btn-kainet {
-    @apply relative inline-flex items-center justify-center rounded-lg font-semibold text-black px-5 py-3 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/70;
-    background: linear-gradient(90deg, #00E5FF, #66F0FF, #00E5FF);
-    background-size: 200% 100%;
-    animation: kainet-shimmer 3s linear infinite;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 24px rgba(0,229,255,0.15);
-  }
-  .btn-kainet:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 10px 32px rgba(0,229,255,0.28); }
-  .btn-kainet:active { transform: translateY(1px); }
-
-  /* Botón secundario outline */
-  .btn-kainet--outline {
-    @apply inline-flex items-center justify-center rounded-lg font-semibold px-4 py-2 text-[#EAEAEA] border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]/60;
-    border-color: rgba(255,255,255,0.12);
-    background: transparent;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
-  }
-  .btn-kainet--outline:hover {
-    background: rgba(255,255,255,0.06);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.16) inset;
-  }
-  .btn-kainet--outline:active { transform: translateY(1px); }
-
   /* Subrayado animado para links */
   .link-underline { @apply relative text-[#EAEAEA]; }
   .link-underline::after {
@@ -189,59 +165,13 @@ html { scroll-behavior: smooth; }
 
 /* Respeta preferencias del usuario para reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
-  .btn-kainet { animation: none; }
+  * { animation-duration: 0.01ms !important; }
 }
 
 /* ====================================
    TEXT SHADOW UTILITIES
    For improved legibility over animated backgrounds
    ==================================== */
-
-/* ====================================
-   DEPRECATED TEXT SHADOWS - v3.0
-   Kept for backwards compatibility but 
-   now map to minimal/no shadow
-   ==================================== */
-
-/* Small shadow - now minimal */
-.text-shadow-sm {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Medium shadow - now subtle */
-.text-shadow-md {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Large shadow - now subtle */
-.text-shadow-lg {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Extra large shadow - now subtle */
-.text-shadow-xl {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Cyan glow - now disabled */
-.text-shadow-glow {
-  text-shadow: none;
-}
-
-/* Purple glow - now disabled */
-.text-shadow-glow-purple {
-  text-shadow: none;
-}
-
-/* Section title shadow - now subtle */
-.section-title-shadow {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Apply text shadows to common text elements outside cards */
-.text-readable {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
 
 /* ====================================
    MOBILE UTILITIES & ENTERPRISE DESIGN
@@ -336,23 +266,4 @@ html { scroll-behavior: smooth; }
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-}
-
-/* Mobile menu slide animation */
-.mobile-menu-enter {
-  transform: translateX(100%);
-}
-
-.mobile-menu-enter-active {
-  transform: translateX(0);
-  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.mobile-menu-exit {
-  transform: translateX(0);
-}
-
-.mobile-menu-exit-active {
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 }

@@ -17,14 +17,6 @@ export default defineConfig({
           // Separar React y dependencias core
           'react-vendor': ['react', 'react-dom'],
           
-          // Separar Three.js y dependencias 3D (son grandes)
-          'three-vendor': [
-            'three',
-            '@react-three/fiber',
-            '@react-three/drei',
-            '@react-three/postprocessing'
-          ],
-          
           // Separar framer-motion (animaciones)
           'animation-vendor': ['framer-motion'],
         },
@@ -58,9 +50,6 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
-      'three',
-      '@react-three/fiber',
-      '@react-three/drei',
       'framer-motion'
     ],
   },

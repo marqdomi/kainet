@@ -9,19 +9,19 @@ import { EasterEggProvider, useEasterEggContext } from './contexts/EasterEggCont
 import { ThemeProvider } from './contexts/ThemeContext';
 import { features } from './config/features';
 
-// Pages
-import Home from './pages/Home';
-import AboutPage from './pages/AboutPage';
-import ProjectsPage from './pages/ProjectsPage';
-import BlogPage from './pages/BlogPage';
-import BlogPostPage from './pages/BlogPostPage';
-import ContactPage from './pages/ContactPage';
-import NewsletterConfirmPage from './pages/NewsletterConfirmPage';
-import PrivacyPage from './pages/PrivacyPage';
-import KaidoPage from './pages/KaidoPage';
-import ProductsPage from './pages/ProductsPage';
-import ServicesPage from './pages/ServicesPage';
-import NotFound from './pages/NotFound';
+// Pages - Lazy loaded for code splitting
+const Home = lazy(() => import('./pages/Home'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NewsletterConfirmPage = lazy(() => import('./pages/NewsletterConfirmPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const KaidoPage = lazy(() => import('./pages/KaidoPage'));
+const ProductsPage = lazy(() => import('./pages/ProductsPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Lazy load easter egg components (only non-cultural ones)
 const Fireworks = lazy(() => import('./components/effects/Fireworks'));
@@ -39,45 +39,52 @@ const AppContent = () => {
     specialDateEffect,
   } = useEasterEggContext();
 
+  // Page loading fallback
+  const PageLoader = (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-[var(--cyan-neon)] border-r-transparent" />
+    </div>
+  );
+
   // Conditionally render content based on feature flags
   const RoutesContent = (
-    <Routes>
-      {/* Main layout wraps all pages */}
-      <Route path="/" element={<MainLayout />}>
-        {/* Home page */}
-        <Route index element={<Home />} />
+    <Suspense fallback={PageLoader}>
+      <Routes>
+        {/* Main layout wraps all pages */}
+        <Route path="/" element={<MainLayout />}>
+          {/* Home page */}
+          <Route index element={<Home />} />
 
-        {/* About page */}
-        <Route path="about" element={<AboutPage />} />
-        <Route path="nosotros" element={<AboutPage />} />
+          {/* About page */}
+          <Route path="nosotros" element={<AboutPage />} />
 
-        {/* Kaido Landing Page */}
-        <Route path="kaido" element={<KaidoPage />} />
+          {/* Kaido Landing Page */}
+          <Route path="kaido" element={<KaidoPage />} />
 
-        {/* Products & Services - Ahora Competencias */}
-        <Route path="servicios" element={<ServicesPage />} />
+          {/* Products & Services - Ahora Competencias */}
+          <Route path="servicios" element={<ServicesPage />} />
 
-        {/* Projects / Proyectos */}
-        <Route path="projects" element={<ProjectsPage />} />
-        <Route path="proyectos" element={<ProjectsPage />} />
+          {/* Projects */}
+          <Route path="proyectos" element={<ProjectsPage />} />
 
-        {/* Blog */}
-        <Route path="blog" element={<BlogPage />} />
-        <Route path="blog/:slug" element={<BlogPostPage />} />
+          {/* Blog */}
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="blog/:slug" element={<BlogPostPage />} />
 
-        {/* Contact */}
-        <Route path="contact" element={<ContactPage />} />
+          {/* Contact */}
+          <Route path="contact" element={<ContactPage />} />
 
-        {/* Newsletter */}
-        <Route path="newsletter/confirm" element={<NewsletterConfirmPage />} />
+          {/* Newsletter */}
+          <Route path="newsletter/confirm" element={<NewsletterConfirmPage />} />
 
-        {/* Legal */}
-        <Route path="privacidad" element={<PrivacyPage />} />
+          {/* Legal */}
+          <Route path="privacidad" element={<PrivacyPage />} />
 
-        {/* 404 Not Found */}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 
   return (

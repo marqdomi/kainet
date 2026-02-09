@@ -212,7 +212,12 @@ const Contact = () => {
 
       {/* Success Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4">
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mensaje enviado exitosamente"
+        >
           <Card variant="default" className="max-w-sm w-full">
             <div className="text-center">
               <div className="mb-4 flex justify-center">

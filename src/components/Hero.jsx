@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import useParallaxScroll from '../hooks/useParallaxScroll';
 
 const Hero = () => {
-  console.log('[Hero] Component rendering');
   const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
 
   return (

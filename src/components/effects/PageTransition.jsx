@@ -26,7 +26,6 @@ import ModernLoader from '../loaders/ModernLoader';
 
 const PageTransition = ({ children, duration = 600 }) => {
   const location = useLocation();
-  console.log('[PageTransition] Current pathname:', location.pathname);
   const [isLoading, setIsLoading] = useState(false);
   const [direction, setDirection] = useState('forward');
   const prefersReducedMotion = useReducedMotion();
@@ -161,10 +160,6 @@ const PageTransition = ({ children, duration = 600 }) => {
   const isNavigatingToHome = location.pathname === '/' && previousLocation.current && previousLocation.current !== '/';
   const shouldUseFade = prefersReducedMotion || isNavigatingToHome;
   const variants = shouldUseFade ? fadeVariants : wipeVariants;
-  
-  console.log('[PageTransition] isNavigatingToHome:', isNavigatingToHome);
-  console.log('[PageTransition] shouldUseFade:', shouldUseFade);
-  console.log('[PageTransition] previousLocation:', previousLocation.current);
 
   return (
     <>
@@ -221,11 +216,7 @@ const PageTransition = ({ children, duration = 600 }) => {
               minHeight: '100%',
               willChange: (prefersReducedMotion || isNavigatingToHome) ? 'opacity' : 'clip-path, filter',
             }}
-            onAnimationStart={() => {
-              console.log('[PageTransition] Animation started for:', location.pathname);
-            }}
             onAnimationComplete={() => {
-              console.log('[PageTransition] Animation completed for:', location.pathname);
               // Force visibility after animation
               const element = document.querySelector(`[data-page-key="${location.pathname}"]`);
               if (element && element instanceof HTMLElement) {

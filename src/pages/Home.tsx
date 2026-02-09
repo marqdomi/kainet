@@ -43,8 +43,6 @@ const LazySection: React.FC<LazySectionProps> = ({ children }) => {
 };
 
 const Home: React.FC = () => {
-  console.log('[Home] Component rendering');
-
   return (
     <>
       <SEO

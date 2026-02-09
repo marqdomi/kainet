@@ -89,11 +89,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
       // Default fallback UI
       return (
-        <div className="min-h-screen flex items-center justify-center bg-[#000000] p-4">
-          <div className="max-w-md w-full bg-[#0A0A0A] border border-[#00E5FF]/20 rounded-lg p-8 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-[var(--black-pure)] p-4">
+          <div className="max-w-md w-full bg-[var(--black-base)] border border-[var(--cyan-neon)]/20 rounded-lg p-8 text-center">
             <div className="mb-4">
               <svg
-                className="w-16 h-16 mx-auto text-[#00E5FF]"
+                className="w-16 h-16 mx-auto text-[var(--cyan-neon)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -107,11 +107,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               </svg>
             </div>
             
-            <h1 className="text-2xl font-bold text-[#00E5FF] mb-2">
+            <h1 className="text-2xl font-bold text-[var(--cyan-neon)] mb-2">
               Algo salió mal
             </h1>
             
-            <p className="text-gray-400 mb-6">
+            <p className="text-[var(--text-secondary)] mb-6">
               Lo sentimos, ha ocurrido un error inesperado. Por favor, intenta recargar la página.
             </p>
 
@@ -120,7 +120,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 <summary className="cursor-pointer text-[#FF0055] font-mono text-sm mb-2">
                   Detalles del error (solo en desarrollo)
                 </summary>
-                <pre className="text-xs text-gray-400 overflow-auto">
+                <pre className="text-xs text-[var(--text-secondary)] overflow-auto">
                   {this.state.error.toString()}
                   {this.state.errorInfo && (
                     <>
@@ -134,14 +134,14 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-[#00E5FF] text-black font-semibold rounded-lg hover:bg-[#00E5FF]/90 transition-colors duration-200"
+              className="px-6 py-3 bg-[var(--cyan-neon)] text-black font-semibold rounded-lg hover:bg-[var(--cyan-neon)]/90 transition-colors duration-200"
             >
               Recargar página
             </button>
 
             <button
               onClick={this.reset}
-              className="ml-4 px-6 py-3 border border-[#00E5FF]/30 text-[#00E5FF] font-semibold rounded-lg hover:bg-[#00E5FF]/10 transition-colors duration-200"
+              className="ml-4 px-6 py-3 border border-[var(--cyan-neon)]/30 text-[var(--cyan-neon)] font-semibold rounded-lg hover:bg-[var(--cyan-neon)]/10 transition-colors duration-200"
             >
               Intentar de nuevo
             </button>

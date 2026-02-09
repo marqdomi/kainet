@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import { getPostBySlug, getBlogPosts } from '../lib/supabase';
+import SEO from './SEO';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { calculateReadTime } from '../utils/readTime';
 import './BlogPost.css';
@@ -43,6 +44,7 @@ const ShareButtons = ({ url, title, description }) => {
         rel="noopener noreferrer"
         className="p-2 rounded-lg bg-[#0077B5]/10 hover:bg-[#0077B5]/20 text-[#0077B5] transition-all duration-200 hover:scale-110"
         title="Compartir en LinkedIn"
+        aria-label="Compartir en LinkedIn"
       >
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -54,8 +56,9 @@ const ShareButtons = ({ url, title, description }) => {
         href={twitterUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all duration-200 hover:scale-110"
+        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all duration-200 hover:scale-110"
         title="Compartir en X (Twitter)"
+        aria-label="Compartir en X (Twitter)"
       >
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -69,6 +72,7 @@ const ShareButtons = ({ url, title, description }) => {
         rel="noopener noreferrer"
         className="p-2 rounded-lg bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] transition-all duration-200 hover:scale-110"
         title="Compartir en Facebook"
+        aria-label="Compartir en Facebook"
       >
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -81,7 +85,7 @@ const ShareButtons = ({ url, title, description }) => {
         className={`p-2 rounded-lg transition-all duration-200 hover:scale-110 ${
           copied 
             ? 'bg-green-500/20 text-green-400' 
-            : 'bg-cyan-400/10 hover:bg-cyan-400/20 text-cyan-400'
+            : 'bg-[var(--cyan-neon)]/10 hover:bg-[var(--cyan-neon)]/20 text-[var(--cyan-neon)]'
         }`}
         title={copied ? '¡Copiado!' : 'Copiar enlace'}
       >
@@ -161,8 +165,8 @@ const BlogPost = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#00E5FF] border-r-transparent mb-4"></div>
-          <p className="text-gray-300">Cargando artículo...</p>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[var(--cyan-neon)] border-r-transparent mb-4"></div>
+          <p className="text-[var(--text-secondary)]">Cargando artículo...</p>
         </div>
       </div>
     );
@@ -178,7 +182,7 @@ const BlogPost = () => {
           </h2>
           <a
             href="/blog"
-            className="text-cyan-400 hover:text-cyan-300 transition-colors"
+            className="text-[var(--cyan-neon)] hover:text-[var(--cyan-light)] transition-colors"
           >
             ← Volver al blog
           </a>
@@ -189,6 +193,15 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen pt-20 pb-20">
+      {/* SEO dinámico para cada post */}
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        url={`https://kainet.mx/blog/${post.slug}`}
+        type="article"
+        image={post.image}
+      />
+
       {/* Header del Post */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -200,14 +213,14 @@ const BlogPost = () => {
         <div className="mb-6">
           <a
             href="/blog"
-            className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+            className="text-[var(--cyan-neon)] hover:text-[var(--cyan-light)] transition-colors text-sm"
           >
             ← Volver al blog
           </a>
         </div>
 
         {/* Categoría */}
-        <span className="inline-block px-4 py-1 bg-cyan-400/10 text-cyan-400 rounded-full text-sm font-medium mb-4">
+        <span className="inline-block px-4 py-1 bg-[var(--cyan-neon)]/10 text-[var(--cyan-neon)] rounded-full text-sm font-medium mb-4">
           {post.category}
         </span>
 
@@ -273,7 +286,7 @@ const BlogPost = () => {
         {/* Botones de compartir */}
         <div className="mb-8">
           <ShareButtons 
-            url={`https://kainet.dev/blog/${post.slug}`}
+            url={`https://kainet.mx/blog/${post.slug}`}
             title={post.title}
             description={post.excerpt}
           />
@@ -301,7 +314,7 @@ const BlogPost = () => {
       >
         {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-xl text-body mb-12 leading-relaxed italic border-l-4 border-cyan-400 pl-6">
+          <p className="text-xl text-body mb-12 leading-relaxed italic border-l-4 border-[var(--cyan-neon)] pl-6">
             {post.excerpt}
           </p>
         )}
@@ -314,14 +327,14 @@ const BlogPost = () => {
             prose-h2:text-3xl prose-h2:mb-4 prose-h2:mt-10
             prose-h3:text-2xl prose-h3:mb-3 prose-h3:mt-8
             prose-p:text-body prose-p:leading-relaxed prose-p:mb-6
-            prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:text-cyan-300
+            prose-a:text-[var(--cyan-neon)] prose-a:no-underline hover:prose-a:text-[var(--cyan-light)]
             prose-strong:text-heading prose-strong:font-bold
             prose-ul:text-body prose-ul:my-6
             prose-ol:text-body prose-ol:my-6
             prose-li:mb-2
-            prose-code:text-cyan-400 prose-code:bg-cyan-400/10 prose-code:px-2 prose-code:py-1 prose-code:rounded
+            prose-code:text-[var(--cyan-neon)] prose-code:bg-[var(--cyan-neon)]/10 prose-code:px-2 prose-code:py-1 prose-code:rounded
             prose-pre:bg-[var(--card-bg)] prose-pre:border prose-pre:border-[var(--border-color)]
-            prose-blockquote:border-l-4 prose-blockquote:border-cyan-400 prose-blockquote:pl-6 prose-blockquote:italic
+            prose-blockquote:border-l-4 prose-blockquote:border-[var(--cyan-neon)] prose-blockquote:pl-6 prose-blockquote:italic
             prose-hr:border-[var(--border-color)] prose-hr:my-12
           "
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderMarkdown(post.content)) }}
@@ -346,17 +359,17 @@ const BlogPost = () => {
                 href={`/blog/${relatedPost.slug}`}
                 className="group"
               >
-                <div className="card-default border rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
+                <div className="card-default border rounded-xl overflow-hidden hover:border-[var(--cyan-neon)]/50 transition-all duration-300">
                   <img
                     src={relatedPost.image}
                     alt={relatedPost.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="p-6">
-                    <span className="text-xs text-cyan-400 font-medium">
+                    <span className="text-xs text-[var(--cyan-neon)] font-medium">
                       {relatedPost.category}
                     </span>
-                    <h3 className="text-lg font-bold text-heading mt-2 mb-3 group-hover:text-cyan-400 transition-colors">
+                    <h3 className="text-lg font-bold text-heading mt-2 mb-3 group-hover:text-[var(--cyan-neon)] transition-colors">
                       {relatedPost.title}
                     </h3>
                     <p className="text-sm text-muted mb-4 line-clamp-2">
@@ -391,7 +404,7 @@ const BlogPost = () => {
           {/* Botones de compartir grandes */}
           <div className="flex justify-center gap-4 mb-8">
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://kainet.dev/blog/${post.slug}`)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://kainet.mx/blog/${post.slug}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3 bg-[#0077B5] hover:bg-[#006396] text-white rounded-lg transition-all duration-200 hover:scale-105 font-medium"
@@ -402,7 +415,7 @@ const BlogPost = () => {
               Compartir en LinkedIn
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://kainet.dev/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://kainet.mx/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-200 hover:scale-105 font-medium"

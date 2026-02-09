@@ -627,7 +627,7 @@ const AboutPage: React.FC = () => {
                     Conectar en LinkedIn
                   </Button>
                 </a>
-                <Link to="/contacto">
+                <Link to="/contact">
                   <Button variant="secondary" size="lg">
                     Enviar Mensaje
                   </Button>

@@ -1,4 +1,21 @@
 {
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/nosotros",
+      "statusCode": 301
+    },
+    {
+      "source": "/projects",
+      "destination": "/proyectos",
+      "statusCode": 301
+    },
+    {
+      "source": "/contacto",
+      "destination": "/contact",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api).*)",
