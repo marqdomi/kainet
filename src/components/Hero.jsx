@@ -2,6 +2,47 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import useParallaxScroll from '../hooks/useParallaxScroll';
+import './Hero.css';
+
+// Word-by-word stagger animation
+const wordContainer = {
+  hidden: { opacity: 0 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: delay,
+    },
+  }),
+};
+
+const wordChild = {
+  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
+const AnimatedWords = ({ text, className, custom = 0, as: Tag = 'span' }) => (
+  <Tag className={className}>
+    <motion.span
+      variants={wordContainer}
+      initial="hidden"
+      animate="visible"
+      custom={custom}
+      className="inline-flex flex-wrap justify-center gap-x-[0.3em]"
+    >
+      {text.split(' ').map((word, i) => (
+        <motion.span key={i} variants={wordChild} className="inline-block">
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  </Tag>
+);
 
 const Hero = () => {
   const { offset, blur, ref } = useParallaxScroll({ speed: 0.3, maxBlur: 2 });
@@ -18,17 +59,12 @@ const Hero = () => {
         }}
       />
 
-      {/* Background con Mesh Gradient */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: `
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 229, 255, 0.08), transparent),
-            radial-gradient(ellipse 60% 40% at 80% 50%, rgba(168, 85, 247, 0.05), transparent),
-            radial-gradient(ellipse 50% 30% at 20% 70%, rgba(255, 107, 53, 0.04), transparent)
-          `
-        }}
-      />
+      {/* Background con Mesh Gradient animado (aurora-style) */}
+      <div className="absolute inset-0 z-0 hero-aurora">
+        <div className="hero-aurora-blob hero-aurora-blob-1" />
+        <div className="hero-aurora-blob hero-aurora-blob-2" />
+        <div className="hero-aurora-blob hero-aurora-blob-3" />
+      </div>
 
       {/* Subtle noise texture for depth */}
       <div
@@ -44,40 +80,35 @@ const Hero = () => {
         <div className="max-w-5xl relative">
           {/* Badge / Label */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="mb-6"
           >
-            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-xs sm:text-sm font-bold tracking-wider uppercase">
+            <span className="hero-badge inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-black/30 backdrop-blur-md border border-[var(--cyan-neon)]/30 rounded-full text-[var(--cyan-neon)] text-xs sm:text-sm font-bold tracking-wider uppercase">
+              <span className="hero-badge-dot" />
               Laboratorio de I+D Personal
             </span>
           </motion.div>
 
-          {/* Main Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35, type: 'spring', stiffness: 110 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4"
-          >
-            Explorando la Frontera de la IA
-          </motion.h1>
+          {/* Main Headline - word-by-word reveal */}
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-kainet-white mb-4">
+            <AnimatedWords text="Explorando la Frontera de la IA" custom={0.3} />
+          </h1>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, type: 'spring', stiffness: 110 }}
-            className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-kainet-cyan mb-6 sm:mb-8"
-          >
-            y la Automatización de Redes
-          </motion.h2>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 sm:mb-8">
+            <AnimatedWords
+              text="y la Automatización de Redes"
+              className="hero-gradient-text"
+              custom={0.7}
+            />
+          </h2>
 
           {/* Subtitle / Value Prop */}
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.3 }}
             className="text-base sm:text-lg md:text-xl text-body max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
           >
             Una iniciativa personal de I+D enfocada en{' '}
@@ -91,7 +122,7 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.1 }}
+            transition={{ duration: 0.7, delay: 1.5 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
             <a
@@ -110,6 +141,19 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[3] flex flex-col items-center gap-2"
+      >
+        <span className="text-xs text-[var(--text-tertiary)] uppercase tracking-[0.2em]">Scroll</span>
+        <div className="scroll-indicator">
+          <div className="scroll-indicator-dot" />
+        </div>
+      </motion.div>
     </section>
   );
 };

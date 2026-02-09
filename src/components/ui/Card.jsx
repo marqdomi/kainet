@@ -1,5 +1,5 @@
 // src/components/ui/Card.jsx
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -23,11 +23,24 @@ const Card = ({
   children, 
   variant = 'default',
   hover = false,
+  glow = false,
   padding = 'default',
   className = '',
   as: Component = 'div',
   ...props 
 }) => {
+  const cardRef = useRef(null);
+
+  // Mouse-tracking glow: sets --mouse-x/--mouse-y CSS vars for radial glow
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    cardRef.current.style.setProperty('--mouse-x', `${x}%`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}%`);
+  }, []);
+
   const baseStyles = `
     rounded-2xl
     transition-all duration-200 ease-out
@@ -43,8 +56,6 @@ const Card = ({
   };
 
   // Theme-aware glassmorphism variants using CSS custom properties
-  // Dark mode: dark semi-transparent backgrounds
-  // Light mode: light semi-transparent backgrounds with subtle shadows
   const variants = {
     default: `
       card-default
@@ -68,9 +79,13 @@ const Card = ({
     `,
   };
 
+  const showGlow = glow || hover;
+
   return (
     <Component
-      className={`${baseStyles} ${paddingStyles[padding]} ${variants[variant]} ${className}`}
+      ref={cardRef}
+      className={`${baseStyles} ${paddingStyles[padding]} ${variants[variant]} ${showGlow ? 'card-depth' : ''} ${className}`}
+      onMouseMove={showGlow ? handleMouseMove : undefined}
       {...props}
     >
       {children}
@@ -82,6 +97,7 @@ Card.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['default', 'subtle', 'featured', 'elevated']),
   hover: PropTypes.bool,
+  glow: PropTypes.bool,
   padding: PropTypes.oneOf(['none', 'sm', 'default', 'lg']),
   className: PropTypes.string,
   as: PropTypes.elementType,

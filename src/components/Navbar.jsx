@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import React, { useCallback, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEasterEggContext } from '../contexts/EasterEggContext';
 import ThemeToggle from './ui/ThemeToggle';
@@ -53,6 +53,10 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30, restDelta: 0.001 });
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -143,6 +147,15 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
+        style={{
+          scaleX,
+          background: 'linear-gradient(90deg, var(--cyan-neon), #38bdf8, #a78bfa)',
+        }}
+      />
+
       <AnimatePresence>
         {isVisible && (
           <motion.nav

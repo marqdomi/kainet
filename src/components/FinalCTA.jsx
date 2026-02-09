@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button, Card } from './ui';
 import { Linkedin, FileText, Mail } from 'lucide-react';
+import './FinalCTA.css';
 
 const FinalCTA = () => {
     return (
@@ -23,61 +24,71 @@ const FinalCTA = () => {
                     </p>
                 </motion.div>
 
-                {/* Single CTA Card */}
+                {/* CTA Card with animated gradient border */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
+                    className="cta-gradient-border"
                 >
-                    <Card variant="featured" hover padding="lg" className="text-center">
-                        <div className="flex justify-center mb-4">
-                            <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/10 flex items-center justify-center">
-                                <Mail className="w-8 h-8 text-[var(--cyan-neon)]" strokeWidth={1.5} />
-                            </div>
-                        </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
-                            Conectemos
-                        </h3>
-                        <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed max-w-lg mx-auto">
-                            Si estás interesado en mi experiencia técnica, colaboraciones de investigación,
-                            o simplemente quieres conectar profesionalmente, estos son los mejores canales.
-                        </p>
+                    <Card variant="featured" hover glow padding="lg" className="text-center relative overflow-hidden">
+                        {/* Subtle background glow */}
+                        <div className="cta-bg-glow" />
 
-                        {/* CTA Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a
-                                href="https://www.linkedin.com/in/marcdomibe/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                                    <Linkedin className="w-5 h-5 mr-2" />
-                                    Conectar en LinkedIn
-                                </Button>
-                            </a>
-                            <a
-                                href="/cv-marco-dominguez.pdf"
-                                download
-                            >
-                                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                                    <FileText className="w-5 h-5 mr-2" />
-                                    Descargar CV
-                                </Button>
-                            </a>
-                        </div>
-
-                        {/* Email fallback */}
-                        <div className="mt-6 pt-6 border-t border-[var(--border-color)]">
-                            <p className="text-sm text-[var(--text-tertiary)]">
-                                También puedes escribirme a{' '}
-                                <a
-                                    href="mailto:contacto@kainet.mx"
-                                    className="text-[var(--cyan-neon)] hover:underline"
+                        <div className="relative z-[1]">
+                            <div className="flex justify-center mb-4">
+                                <motion.div
+                                    className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/10 flex items-center justify-center"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                    transition={{ type: 'spring', stiffness: 300 }}
                                 >
-                                    contacto@kainet.mx
-                                </a>
+                                    <Mail className="w-8 h-8 text-[var(--cyan-neon)]" strokeWidth={1.5} />
+                                </motion.div>
+                            </div>
+                            <h3 className="text-xl sm:text-2xl font-bold text-heading mb-2 sm:mb-3">
+                                Conectemos
+                            </h3>
+                            <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed max-w-lg mx-auto">
+                                Si estás interesado en mi experiencia técnica, colaboraciones de investigación,
+                                o simplemente quieres conectar profesionalmente, estos son los mejores canales.
                             </p>
+
+                            {/* CTA Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                <a
+                                    href="https://www.linkedin.com/in/marcdomibe/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Button variant="primary" size="lg" className="w-full sm:w-auto">
+                                        <Linkedin className="w-5 h-5 mr-2" />
+                                        Conectar en LinkedIn
+                                    </Button>
+                                </a>
+                                <a
+                                    href="/cv-marco-dominguez.pdf"
+                                    download
+                                >
+                                    <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                                        <FileText className="w-5 h-5 mr-2" />
+                                        Descargar CV
+                                    </Button>
+                                </a>
+                            </div>
+
+                            {/* Email fallback */}
+                            <div className="mt-6 pt-6 border-t border-[var(--border-color)]">
+                                <p className="text-sm text-[var(--text-tertiary)]">
+                                    También puedes escribirme a{' '}
+                                    <a
+                                        href="mailto:contacto@kainet.mx"
+                                        className="text-[var(--cyan-neon)] hover:underline"
+                                    >
+                                        contacto@kainet.mx
+                                    </a>
+                                </p>
+                            </div>
                         </div>
                     </Card>
                 </motion.div>

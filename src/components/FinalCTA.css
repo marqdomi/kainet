@@ -1,0 +1,72 @@
+/* ================================================
+   KAINET - FinalCTA Animated Gradient Border
+   ================================================ */
+
+/* Animated gradient border wrapper */
+.cta-gradient-border {
+  position: relative;
+  padding: 2px;
+  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--cyan-neon),
+    #a78bfa,
+    #f97316,
+    var(--cyan-neon)
+  );
+  background-size: 300% 300%;
+  animation: gradient-border-rotate 6s ease-in-out infinite;
+}
+
+/* Inner card needs its own bg so the gradient only shows as border */
+.cta-gradient-border > * {
+  border: none !important;
+}
+
+@keyframes gradient-border-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Subtle inner glow matching the gradient */
+.cta-bg-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    rgba(0, 229, 255, 0.06) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* Light theme: slightly different gradient */
+.light-theme .cta-gradient-border {
+  background: linear-gradient(
+    135deg,
+    #0891b2,
+    #7c3aed,
+    #ea580c,
+    #0891b2
+  );
+  background-size: 300% 300%;
+  animation: gradient-border-rotate 6s ease-in-out infinite;
+}
+
+.light-theme .cta-bg-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    rgba(8, 145, 178, 0.05) 0%,
+    transparent 60%
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cta-gradient-border {
+    animation: none !important;
+    background-size: 100% 100%;
+  }
+}
