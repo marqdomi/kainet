@@ -15,7 +15,7 @@ const ContactPage: React.FC = () => {
     <>
       <SEO
         title="Contacto"
-        description="Contáctanos para consultas sobre automatización, desarrollo web o proyectos SaaS. Respuesta en menos de 24 horas. Ciudad de México."
+        description="Contáctame para consultas sobre automatización, desarrollo web o proyectos SaaS. Respuesta en menos de 24 horas. Ciudad de México."
         url="https://kainet.mx/contact"
       />
       <Suspense fallback={<LoadingFallback />}>

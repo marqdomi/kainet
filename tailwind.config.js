@@ -12,6 +12,15 @@ export default {
         'kainet-cyan': '#00E5FF',
         'kainet-blue': '#0D1B3E',
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        }
+      },
+      animation: {
+        fadeIn: 'fadeIn 200ms ease-out'
+      }
     },
   },
   plugins: [],

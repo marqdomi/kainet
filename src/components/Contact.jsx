@@ -1,45 +1,179 @@
 // src/components/Contact.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SectionWrapper from '../hoc/SectionWrapper';
 import { Button, Input, SectionTitle, Card } from './ui';
-import { Mail, MapPin, Clock, Send, Check } from 'lucide-react';
+import { Mail, MapPin, Clock, Send, Check, Linkedin } from 'lucide-react';
 
 const CONTACT_ENDPOINT = '/api/contact';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/marcdomibe/';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const initialForm = { name: '', email: '', subject: '', message: '', company: '' };
+
+const validateForm = (form) => {
+  const errors = {};
+
+  if (!form.name.trim()) {
+    errors.name = 'Por favor escribe tu nombre';
+  }
+
+  if (!form.email.trim()) {
+    errors.email = 'Por favor escribe tu email';
+  } else if (!EMAIL_REGEX.test(form.email.trim())) {
+    errors.email = 'Por favor proporciona un email válido';
+  }
+
+  if (!form.message.trim()) {
+    errors.message = 'Por favor escribe tu mensaje';
+  } else if (form.message.trim().length < 10) {
+    errors.message = 'El mensaje debe tener al menos 10 caracteres';
+  }
+
+  return errors;
+};
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
+  const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [csrfToken, setCsrfToken] = useState('');
+  const modalRef = useRef(null);
+  const previousActiveElementRef = useRef(null);
+
+  useEffect(() => {
+    let active = true;
+
+    const fetchCsrfToken = async () => {
+      try {
+        const res = await fetch(CONTACT_ENDPOINT, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        if (active && data?.csrfToken) {
+          setCsrfToken(data.csrfToken);
+        }
+      } catch (error) {
+        console.warn('No se pudo obtener CSRF token:', error);
+      }
+    };
+
+    fetchCsrfToken();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showModal) return;
+
+    previousActiveElementRef.current = document.activeElement;
+
+    const focusableSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'textarea:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    const focusFirstElement = () => {
+      const focusableElements = modalRef.current?.querySelectorAll(focusableSelector);
+      if (focusableElements?.length) {
+        focusableElements[0].focus();
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setShowModal(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = modalRef.current?.querySelectorAll(focusableSelector);
+      if (!focusableElements || focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    setTimeout(focusFirstElement, 0);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previousActiveElementRef.current?.focus?.();
+    };
+  }, [showModal]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
+
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+
+    if (errorMsg) {
+      setErrorMsg('');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
     setErrorMsg('');
+    setFieldErrors({});
 
     // Honeypot anti-spam
     if (form.company.trim()) {
       setStatus('success');
-      setForm({ name: '', email: '', subject: '', message: '', company: '' });
+      setForm(initialForm);
       setShowModal(true);
       return;
     }
 
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+    const validationErrors = validateForm(form);
+    if (Object.keys(validationErrors).length > 0) {
       setStatus('error');
-      setErrorMsg('Por favor completa todos los campos obligatorios');
+      setFieldErrors(validationErrors);
+      setErrorMsg('Revisa los campos marcados en rojo.');
+      return;
+    }
+
+    if (!csrfToken) {
+      setStatus('error');
+      setErrorMsg('No se pudo validar la solicitud. Recarga la página e intenta de nuevo.');
       return;
     }
 
     try {
       const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+          'X-Requested-With': 'fetch'
+        },
+        credentials: 'same-origin',
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim(),
@@ -48,11 +182,11 @@ const Contact = () => {
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (res.ok && data.success) {
         setStatus('success');
-        setForm({ name: '', email: '', subject: '', message: '', company: '' });
+        setForm(initialForm);
         setShowModal(true);
       } else {
         setStatus('error');
@@ -99,6 +233,18 @@ const Contact = () => {
             Si tienes preguntas sobre mis proyectos de I+D o quieres conectar profesionalmente, 
             puedes escribirme directamente o conectar en LinkedIn.
           </p>
+          <div className="mt-6 flex justify-center">
+            <Button
+              as="a"
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+            >
+              <Linkedin className="w-4 h-4 mr-2" />
+              Conectar en LinkedIn
+            </Button>
+          </div>
         </div>
 
         {/* Centered Form Card */}
@@ -127,6 +273,8 @@ const Contact = () => {
                   required
                   label="Tu Nombre"
                   placeholder="Ej. Marco Domínguez"
+                  error={fieldErrors.name}
+                  autoComplete="name"
                 />
                 <Input
                   id="email"
@@ -137,6 +285,8 @@ const Contact = () => {
                   required
                   label="Tu Email"
                   placeholder="tu@correo.com"
+                  error={fieldErrors.email}
+                  autoComplete="email"
                 />
               </div>
 
@@ -151,6 +301,7 @@ const Contact = () => {
                   label="Asunto"
                   helperText="(opcional)"
                   placeholder="Ej. Consulta sobre automatización"
+                  autoComplete="off"
                 />
               </div>
 
@@ -166,9 +317,15 @@ const Contact = () => {
                   required
                   label="Tu Mensaje"
                   placeholder="Cuéntanos brevemente sobre tu proyecto o idea…"
-                  error={status === 'error' ? errorMsg : undefined}
+                  error={fieldErrors.message}
                 />
               </div>
+
+              {status === 'error' && errorMsg && (
+                <p className="mb-4 text-sm text-[var(--red-error)]" role="alert">
+                  {errorMsg}
+                </p>
+              )}
 
               {/* Submit Button */}
               <Button
@@ -214,20 +371,25 @@ const Contact = () => {
       {showModal && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mensaje enviado exitosamente"
+          onClick={() => setShowModal(false)}
         >
-          <Card variant="default" className="max-w-sm w-full">
-            <div className="text-center">
+          <Card variant="default" className="max-w-sm w-full" padding="default">
+            <div
+              ref={modalRef}
+              className="text-center"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="contact-success-title"
+              onClick={(event) => event.stopPropagation()}
+            >
               <div className="mb-4 flex justify-center">
                 <div className="w-16 h-16 rounded-full bg-[var(--cyan-neon)]/20 flex items-center justify-center">
                   <Check className="w-8 h-8 text-[var(--cyan-neon)]" />
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">¡Mensaje enviado!</h3>
+              <h3 id="contact-success-title" className="text-xl font-semibold text-[var(--text-primary)] mb-2">¡Mensaje enviado!</h3>
               <p className="text-[var(--text-secondary)] mb-2">
-                Gracias por escribirnos. Te responderemos pronto.
+                Gracias por escribirme. Te responderé pronto.
               </p>
               <p className="text-sm text-[var(--cyan-neon)] mb-6">
                 contacto@kainet.mx

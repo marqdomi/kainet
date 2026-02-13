@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 const Input = React.forwardRef(({
   type = 'text',
+  id,
   label,
   error,
   helperText,
@@ -38,12 +39,13 @@ const Input = React.forwardRef(({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+        <label htmlFor={id} className="block text-sm font-medium text-[var(--text-primary)] mb-2">
           {label}
         </label>
       )}
       <InputElement
         ref={ref}
+        id={id}
         type={type === 'textarea' ? undefined : type}
         className={`${baseStyles} ${type === 'textarea' ? 'min-h-[120px] resize-vertical' : ''} ${className}`}
         {...props}
@@ -61,6 +63,7 @@ Input.displayName = 'Input';
 
 Input.propTypes = {
   type: PropTypes.oneOf(['text', 'email', 'password', 'textarea']),
+  id: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.string,
   helperText: PropTypes.string,
